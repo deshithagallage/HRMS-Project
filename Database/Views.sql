@@ -27,3 +27,9 @@ CREATE VIEW leave_count AS
 SELECT Employee_ID, Annual, Casual, No_Pay, Maternity_Leave
 FROM Employee_data JOIN leave_limit
 USING (Pay_Grade_ID);
+
+CREATE VIEW leave_count_gender AS
+SELECT Employee_ID,Gender, Annual, Casual, No_Pay, Maternity_Leave
+FROM Employee_data JOIN leave_limit
+USING (Pay_Grade_ID);
+
