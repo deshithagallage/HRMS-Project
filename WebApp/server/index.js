@@ -67,6 +67,19 @@ app.get("/customAttributes", (req, res) => {
   });
 });
 
+app.get('/employeeCustomAttributes', (req, res) => {
+  // Fetch employee data with custom fields from the database
+  const query = 'SELECT * FROM Employee_Custom_Attribute';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching employee data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.post("/createLeaveReq", (req, res) => {
   const id = req.body.id;
   const startDate = req.body.startDate;
