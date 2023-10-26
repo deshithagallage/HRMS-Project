@@ -297,7 +297,7 @@ app.post("/editEmployee", async (req, res) => {
 });
 
 app.get("/employeeData", (req, res) => {
-  db.query("SELECT * FROM employee_data", (err, result) => {
+  db.query("SELECT * FROM Employee_Data ORDER BY Timestamp", (err, result) => {
     if (err) {
       console.log(err);
     } else {

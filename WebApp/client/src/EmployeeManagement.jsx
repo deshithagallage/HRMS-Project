@@ -8,6 +8,9 @@ function EmployeeManagement() {
   const { id_to_transfer } = useParams();
   const navigate = useNavigate();
 
+  localStorage.removeItem('employeeData');
+  localStorage.removeItem('haveDependent');
+
   const handleAddEmployee = () => {
     navigate(`/PageHR/${id_to_transfer}/EmployeeManagement/AddEmployee`);
   };
@@ -56,7 +59,7 @@ function EmployeeManagement() {
 
   return (
     <div>
-      <h1>Page the Employee Management</h1>
+      <h1>Page of the Employee Management</h1>
       <div className="d-flex justify-content-between">
         <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleAddEmployee}>
           Add New Employee
