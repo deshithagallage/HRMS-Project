@@ -96,7 +96,7 @@ app.get("/emp_view/:id_to_transfer", (req, res) => {
 
   // Define the SQL query to retrieve the employee record based on the provided ID
   const sql =
-    "SELECT Employee_ID, First_name, Last_name, Job_Title, Dept_name, Pay_Grade FROM emp_view WHERE Employee_ID = ?";
+    "SELECT Employee_ID, Name, Job_Title, Dept_name, Pay_Grade FROM emp_view WHERE Employee_ID = ?";
 
   db.query(sql, [id_to_transfer], (err, result) => {
     if (err) {

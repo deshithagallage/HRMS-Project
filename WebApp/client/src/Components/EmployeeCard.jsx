@@ -25,10 +25,7 @@ function EmployeeCard({ employee }) {
             Employee ID: {employee.Employee_ID}
           </div>
           <div>
-            First Name: {employee.First_name}
-          </div>
-          <div>
-            Last Name: {employee.Last_name}
+            Name: {employee.Name}
           </div>
           <div>
             Job title: {employee.Job_Title}
