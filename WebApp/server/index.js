@@ -142,9 +142,7 @@ app.get("/supervisorReport/:id_to_transfer", (req, res) => {
 
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
-
   try {
-    const hashedPassword = await argon2.hash(employeeData.password);
     const employmentStatusQuery =
       "SELECT Status_ID FROM Employment_Status WHERE Status = ?";
     const payGradeQuery =
@@ -229,9 +227,9 @@ app.post("/addEmployee", async (req, res) => {
     });
 
     const accountSql =
-      "INSERT INTO `Employee_account` (`Employee_ID`, `User_ID`, `hashedPassword`) VALUES ?";
+      "INSERT INTO `Employee_account` (`Employee_ID`, `User_ID`, `Password`) VALUES ?";
     const accountValues = [
-      [employeeID, employeeData.username, employeeData.password],
+      [employeeID, employeeData.username, Password],
     ];
     await queryDatabase(accountSql, [accountValues]);
 

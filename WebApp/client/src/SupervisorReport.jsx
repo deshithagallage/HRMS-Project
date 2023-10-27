@@ -9,7 +9,7 @@ function SupervisorReport() {
   // Function to fetch supervisors from the server
   const fetchSupervisors = async () => {
     try {
-      const response = await Axios.get(`http://localhost:3001/fetchSupervisors`); // Replace with your API endpoint
+      const response = await Axios.get(`http://localhost:3000/fetchSupervisors`); // Replace with your API endpoint
       setSupervisors(response.data);
     } catch (error) {
       console.error("Error fetching supervisors: " + error);
@@ -20,7 +20,7 @@ function SupervisorReport() {
   const fetchSubordinates = async () => {
     if (supervisor) { // Only fetch if a supervisor is selected
       try {
-        const response = await Axios.get(`http://localhost:3001/supervisorReport/${supervisor}`);
+        const response = await Axios.get(`http://localhost:3000/supervisorReport/${supervisor}`);
         if (response.data) {
           setSubordinates(response.data);
         } else {
