@@ -71,3 +71,18 @@ JOIN Department dept ON e.Dept_ID = dept.Dept_ID;
 create view supervisor_leave_accept as
 select Leave_Req_ID,Employee_ID,Supervisor_ID,Start_Date,No_of_Days,Type,Status
 from leave_request join supervisor where leave_request.Employee_ID = supervisor.Subordinate_ID
+
+
+-- View for display employee salaries
+CREATE VIEW EmployeeSalaries AS
+SELECT
+    E.Employee_ID,
+    E.First_Name,
+    E.Last_Name,
+    E.Job_Title,
+    PG.Pay_Grade,
+    PG.Basic_Salary
+FROM
+    Employee_Data E
+INNER JOIN
+    Pay_Grade PG ON E.Pay_Grade_ID = PG.Pay_Grade_ID;

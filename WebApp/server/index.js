@@ -336,6 +336,22 @@ app.get("/employeeData", (req, res) => {
   });
 });
 
+app.get('/report4/employeesalaries/:minSalary/:maxSalary', (req, res) => {
+  const minSalary = req.params.minSalary
+  const maxSalary = req.params.maxSalary
+
+  const query = "SELECT * FROM EmployeeSalaries WHERE Basic_Salary BETWEEN ? AND ?";
+
+  db.query(query, [minSalary, maxSalary], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Failed to retrieve data' });
+    }
+
+    res.json(results);
+  });
+});
+
 app.get("/getPass", (req, res) => {
   db.query("SELECT * FROM password_check", (err, result) => {
     if (err) {
