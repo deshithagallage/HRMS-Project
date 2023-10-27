@@ -15,12 +15,13 @@ import Report1 from './Report1';
 import Report2 from './Report2';
 import Report3 from './Report3';
 import Report4 from './Report4';
-import Report5 from './Report5';
+import SupervisorReport from './SupervisorReport';
 import PageAdmin from './PageAdmin';
 import AddHR from './AddHR';
 import CreateHRAccount from './CreateHRAccount';
 import ViewEmployee from './ViewEmployee';
 import EditEmployee from './EditEmployee';
+
 
 function App() {
   return (
@@ -37,11 +38,9 @@ function App() {
         <Route path="/PageHR/:id_to_transfer/ReportGenaration" element={<ReportGenaration />} />
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report1" element={<Report1 />} />
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report2" element={<Report2 />} />
-
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report3" element={<Report3 />} />
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report4" element={<Report4 />} />
-        <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report5" element={<Report5 />} />
-
+        <Route path="/PageHR/:id_to_transfer/ReportGenaration/Supervisor_Report" element={<SupervisorReport />} />
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement/AddEmployee/AddDependent" element={<AddDependent />} />
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement/ViewEmployee/:id_to_view" element={<ViewEmployee />} />
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement/EditEmployee/:id_to_edit" element={<EditEmployee />} />
