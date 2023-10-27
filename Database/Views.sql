@@ -2,7 +2,8 @@
 CREATE VIEW emp_view AS
 SELECT
 	t1.Employee_ID,
-    concat(t1.First_name,' ',t1.Last_name) as Name,
+    t1.First_name,
+    t1.Last_name,
     t1.Job_Title,
     t2.dept_name,
     t3.pay_grade
