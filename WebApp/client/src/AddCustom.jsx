@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './styles/PageHR.css'; // Import the CSS file
+
 
 function AddCustom() {
   const { id_to_transfer } = useParams();
@@ -67,6 +71,34 @@ function AddCustom() {
   };
 
   return (
+    <div className="page-container">
+        <div className="sidebar">
+      <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
+        <h2>Jupiter Apparels</h2></div>
+        <ul>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`} activeClassName="active-link">
+              Employee Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/AddCustom`} activeClassName="active-link">
+              Add Custom Attribute
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/ReportGenaration`} activeClassName="active-link">
+              Report Generation
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to={`/`} activeClassName="active-link">
+            Log out
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+            <div className="content">
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-4">
@@ -133,6 +165,8 @@ function AddCustom() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

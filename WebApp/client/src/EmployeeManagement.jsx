@@ -100,7 +100,7 @@ function EmployeeManagement() {
           />
         </div>
       </div>
-      <div className="table-container">
+      <div className="table-container" >
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
