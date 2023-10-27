@@ -13,7 +13,7 @@ function ReportCard1() {
 
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Body>
+      <Card.Body className="d-flex flex-column align-items-center">
         <Card.Title className="text-center">Leave Report</Card.Title>
         <Card.Text>  Generate a report of all the leaves taken by an employee grouped by the respective department. </Card.Text>
         <Button variant="primary" onClick={handleGenerateReport}>Generate Report</Button>

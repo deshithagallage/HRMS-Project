@@ -15,33 +15,40 @@ function ReportGeneration() {
         <h1>Report Generation Page</h1>
       </div>
 
-      <div className="d-flex justify-content-center mb-4">
-        <div className="dark-border"> {/* Apply the dark-border class */}
-          <ReportCard1 />
-        </div>
-      </div>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-4 mb-4">
+            <div className="dark-border"> {/* Apply the dark-border class */}
+              <ReportCard1 />
+            </div>
+          </div>
 
-      <div className="d-flex justify-content-center mb-4">
-        <div className="dark-border"> {/* Apply the dark-border class */}
-          <ReportCard2 />
-        </div>
-      </div>
+          <div className="col-md-4 mb-4">
+            <div className="dark-border"> {/* Apply the dark-border class */}
+              <ReportCard2 />
+            </div>
+          </div>
 
-      <div className="d-flex justify-content-center mb-4">
-        <div className="dark-border"> {/* Apply the dark-border class */}
-          <ReportCard3 />
+          <div className="col-md-4 mb-4">
+            <div className="dark-border"> {/* Apply the dark-border class */}
+              <ReportCard3 />
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div className="d-flex justify-content-center mb-4">
-        <div className="dark-border"> {/* Apply the dark-border class */}
-          <ReportCard4 />
-        </div>
-      </div>
+        <div className="row">
+          <div className="col-md-4 mb-4">
+            <div className="dark-border"> {/* Apply the dark-border class */}
+              <ReportCard4 />
+            </div>
+          </div>
 
-      <div className="d-flex justify-content-center mb-4">
-        <div className="dark-border"> {/* Apply the dark-border class */}
-          <ReportCard5 />
+          <div className="col-md-4 mb-4">
+            <div className="dark-border"> {/* Apply the dark-border class */}
+              <ReportCard5 />
+            </div>
+          </div>
+          
         </div>
       </div>
     </div>

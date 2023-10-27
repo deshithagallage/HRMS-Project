@@ -13,7 +13,7 @@ function ReportCard4() {
 
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Body>
+      <Card.Body className="d-flex flex-column align-items-center">
         <Card.Title className="text-center">Salary Report</Card.Title>
         <Card.Text>Generate a report for the employee records based on the salary (pay grade) of each employee</Card.Text>
         <Button variant="primary" onClick={handleGenerateReport}>Generate Report</Button>

@@ -71,7 +71,7 @@ function Login() {
   
         <MDBCol md='6' className='text-center position-relative'>
   
-          <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong" style={{ top: '8%', right: '20%' }}></div>
+          <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong" style={{ top: '4%', right: '20%' }}></div>
           <div id="radius-shape-2" className="position-absolute shadow-5-strong" style={{ top: '60%', right: '10%' }}></div>
   
           <MDBCard className='my-5 bg-glass' style={{ maxWidth: '400px', height: '450px'}}>
