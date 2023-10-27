@@ -15,7 +15,7 @@ import Report1 from './Report1';
 import Report2 from './Report2';
 import Report3 from './Report3';
 import Report4 from './Report4';
-import Report5 from './Report5';
+import SupervisorReport from './SupervisorReport';
 import PageAdmin from './PageAdmin';
 import AddHR from './AddHR';
 import ViewEmployee from './ViewEmployee';
@@ -39,7 +39,7 @@ function App() {
 
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report3" element={<Report3 />} />
         <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report4" element={<Report4 />} />
-        <Route path="/PageHR/:id_to_transfer/ReportGenaration/Report5" element={<Report5 />} />
+        <Route path="/PageHR/:id_to_transfer/ReportGenaration/SupervisorReport" element={<SupervisorReport />} />
 
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement/AddEmployee/AddDependent" element={<AddDependent />} />
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement/ViewEmployee/:id_to_view" element={<ViewEmployee />} />
