@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const argon2 = require('argon2');
 
 require("dotenv").config();
 
@@ -143,6 +144,7 @@ app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
 
   try {
+    const hashedPassword = await argon2.hash(employeeData.password);
     const employmentStatusQuery =
       "SELECT Status_ID FROM Employment_Status WHERE Status = ?";
     const payGradeQuery =
@@ -227,7 +229,7 @@ app.post("/addEmployee", async (req, res) => {
     });
 
     const accountSql =
-      "INSERT INTO `Employee_account` (`Employee_ID`, `User_ID`, `Password`) VALUES ?";
+      "INSERT INTO `Employee_account` (`Employee_ID`, `User_ID`, `hashedPassword`) VALUES ?";
     const accountValues = [
       [employeeID, employeeData.username, employeeData.password],
     ];

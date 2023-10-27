@@ -68,7 +68,7 @@ function AddEmployee() {
 
   const [employmentStatusOptions, setEmploymentStatusOptions] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3000/addEmployee/employmentStatus")
+    Axios.get("http://localhost:3001/addEmployee/employmentStatus")
       .then(response => {
         setEmploymentStatusOptions(response.data);
       })
@@ -79,7 +79,7 @@ function AddEmployee() {
 
   const [payGradeOptions, setPayGradeOptions] = useState ([]);
   useEffect(() => {
-    Axios.get("http://localhost:3000/addEmployee/payGrade")
+    Axios.get("http://localhost:3001/addEmployee/payGrade")
       .then(response => {
         setPayGradeOptions(response.data);
       })
@@ -90,7 +90,7 @@ function AddEmployee() {
 
   const [departmentOptions, setDepartmentOptions] = useState ([]);
   useEffect(() => {
-    Axios.get("http://localhost:3000/addEmployee/department")
+    Axios.get("http://localhost:3001/addEmployee/department")
       .then(response => {
         setDepartmentOptions(response.data);
       })
@@ -101,7 +101,7 @@ function AddEmployee() {
 
   const [branchOptions, setBranchOptions] = useState ([]);
   useEffect(() => {
-    Axios.get("http://localhost:3000/addEmployee/branch")
+    Axios.get("http://localhost:3001/addEmployee/branch")
       .then(response => {
         setBranchOptions(response.data);
       })
@@ -120,7 +120,7 @@ function AddEmployee() {
             employeeData: employeeData,
             haveDependent: haveDependent
           }
-          Axios.post("http://localhost:3000/addEmployee", data)
+          Axios.post("http://localhost:3001/addEmployee", data)
           .then(res => {
             localStorage.removeItem('employeeData');
             localStorage.removeItem('haveDependent');

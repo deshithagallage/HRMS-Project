@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 function SupervisorReport() {
   const [supervisor, setSupervisor] = useState(""); // State variable to track selected supervisor
   const [subordinates, setSubordinates] = useState([]); // State variable to store subordinates data
   const [supervisors, setSupervisors] = useState([]); // State variable to store supervisors data
-  const { id_to_transfer } = useParams(); // Get the id_to_transfer from route parameters
 
   // Function to fetch supervisors from the server
   const fetchSupervisors = async () => {
