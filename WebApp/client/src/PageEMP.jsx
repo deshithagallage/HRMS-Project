@@ -19,8 +19,8 @@ function PageEMP() {
         console.log('id_to_transfer in PageEMP:', id_to_transfer);
 
         const [employeeResponse, supervisorsResponse] = await Promise.all([
-          Axios.get(`http://localhost:3000/emp_view/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/fetchSupervisors`)
+          Axios.get(`http://localhost:3001/emp_view/${id_to_transfer}`),
+          Axios.get(`http://localhost:3001/fetchSupervisors`)
         ]);
 
         setEmployee(employeeResponse.data);

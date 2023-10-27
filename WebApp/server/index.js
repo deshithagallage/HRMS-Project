@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const argon2 = require('argon2');
 
 require("dotenv").config();
 
@@ -109,7 +110,7 @@ app.get("/emp_view/:id_to_transfer", (req, res) => {
 
   // Define the SQL query to retrieve the employee record based on the provided ID
   const sql =
-    "SELECT Employee_ID, First_name, Last_name, Job_Title, Dept_name, Pay_Grade FROM emp_view WHERE Employee_ID = ?";
+    "SELECT Employee_ID, Name, Job_Title, Dept_name, Pay_Grade FROM emp_view WHERE Employee_ID = ?";
 
   db.query(sql, [id_to_transfer], (err, result) => {
     if (err) {
@@ -131,6 +132,20 @@ app.get("/fetchSupervisors", (req, res) => {
   db.query(sql, (error, results) => {
     if (error) {
       console.error("Error fetching supervisor data:", error);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+app.get("/supervisorReport/:id_to_transfer", (req, res) => {
+  const id_to_transfer = req.params.id_to_transfer;
+  const query =
+    "SELECT employee_data.first_name as Subordinate_first_name, employee_data.last_name as Subordinate_last_name FROM supervisor LEFT JOIN employee_data ON supervisor.subordinate_ID = employee_data.employee_id WHERE supervisor.Supervisor_ID = ?";
+  db.query(query,[id_to_transfer],(error, results) => {
+    if (error) {
+      console.error("Error querying the database: " + error);
       res.status(500).json({ error: "Internal server error" });
     } else {
       res.json(results);
@@ -517,6 +532,6 @@ app.get("/fetchLeaveRequestsDept", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Yey, your server is running on port 3000");
+app.listen(3001, () => {
+  console.log("Yey, your server is running on port 3001");
 });
