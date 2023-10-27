@@ -68,6 +68,19 @@ app.get("/customAttributes", (req, res) => {
   });
 });
 
+app.get('/employeeCustomAttributes', (req, res) => {
+  // Fetch employee data with custom fields from the database
+  const query = 'SELECT * FROM Employee_Custom_Attribute';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching employee data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.post("/createLeaveReq", (req, res) => {
   const id = req.body.id;
   const startDate = req.body.startDate;
@@ -142,6 +155,7 @@ app.get("/supervisorReport/:id_to_transfer", (req, res) => {
 
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
+<<<<<<< HEAD
   try {
     const employmentStatusQuery =
       "SELECT Status_ID FROM Employment_Status WHERE Status = ?";
@@ -152,40 +166,37 @@ app.post("/addEmployee", async (req, res) => {
       "SELECT Dept_ID FROM Department WHERE Dept_name = ?";
 
     const employmentStatusResult = await queryDatabase(employmentStatusQuery, [
+=======
+
+  db.query('CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      employeeData.firstName,
+      employeeData.lastName,
+      employeeData.gender,
+      employeeData.maritalStatus,
+      employeeData.birthday,
+      employeeData.email,
+>>>>>>> 47c9703fbc65676e9efd2350aa16e8c200f6cb3c
       employeeData.employmentStatus,
-    ]);
-    const payGradeResult = await queryDatabase(payGradeQuery, [
+      employeeData.jobTitle,
       employeeData.payGrade,
-    ]);
-    const branchResult = await queryDatabase(branchQuery, [
       employeeData.branch,
-    ]);
-    const departmentResult = await queryDatabase(departmentQuery, [
       employeeData.department,
-    ]);
 
-    employeeData.employmentStatus = employmentStatusResult[0].Status_ID;
-    employeeData.payGrade = payGradeResult[0].Pay_Grade_ID;
-    employeeData.branch = branchResult[0].Branch_ID;
-    employeeData.department = departmentResult[0].Dept_ID;
+      haveDependent,
 
-    let dependentId = null; // Default to null
-    if (haveDependent === true) {
-      const dependentQuery =
-        "SELECT Dependent_ID FROM Dependent_Information ORDER BY Timestamp DESC LIMIT 1";
-      const dependentResult = await queryDatabase(dependentQuery);
+      employeeData.username,
+      employeeData.password,
 
-      // Check if dependentResult exists and has a valid Dependent_ID property
-      if (
-        dependentResult &&
-        dependentResult[0] &&
-        dependentResult[0].Dependent_ID !== undefined
-      ) {
-        dependentId = dependentResult[0].Dependent_ID;
+      JSON.stringify(employeeData.contact), // You may need to stringify the JSON object
+    ],
+    (error, results, fields) => {
+      if (error) {
+        console.error('Error updating employee data:', error);
       } else {
-        console.error("Error fetching Dependent_ID or no dependent found.");
-        // Handle the error or provide a default value if needed.
+        console.log('Employee data inserted successfully.');
       }
+<<<<<<< HEAD
     }
 
     const sql =
@@ -244,20 +255,11 @@ app.post("/addEmployee", async (req, res) => {
     console.error("Error:", err.message);
     res.status(500).json({ error: "Internal server error" });
   }
+=======
+  
+    })
+>>>>>>> 47c9703fbc65676e9efd2350aa16e8c200f6cb3c
 });
-
-// Utility function to perform database queries with a Promise-based API
-function queryDatabase(sql, params) {
-  return new Promise((resolve, reject) => {
-    db.query(sql, params, (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-}
 
 app.post("/AddEmployee/AddDependent", (req, res) => {
   const sql =
@@ -397,7 +399,7 @@ app.post("/editEmployee", async (req, res) => {
 });
 
 app.get("/employeeData", (req, res) => {
-  db.query("SELECT * FROM employee_data", (err, result) => {
+  db.query("SELECT * FROM Employee_Data ORDER BY Timestamp", (err, result) => {
     if (err) {
       console.log(err);
     } else {

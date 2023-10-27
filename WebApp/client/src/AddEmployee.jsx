@@ -26,8 +26,7 @@ function AddEmployee() {
     branch: "Choose...",
     username: "",
     password: "",
-    confirmPassword: "",
-    supervisor: ""
+    confirmPassword: ""
   }
 
   const [savedEmployeeData, setSavedEmployeeData] = useState(() => {
@@ -142,19 +141,19 @@ function AddEmployee() {
             <div className="row">
               <div className="form-group col-md-6">
                 <label htmlFor="inputFirstName" style={{marginTop: '15px'}}>First Name</label>
-                <Field type="text" className="form-control" id="inputFirstName" name="firstName" placeholder="First Name" />
+                <Field type="text" className="form-control" id="inputFirstName" name="firstName" placeholder="First Name" style={{marginBottom: "0px"}} />
                 <ErrorMessage name="firstName" component="div" className="error-message" />
               </div>
               <div className="form-group col-md-6">
                 <label htmlFor="inputLastName" style={{marginTop: '15px'}}>Last Name</label>
-                <Field type="text" className="form-control" id="inputLastName" name="lastName" placeholder="Last Name" />
+                <Field type="text" className="form-control" id="inputLastName" name="lastName" placeholder="Last Name" style={{marginBottom: "0px"}} />
                 <ErrorMessage name="lastName" component="div" className="error-message" />
               </div>
             </div>
             <div className="row">
               <div className="form-group col-md-4">
                 <label htmlFor="inputGender" style={{marginTop: '15px'}}>Gender</label>
-                <Field as='select' className="form-control" id="inputGender" name="gender" >
+                <Field as='select' className="form-control" id="inputGender" name="gender" style={{marginBottom: "0px"}} >
                   <option>Choose...</option>
                   <option>Male</option>
                   <option>Female</option>
@@ -165,7 +164,7 @@ function AddEmployee() {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="inputMaritalStatus" style={{marginTop: '15px'}}>Marital Status</label>
-                <Field as='select' className="form-control" id="inputMaritalStatus" name="maritalStatus" >
+                <Field as='select' className="form-control" id="inputMaritalStatus" name="maritalStatus" style={{marginBottom: "0px"}} >
                   <option>Choose...</option>
                   <option>Married</option>
                   <option>Unmarried</option>
@@ -176,7 +175,7 @@ function AddEmployee() {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="inputBirthday" style={{marginTop: '15px'}}>Birthday</label>
-                <Field type="date" className="form-control" id="inputBirthday" name="birthday" placeholder="Birthday" />
+                <Field type="date" className="form-control" id="inputBirthday" name="birthday" placeholder="Birthday" style={{marginBottom: "0px"}} />
                 <ErrorMessage name="birthday" component="div" className="error-message" />
               </div>
             </div>
@@ -193,7 +192,7 @@ function AddEmployee() {
                       <div key={index}>
                         
                         <div className="d-flex justify-content-between">
-                          <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px"}} />
+                          <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px", marginBottom: "0px"}} />
                           {
                             index > 0 &&
                             <button type="button" className="btn btn-secondary" style={{marginLeft: "5px", marginTop: "5px"}} onClick={() => remove(index)}><BsFillTelephoneMinusFill /></button>
@@ -210,13 +209,13 @@ function AddEmployee() {
 
             <div className="form-group col-md-6">
               <label htmlFor="inputEmail" style={{marginTop: '15px'}}>Email</label>
-              <Field type="email" className="form-control" id="inputEmail" name="email" placeholder="Email" />
+              <Field type="email" className="form-control" id="inputEmail" name="email" placeholder="Email" style={{marginBottom: "0px"}} />
               <ErrorMessage name="email" component="div" className="error-message" />
             </div>
             <div className="row">
               <div className="form-group col-md-4">
                 <label htmlFor="inputEmploymentStatus" style={{marginTop: '15px'}}>Employment Status</label>
-                <Field as='select' className="form-control" id="inputEmploymentStatus" name="employmentStatus" >
+                <Field as='select' className="form-control" id="inputEmploymentStatus" name="employmentStatus" style={{marginBottom: "0px"}} >
                   <option>Choose...</option>
                   {employmentStatusOptions.map(option => (
                     <option key={option.Status_ID}>
@@ -228,7 +227,7 @@ function AddEmployee() {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="inputJobTitle" style={{marginTop: '15px'}}>Job Title</label>
-                <Field as='select' className="form-control" id="inputJobTitle" name="jobTitle" >
+                <Field as='select' className="form-control" id="inputJobTitle" name="jobTitle" style={{marginBottom: "0px"}} >
                   <option>Choose...</option>
                   <option>HR Manager</option>
                   <option>Accountant</option>
@@ -239,7 +238,7 @@ function AddEmployee() {
               </div>
               <div className="form-group col-md-4">
                 <label htmlFor="inputPayGrade" style={{marginTop: '15px'}}>Pay Grade</label>
-                <Field as='select' className="form-control" id="inputPayGrade" name="payGrade" >
+                <Field as='select' className="form-control" id="inputPayGrade" name="payGrade" style={{marginBottom: "0px"}} >
                   <option>Choose...</option>
                   {payGradeOptions.map(option => (
                     <option key={option.Pay_Grade_ID}>
@@ -252,7 +251,7 @@ function AddEmployee() {
             </div>
             <div className="form-group col-md-5">
               <label htmlFor="inputDepartment" style={{marginTop: '15px'}}>Department</label>
-              <Field as='select' className="form-control" id="inputDepartment" name="department" >
+              <Field as='select' className="form-control" id="inputDepartment" name="department" style={{marginBottom: "0px"}} >
                 <option>Choose...</option>
                 {departmentOptions.map(option => (
                   <option key={option.Dept_ID}>
@@ -264,7 +263,7 @@ function AddEmployee() {
             </div>
             <div className="form-group col-md-5">
               <label htmlFor="inputBranch" style={{marginTop: '15px'}}>Branch</label>
-              <Field as='select' className="form-control" id="inputBranch" name="branch" >
+              <Field as='select' className="form-control" id="inputBranch" name="branch" style={{marginBottom: "0px"}} >
                 <option>Choose...</option>
                 {branchOptions.map(option => (
                   <option key={option.Branch_ID}>
@@ -290,37 +289,21 @@ function AddEmployee() {
             </div>
 
             <div>
-              <h4 style={{ marginBottom: '30px', marginTop: '50px' }}>Supervisor Details</h4>
-            </div>
-            
-            <div className="form-group col-md-6">
-              <label htmlFor="supervisorID" style={{ marginTop: '15px' }}>Supervisor's ID</label>
-              <Field
-                type="text"
-                className="form-control"
-                id="supervisorID"
-                name="supervisor"
-                placeholder="Supervisor's ID"
-              />
-              <ErrorMessage name="supervisor" component="div" className="error-message" />
-            </div>
-
-            <div>
               <h4 style={{ marginBottom: '30px', marginTop: '50px' }}>Employee Account Information</h4>
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="inputUsername" style={{marginTop: '15px'}}>Username</label>
-              <Field type="text" className="form-control" id="inputUsername" name="username" placeholder="New Username" />
+              <Field type="text" className="form-control" id="inputUsername" name="username" placeholder="New Username" style={{marginBottom: "0px"}} />
               <ErrorMessage name="username" component="div" className="error-message" />
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="inputPassword" style={{marginTop: '15px'}}>Password</label>
-              <Field type="password" className="form-control" id="inputPassword" name="password" placeholder="New Password" />
+              <Field type="password" className="form-control" id="inputPassword" name="password" placeholder="New Password" style={{marginBottom: "0px"}} />
               <ErrorMessage name="password" component="div" className="error-message" />
             </div>
             <div className="form-group col-md-6">
               <label htmlFor="inputConfirmPassword" style={{marginTop: '15px'}}>Confirm Password</label>
-              <Field type="password" className="form-control" id="inputConfirmPassword" name="confirmPassword" placeholder="Confirm Password" />
+              <Field type="password" className="form-control" id="inputConfirmPassword" name="confirmPassword" placeholder="Confirm Password" style={{marginBottom: "0px"}} />
               <ErrorMessage name="confirmPassword" component="div" className="error-message" />
             </div>
     
