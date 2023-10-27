@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams,NavLink, Outlet } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/EmployeeManagement.css'; // Import the CSS file
+import './styles/PageHR.css'; // Import the CSS file
 
 function EmployeeManagement() {
   const { id_to_transfer } = useParams();
@@ -55,7 +56,34 @@ function EmployeeManagement() {
   const displayedEmployees = filteredEmployees.slice(offset, offset + perPage);
 
   return (
-    <div>
+    <div className="page-container">
+       <div className="sidebar">
+      <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
+        <h2>Jupiter Apparels</h2></div>
+        <ul>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`} activeClassName="active-link">
+              Employee Management
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/AddCustom`} activeClassName="active-link">
+              Add Custom Attribute
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageHR/${id_to_transfer}/ReportGenaration`} activeClassName="active-link">
+              Report Generation
+            </NavLink>
+          </li>
+          <li>
+          <NavLink to={`/`} activeClassName="active-link">
+            Log out
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+    <div className="content">
       <h1>Page the Employee Management</h1>
       <div className="d-flex justify-content-between">
         <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleAddEmployee}>
@@ -136,6 +164,7 @@ function EmployeeManagement() {
           activeClassName="active"
         />
       </div>
+    </div>
     </div>
   );
 }

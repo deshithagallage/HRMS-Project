@@ -34,6 +34,11 @@ function PageHR() {
               Report Generation
             </NavLink>
           </li>
+          <li>
+          <NavLink to={`/`} activeClassName="active-link">
+            Log out
+            </NavLink>
+          </li>
         </ul>
       </div>
       <div className="content">
