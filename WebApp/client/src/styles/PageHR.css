@@ -67,4 +67,14 @@
   .sidebar a:hover {
     background-color: #848080;
   }
+
+  /* custom-container.css */
+.container.narrow-container {
+  max-width:500x; /* Adjust the width to your preference */
+  width: 80%;
+}
+
     
+.custom-button {
+  width: 210px; /* Change this value to your preferred button width */
+}
