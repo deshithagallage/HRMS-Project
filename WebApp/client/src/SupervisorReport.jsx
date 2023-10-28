@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Axios from 'axios';
+import './styles/SupervisorReport.css';
 
 function SupervisorReport() {
-  const [supervisor, setSupervisor] = useState(""); // State variable to track selected supervisor
-  const [subordinates, setSubordinates] = useState([]); // State variable to store subordinates data
-  const [supervisors, setSupervisors] = useState([]); // State variable to store supervisors data
+  const [supervisor, setSupervisor] = useState("");
+  const [subordinates, setSubordinates] = useState([]);
+  const [supervisors, setSupervisors] = useState([]);
 
-  // Function to fetch supervisors from the server
   const fetchSupervisors = async () => {
     try {
-      const response = await Axios.get(`http://localhost:3000/fetchSupervisors`); // Replace with your API endpoint
+      const response = await Axios.get(`http://localhost:3000/fetchSupervisors`);
       setSupervisors(response.data);
     } catch (error) {
       console.error("Error fetching supervisors: " + error);
     }
   };
 
-  // Function to fetch subordinates of the selected supervisor
   const fetchSubordinates = async () => {
-    if (supervisor) { // Only fetch if a supervisor is selected
+    if (supervisor) {
       try {
         const response = await Axios.get(`http://localhost:3000/supervisorReport/${supervisor}`);
         if (response.data) {
@@ -32,35 +31,43 @@ function SupervisorReport() {
     }
   };
 
-  // Use useEffect to fetch supervisors when the component mounts
   useEffect(() => {
     fetchSupervisors();
   }, []);
 
   return (
-    <div>
-      <h1>Supervisor Report</h1>
-      <div>
-        <label>Select a Supervisor: </label>
-        <select onChange={(e) => setSupervisor(e.target.value)}>
-          <option value="">Select Supervisor</option>
+    <div className="report_background">
+      <h1 className="headers">Supervisor Report</h1>
+      <div className="select_supervisor_part">
+        <label className="label_line">Select a Supervisor: </label>
+        <select className="select" onChange={(e) => setSupervisor(e.target.value)}>
+          <option className="option_part" value="">Select Supervisor</option>
           {supervisors.map((supervisor) => (
-            <option key={supervisor.Supervisor_ID} value={supervisor.Supervisor_ID}>
+            <option className="option_part" key={supervisor.Supervisor_ID} value={supervisor.Supervisor_ID}>
               {supervisor.Supervisor_ID}
             </option>
           ))}
         </select>
-        <button onClick={fetchSubordinates}>Show Subordinates</button>
+        <button className="buttons" onClick={fetchSubordinates}>Show Subordinates</button>
       </div>
-      <div>
-        <h2>Subordinates:</h2>
-        <ul>
-          {subordinates.map((subordinate, index) => (
-            <li key={index}>
-              {subordinate.Subordinate_first_name} {subordinate.Subordinate_last_name}
-            </li>
-          ))}
-        </ul>
+      <div className="SubordinatesList">
+        <h2 className="headers2">Subordinates:</h2>
+        <table className="subordinates-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            {subordinates.map((subordinate, index) => (
+              <tr key={index}>
+                <td  style={{ width: "50%" }}>{subordinate.Subordinate_first_name} {subordinate.Subordinate_last_name}</td>
+                <td  style={{ width: "50%" }}>{subordinate.Subordinate_ID}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
