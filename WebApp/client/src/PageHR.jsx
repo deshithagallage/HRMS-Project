@@ -11,6 +11,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
+import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import LineChart from "./Components/LineChart";
 
 function PageHR() {
   const { id_to_transfer } = useParams();
@@ -58,7 +60,7 @@ function PageHR() {
       </div>
       <div className="content">
         <Box m="20px">
-          </Box>      <Box
+       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
         gridAutoRows="140px"
@@ -124,6 +126,8 @@ function PageHR() {
             }
           />
         </Box>
+        
+
         <Box
           gridColumn="span 3"
           display="flex"
@@ -144,25 +148,62 @@ function PageHR() {
             }
           />
         </Box>
+                {/* ROW 2 */}
+                <Box
+          gridColumn="span 8"
+          gridRow="span 2"
+          backgroundColor={colors.primary[400]}
+        >
+          <Box
+            mt="25px"
+            p="0 30px"
+            display="flex "
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              <Typography
+                variant="h5"
+                fontWeight="600"
+                color={colors.grey[100]}
+              >
+                Revenue Generated
+              </Typography>
+              
+            </Box>
+            <Box>
+              <IconButton>
+                <DownloadOutlinedIcon
+                  sx={{ fontSize: "26px", color: colors.greenAccent[500] }}
+                />
+              </IconButton>
+            </Box>
+          </Box>
+          <Box height="250px" m="-20px 0 0 0">
+            <LineChart isDashboard={true} />
+          </Box>
+        </Box>
+  
         <Box
           gridColumn="span 4"
           gridRow="span 2"
+          backgroundColor={colors.primary[400]}
           padding="30px"
-          backgroundColor="#f0f0f0" 
         >
-        <Typography
+          <Typography
             variant="h5"
             fontWeight="600"
             sx={{ marginBottom: "15px" }}
           >
-            Branches
+           Branches
           </Typography>
-        <Box height="200px"
-          backgroundColor="#f0f0f0" >
+          <Box height="200px">
             <GeographyChart isDashboard={true} />
+          </Box>
         </Box>
         </Box>
         </Box>
+ 
       </div>
     </div>
   );

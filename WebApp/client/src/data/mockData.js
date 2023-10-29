@@ -432,163 +432,163 @@ export const mockPieData = [
 
 export const mockLineData = [
   {
-    id: "japan",
+    id: "Bangladesh",
     color: tokens("dark").greenAccent[500],
     data: [
       {
-        x: "plane",
+        x: "2012",
         y: 101,
       },
       {
-        x: "helicopter",
+        x: "2013",
         y: 75,
       },
       {
-        x: "boat",
+        x: "2014",
         y: 36,
       },
       {
-        x: "train",
+        x: "2015",
         y: 216,
       },
       {
-        x: "subway",
+        x: "2016",
         y: 35,
       },
       {
-        x: "bus",
+        x: "2017",
         y: 236,
       },
       {
-        x: "car",
+        x: "2018",
         y: 88,
       },
       {
-        x: "moto",
+        x: "2019",
         y: 232,
       },
       {
-        x: "bicycle",
+        x: "2020",
         y: 281,
       },
       {
-        x: "horse",
+        x: "2021",
         y: 1,
       },
       {
-        x: "skateboard",
+        x: "2022",
         y: 35,
       },
       {
-        x: "others",
+        x: "2023",
         y: 14,
       },
     ],
   },
   {
-    id: "france",
+    id: "India",
     color: tokens("dark").blueAccent[300],
     data: [
       {
-        x: "plane",
+        x: "2012",
         y: 212,
       },
       {
-        x: "helicopter",
+        x: "2013",
         y: 190,
       },
       {
-        x: "boat",
+        x: "2014",
         y: 270,
       },
       {
-        x: "train",
+        x: "2015",
         y: 9,
       },
       {
-        x: "subway",
+        x: "2016",
         y: 75,
       },
       {
-        x: "bus",
+        x: "2017",
         y: 175,
       },
       {
-        x: "car",
+        x: "2018",
         y: 33,
       },
       {
-        x: "moto",
+        x: "2019",
         y: 189,
       },
       {
-        x: "bicycle",
+        x: "2020",
         y: 97,
       },
       {
-        x: "horse",
+        x: "2021",
         y: 87,
       },
       {
-        x: "skateboard",
+        x: "2022",
         y: 299,
       },
       {
-        x: "others",
+        x: "2023",
         y: 251,
       },
     ],
   },
   {
-    id: "us",
+    id: "Sri Lanka",
     color: tokens("dark").redAccent[200],
     data: [
       {
-        x: "plane",
+        x: "2012",
         y: 191,
       },
       {
-        x: "helicopter",
+        x: "2013",
         y: 136,
       },
       {
-        x: "boat",
+        x: "2014",
         y: 91,
       },
       {
-        x: "train",
+        x: "2015",
         y: 190,
       },
       {
-        x: "subway",
+        x: "2016",
         y: 211,
       },
       {
-        x: "bus",
+        x: "2017",
         y: 152,
       },
       {
-        x: "car",
+        x: "2018",
         y: 189,
       },
       {
-        x: "moto",
+        x: "2019",
         y: 152,
       },
       {
-        x: "bicycle",
+        x: "2020",
         y: 8,
       },
       {
-        x: "horse",
+        x: "2021",
         y: 197,
       },
       {
-        x: "skateboard",
+        x: "2022",
         y: 107,
       },
       {
-        x: "others",
+        x: "2023",
         y: 170,
       },
     ],
