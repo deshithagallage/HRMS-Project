@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import LeaveCard from "./Components/LeaveCard.jsx"
 import LeaveTable from "./Components/pendingReqTable.jsx"
 import RejectTable from "./Components/rejectedTable.jsx"
+import './styles/PageHR.css'; // Import the CSS file
+import { NavLink } from 'react-router-dom';
 
 function LeaveReq() {
   const { id_to_transfer } = useParams();
@@ -60,6 +62,10 @@ if (Object.values(setAllLeaves)[0].Gender === 'Female') {
   remainingMaternityLeaves = "Undefined";
 }
 
+if (type === "annual") {
+  // Iterate through pendingRequests to check if there's an existing "Annual" request
+  const hasAnnualRequest = pendingRequests.some((request) => request.type === "annual");}
+
   const addEmployee = async () => {
     try {
       if (id === id_to_transfer ) {
@@ -107,6 +113,35 @@ if (Object.values(setAllLeaves)[0].Gender === 'Female') {
   };
 
   return (
+    <div className="page-container">
+        <div className="sidebar">
+        <div style={{ marginTop: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+          <h2>Jupiter Apparels</h2>
+        </div>
+        <ul>
+        <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}`} >
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} activeClassName="active-link">
+              Leave Request
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} activeClassName="active-link">
+              Reset Password
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/`} activeClassName="active-link">
+              Log out
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+       <div className="content">
     <div className="container mt-5">
     <div className="leave-info">
     <h2 style={{ textAlign: 'center' }}>Remaining Leaves</h2>
@@ -114,7 +149,7 @@ if (Object.values(setAllLeaves)[0].Gender === 'Female') {
         <LeaveCard title="Annual Leaves" days={remainingAnnualLeaves} />
         <LeaveCard title="Casual Leaves" days={remainingCasualLeaves} />
         <LeaveCard title="No Pay Leaves" days={remainingNoPayLeaves} />
-        <LeaveCard title="Maternity Leaves" days={remainingMaternityLeaves} />
+        <LeaveCard title="Maternity" days={remainingMaternityLeaves} />
       </div>
     </div>
       <div className="information">
@@ -190,6 +225,8 @@ if (Object.values(setAllLeaves)[0].Gender === 'Female') {
       <LeaveTable pendingRequests={pendingRequests} deleteRequest={deleteRequest} />
       <RejectTable rejectedRequests={rejectedRequests} />
       </div>
+    </div>
+    </div>
     </div>
   );
 }

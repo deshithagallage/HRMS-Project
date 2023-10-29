@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 import EmployeeCard from './Components/EmployeeCard.jsx';
-import './styles/PageEMP.css'; // Import the CSS file
+import './styles/PageHR.css'; // Import the CSS file
+import { NavLink } from 'react-router-dom';
 
 function PageEMP() {
   const { id_to_transfer } = useParams();
@@ -47,25 +48,64 @@ function PageEMP() {
     }
   };
 
+  const handleSidebarLinkClick = (path) => {
+    // Check the condition before navigating to the "Supervisor Access" page
+    if (path === `/PageEMP/${id_to_transfer}/Supervisor?id_to_transfer=${id_to_transfer}`) {
+      if (supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)) {
+        navigate(path);
+      } else {
+        console.log('You do not have supervisor access');
+      }
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
-    <div>
-      <div className='employee'>
-        <EmployeeCard employee={employee} />
+    <div className="page-container">
+      <div className="sidebar">
+        <div style={{ marginTop: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+          <h2>Jupiter Apparels</h2>
+        </div>
+        <ul>
+        <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}`} activeClassName="active-link">
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} activeClassName="active-link">
+              Leave Request
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} activeClassName="active-link">
+              Reset Password
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/`} activeClassName="active-link">
+              Log out
+            </NavLink>
+          </li>
+          <li>
+            <div style={{ textAlign: 'center' }}>
+              <button
+                type="button"
+                className="btn btn-primary btn-lg custom-button"
+                onClick={handleLeaveRequestClick_3}
+                disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}
+              >
+                Supervisor Access
+              </button>
+            </div>
+          </li>
+        </ul>
       </div>
-      <div className="d-flex justify-content-center">
-        <button type="button" className="btn btn-primary btn-lg custom-button" onClick={handleLeaveRequestClick_1} disabled={supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}>
-          Leave Request
-        </button>
-      </div>
-      <div className="d-flex justify-content-center">
-        <button type="button" className="btn btn-primary btn-lg custom-button" onClick={handleLeaveRequestClick_2}>
-          Change your password
-        </button>
-      </div>
-      <div className="d-flex justify-content-center">
-        <button type="button" className="btn btn-primary btn-lg custom-button" onClick={handleLeaveRequestClick_3} disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}>
-          Supervisor
-        </button>
+      <div className="container narrow-container d-flex flex-column align-items-center">
+        <div style={{ marginBottom: '20px' }}>
+          <EmployeeCard employee={employee} />
+        </div>
       </div>
     </div>
   );

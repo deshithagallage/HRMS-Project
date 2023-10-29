@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
+import './styles/PageHR.css'; // Import the CSS file
+import { NavLink } from 'react-router-dom';
 
 function PasswordChange() {
   const { id_to_transfer } = useParams();
@@ -47,6 +49,35 @@ function PasswordChange() {
   };
 
   return (
+    <div className="page-container">
+        <div className="sidebar">
+        <div style={{ marginTop: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+          <h2>Jupiter Apparels</h2>
+        </div>
+        <ul>
+        <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}`} activeClassName="active-link">
+              Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} activeClassName="active-link">
+              Leave Request
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} activeClassName="active-link">
+              Reset Password
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to={`/`} activeClassName="active-link">
+              Log out
+            </NavLink>
+          </li>
+        </ul>
+      </div>
+       <div className="content">
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-4">
@@ -96,6 +127,8 @@ function PasswordChange() {
           </div>
         </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

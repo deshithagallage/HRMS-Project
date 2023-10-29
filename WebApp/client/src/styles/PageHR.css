@@ -15,8 +15,13 @@
     padding: 10px;
   }
   
-  .sidebar ul li a.active-link {
+  .sidebar ul li a.active {
     font-weight: bold;
+  }
+
+ .active {
+    background-color: #848080; /* Set your desired background color */
+    
   }
   
   .content {
@@ -25,6 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    overflow-y: auto; 
   }
   
   .content h1 {
@@ -37,9 +43,10 @@
   }
   
   .sidebar {
-    width: 200px;
+    width: 210px;
     background-color: #f0f0f0;
     height: 100%;
+    overflow-y: auto;
   }
 
   .page-container {
@@ -58,6 +65,16 @@
   }
   
   .sidebar a:hover {
-    background-color: #f8f8f8;
+    background-color: #bcb9b9;
   }
+
+  /* custom-container.css */
+.container.narrow-container {
+  max-width:500x; /* Adjust the width to your preference */
+  width: 80%;
+}
+
     
+.custom-button {
+  width: 210px; /* Change this value to your preferred button width */
+}

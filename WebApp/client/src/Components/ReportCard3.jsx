@@ -13,9 +13,9 @@ function ReportCard3() {
 
   return (
     <Card style={{ width: '18rem' }}>
-      <Card.Body>
+      <Card.Body className="d-flex flex-column align-items-center">
         <Card.Title className="text-center">Custom Filed Report</Card.Title>
-        <Card.Text>Generate a report fro employee records based on the custom fields.</Card.Text>
+        <Card.Text>Generate a report for employee names and details based on the custom fields.</Card.Text>
         <Button variant="primary" onClick={handleGenerateReport}>Generate Report</Button>
       </Card.Body>
     </Card>

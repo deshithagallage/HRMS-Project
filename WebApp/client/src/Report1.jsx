@@ -49,21 +49,21 @@ function Report1() {
           <option value="year">Last Year</option>
         </select>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '20vh' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <h1>Total leaves in a given period by department</h1> </div>
-      <div>
-        <h2>Human Resources Department</h2>
+      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
+        <h2 >Human Resources Department</h2>
         <ReportOneTable allRequests={hrLeaveRequests} />
       </div>
-      <div>
+      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
         <h2>Finance Department</h2>
         <ReportOneTable allRequests={financeLeaveRequests} />
       </div>
-      <div>
+      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
         <h2>Engineering Department</h2>
         <ReportOneTable allRequests={engineeringLeaveRequests} />
       </div>
-      <div>
+      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
         <h2>Accounting Department</h2>
         <ReportOneTable allRequests={accountingLeaveRequests} />
       </div>
