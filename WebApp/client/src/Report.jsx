@@ -18,18 +18,23 @@ function ReportGeneration() {
       <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
         <h2>Jupiter Apparels</h2></div>
         <ul>
+        <li>
+            <NavLink exact to={`/PageHR/${id_to_transfer}/`}>
+              Dashboard
+            </NavLink>
+          </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/EmployeeManagement/`} activeClassName="active-link">
               Employee Management
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/AddCustom`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/AddCustom/`} activeClassName="active-link">
               Add Custom Attribute
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/ReportGenaration`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/ReportGenaration/`} activeClassName="active-link">
               Report Generation
             </NavLink>
           </li>

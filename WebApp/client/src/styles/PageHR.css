@@ -15,12 +15,12 @@
     padding: 10px;
   }
   
-  .sidebar ul li a.active-link {
+  .sidebar ul li a.active {
     font-weight: bold;
   }
 
- .active-link {
-    background-color: #197be3; /* Set your desired background color */
+ .active {
+    background-color: #848080; /* Set your desired background color */
     
   }
   
@@ -65,7 +65,7 @@
   }
   
   .sidebar a:hover {
-    background-color: #848080;
+    background-color: #bcb9b9;
   }
 
   /* custom-container.css */

@@ -62,6 +62,10 @@ if (Object.values(setAllLeaves)[0].Gender === 'Female') {
   remainingMaternityLeaves = "Undefined";
 }
 
+if (type === "annual") {
+  // Iterate through pendingRequests to check if there's an existing "Annual" request
+  const hasAnnualRequest = pendingRequests.some((request) => request.type === "annual");}
+
   const addEmployee = async () => {
     try {
       if (id === id_to_transfer ) {

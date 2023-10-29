@@ -61,6 +61,11 @@ function EmployeeManagement() {
       <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
         <h2>Jupiter Apparels</h2></div>
         <ul>
+        <li>
+            <NavLink to={`/PageHR/${id_to_transfer}`} activeClassName="active-link">
+              Dashboard
+            </NavLink>
+          </li>
           <li>
             <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`} activeClassName="active-link">
               Employee Management
