@@ -9,6 +9,9 @@ function EmployeeManagement() {
   const { id_to_transfer } = useParams();
   const navigate = useNavigate();
 
+  localStorage.removeItem('employeeData');
+  localStorage.removeItem('haveDependent');
+
   const handleAddEmployee = () => {
     navigate(`/PageHR/${id_to_transfer}/EmployeeManagement/AddEmployee`);
   };
@@ -56,6 +59,7 @@ function EmployeeManagement() {
   const displayedEmployees = filteredEmployees.slice(offset, offset + perPage);
 
   return (
+
     <div className="page-container">
        <div className="sidebar">
       <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
@@ -90,6 +94,7 @@ function EmployeeManagement() {
       </div>
     <div className="content">
       <h1>Page the Employee Management</h1>
+
       <div className="d-flex justify-content-between">
         <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleAddEmployee}>
           Add New Employee

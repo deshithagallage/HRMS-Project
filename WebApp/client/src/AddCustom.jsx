@@ -14,9 +14,16 @@ function AddCustom() {
   const [customAttributeName, setCustomAttributeName] = useState('');
   const [employeeID, setEmployeeID] = useState(''); // Specify employee ID here
   const [successMessage, setSuccessMessage] = useState('');
-  const [successMessage2, setSuccessMessage2] = useState('');
-
+  const [successMessage2, setSuccessMessage2] = useState('');  
+  
   useEffect(() => {
+    const storedSuccessMessage2 = localStorage.getItem('successMessage2');
+
+    if (storedSuccessMessage2) {
+      setSuccessMessage2(storedSuccessMessage2);
+      localStorage.removeItem('successMessage2');
+    }
+
     const storedSuccessMessage = localStorage.getItem('successMessage');
 
     if (storedSuccessMessage) {
@@ -45,10 +52,12 @@ function AddCustom() {
         })
         .catch((error) => {
           console.error('Error adding custom attribute definition:', error);
+          localStorage.setItem('successMessage', 'Error adding custom attribute to the employee.');
           setSuccessMessage('Error adding custom attribute to the employee.');
         });
     } else {
       console.error('Invalid input');
+      localStorage.setItem('successMessage', 'Invalid input. Please check your input fields.');
       setSuccessMessage('Invalid input. Please check your input fields.');
     }
   };
@@ -63,10 +72,25 @@ function AddCustom() {
         .then((response) => {
           console.log('Custom attribute added to the employee:', response.data);
           setSuccessMessage2('Custom attribute value added to the employee successfully.');
+          localStorage.setItem('successMessage2', 'Custom attribute value added to the employee successfully.');
         })
-        .catch((error) => console.error('Error adding custom attribute to the employee:', error));
+        .catch((error) => {
+          if (error.response.status === 400) {
+            localStorage.setItem('successMessage2', 'Invalid input. Please check your input fields.');
+            setSuccessMessage2('Invalid input. Please check your input fields.');
+          } else if (error.response.status === 500) {
+            localStorage.setItem('successMessage2', 'The provided Employee ID does not exist.');
+            setSuccessMessage2('The provided Employee ID does not exist.');
+          } else {            
+            console.error('Error adding custom attribute to the employee:', error);
+            localStorage.setItem('successMessage2', 'An error occurred while adding custom attribute to the employee.');
+            setSuccessMessage2('An error occurred while adding custom attribute to the employee.');
+          }
+        });
     } else {
       console.error('Invalid input');
+      localStorage.setItem('successMessage2', 'Invalid input. Please check your input fields.');
+      setSuccessMessage2('Invalid input. Please check your input fields.');
     }
   };
 
@@ -109,7 +133,7 @@ function AddCustom() {
         <div className="col-md-4">
           <h3 className="mb-4 text-center">Add Custom Attribute</h3>
           {successMessage && (
-            <div className="alert alert-success">{successMessage}</div>
+            <div className="alert alert-danger">{successMessage}</div>
           )}
           <div className="container">
             <form>
@@ -134,7 +158,7 @@ function AddCustom() {
                   id="employeeID"
                   value={employeeID}
                   onChange={(e) => setEmployeeID(e.target.value)}
-                />
+                />                
               </div>
               <div className="mt-3">
                 <label htmlFor="selectAttribute" className="form-label">Select Attribute:</label>

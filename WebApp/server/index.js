@@ -33,27 +33,44 @@ app.post("/createCustomAttribute", (req, res) => {
   );
 });
 
-app.post("/associateCustomAttribute", (req, res) => {
-  const employeeID = req.body.employeeID;
-  const attributeID = req.body.attributeID;
-  const value = req.body.value;
+app.post('/associateCustomAttribute', (req, res) => {
+  const { employeeID, attributeID, value } = req.body;
 
-  db.query(
-    "INSERT INTO Employee_Custom_Attribute (Attribute_ID, Employee_ID, Value) VALUES (?,?,?)",
-    [attributeID, employeeID, value],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-        res
-          .status(500)
-          .send("Error associating custom attribute with employee");
-      } else {
-        res
-          .status(200)
-          .send("Custom attribute associated with employee successfully");
-      }
+  // First, check if the provided Employee ID and Attribute ID exist in their respective tables.
+  const checkQuery = 'SELECT * FROM Employee_Data WHERE Employee_ID = ?';
+  db.query(checkQuery, [employeeID], (error, results) => {
+    if (error) {
+      console.error('Error checking Employee Data:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
-  );
+
+    if (results.length === 0) {
+      return res.status(500).json({ message: 'Employee ID does not exist' });
+    }
+
+    const attributeCheckQuery = 'SELECT * FROM Custom_Attribute_Definition WHERE Attribute_ID = ?';
+    db.query(attributeCheckQuery, [attributeID], (attributeError, attributeResults) => {
+      if (attributeError) {
+        console.error('Error checking Custom Attribute Definition:', attributeError);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+
+      if (attributeResults.length === 0) {
+        return res.status(500).json({ message: 'Attribute ID does not exist' });
+      }
+
+      // If both Employee ID and Attribute ID exist, proceed to insert into Employee_Custom_Attribute table.
+      const insertQuery = 'INSERT INTO Employee_Custom_Attribute (Attribute_ID, Employee_ID, Value) VALUES (?, ?, ?)';
+      db.query(insertQuery, [attributeID, employeeID, value], (insertError) => {
+        if (insertError) {
+          console.error('Error inserting into Employee_Custom_Attribute:', insertError);
+          return res.status(500).json({ message: 'Internal server error' });
+        }
+
+        return res.status(200).json({ message: 'Custom attribute added to the employee successfully' });
+      });
+    });
+  });
 });
 
 app.get("/customAttributes", (req, res) => {
@@ -63,6 +80,19 @@ app.get("/customAttributes", (req, res) => {
       res.status(500).send("Error fetching custom attributes");
     } else {
       res.status(200).send(result);
+    }
+  });
+});
+
+app.get('/employeeCustomAttributes', (req, res) => {
+  // Fetch employee data with custom fields from the database
+  const query = 'SELECT * FROM Employee_Custom_Attribute';
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching employee data:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.json(results);
     }
   });
 });
@@ -128,122 +158,36 @@ app.get("/fetchSupervisors", (req, res) => {
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
 
-  try {
-    const employmentStatusQuery =
-      "SELECT Status_ID FROM Employment_Status WHERE Status = ?";
-    const payGradeQuery =
-      "SELECT Pay_Grade_ID FROM Pay_Grade WHERE Pay_Grade = ?";
-    const branchQuery = "SELECT Branch_ID FROM Branch WHERE Branch_Name = ?";
-    const departmentQuery =
-      "SELECT Dept_ID FROM Department WHERE Dept_name = ?";
-
-    const employmentStatusResult = await queryDatabase(employmentStatusQuery, [
+  db.query('CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [
+      employeeData.firstName,
+      employeeData.lastName,
+      employeeData.gender,
+      employeeData.maritalStatus,
+      employeeData.birthday,
+      employeeData.email,
       employeeData.employmentStatus,
-    ]);
-    const payGradeResult = await queryDatabase(payGradeQuery, [
+      employeeData.jobTitle,
       employeeData.payGrade,
-    ]);
-    const branchResult = await queryDatabase(branchQuery, [
       employeeData.branch,
-    ]);
-    const departmentResult = await queryDatabase(departmentQuery, [
       employeeData.department,
-    ]);
 
-    employeeData.employmentStatus = employmentStatusResult[0].Status_ID;
-    employeeData.payGrade = payGradeResult[0].Pay_Grade_ID;
-    employeeData.branch = branchResult[0].Branch_ID;
-    employeeData.department = departmentResult[0].Dept_ID;
+      haveDependent,
 
-    let dependentId = null; // Default to null
-    if (haveDependent === true) {
-      const dependentQuery =
-        "SELECT Dependent_ID FROM Dependent_Information ORDER BY Timestamp DESC LIMIT 1";
-      const dependentResult = await queryDatabase(dependentQuery);
+      employeeData.username,
+      employeeData.password,
 
-      // Check if dependentResult exists and has a valid Dependent_ID property
-      if (
-        dependentResult &&
-        dependentResult[0] &&
-        dependentResult[0].Dependent_ID !== undefined
-      ) {
-        dependentId = dependentResult[0].Dependent_ID;
+      JSON.stringify(employeeData.contact), // You may need to stringify the JSON object
+    ],
+    (error, results, fields) => {
+      if (error) {
+        console.error('Error updating employee data:', error);
       } else {
-        console.error("Error fetching Dependent_ID or no dependent found.");
-        // Handle the error or provide a default value if needed.
+        console.log('Employee data inserted successfully.');
       }
-    }
-
-    const sql =
-      "INSERT INTO `Employee_Data` (`First_name`, `Last_name`, `Gender`, `Marital_status`, `Birthday`, `Email`, `Employment_status`, `Job_Title`, `Pay_Grade_ID`, `Branch_ID`, `Dept_ID`, `Dependent_ID`) VALUES ?";
-
-    const values = [
-      [
-        employeeData.firstName,
-        employeeData.lastName,
-        employeeData.gender,
-        employeeData.maritalStatus,
-        employeeData.birthday,
-        employeeData.email === "" ? null : employeeData.email,
-        employeeData.employmentStatus,
-        employeeData.jobTitle,
-        employeeData.payGrade,
-        employeeData.branch,
-        employeeData.department,
-        dependentId,
-      ],
-    ];
-
-    await queryDatabase(sql, [values]);
-
-    const employeeIDQuery =
-      "SELECT Employee_ID FROM Employee_Data ORDER BY Timestamp DESC LIMIT 1";
-    const employeeIDResult = await queryDatabase(employeeIDQuery);
-    const employeeID = employeeIDResult[0].Employee_ID;
-
-    if (!employeeData.contact || !Array.isArray(employeeData.contact)) {
-      return res.status(400).json({ error: "Invalid data" });
-    }
-
-    // Insert each contact number into the database
-    const contactSql =
-      "INSERT INTO `Contact_Number_Details` (`Employee_ID`, `Contact_Number`) VALUES ?";
-    employeeData.contact.forEach(async (number) => {
-      await queryDatabase(contactSql, [[[employeeID, number]]]);
-    });
-
-    const accountSql =
-      "INSERT INTO `Employee_account` (`Employee_ID`, `User_ID`, `Password`) VALUES ?";
-    const accountValues = [
-      [employeeID, employeeData.username, employeeData.password],
-    ];
-    await queryDatabase(accountSql, [accountValues]);
-
-    const supervisorSql =
-      "INSERT INTO `Supervisor` (`Supervisor_ID`, `Subordinate_ID`) VALUES ?";
-    const supervisorValues = [[employeeData.supervisor, employeeID]];
-    await queryDatabase(supervisorSql, [supervisorValues]);
-
-    console.log("Employee Data Inserted.");
-    res.status(200).json({ message: "Employee data inserted successfully" });
-  } catch (err) {
-    console.error("Error:", err.message);
-    res.status(500).json({ error: "Internal server error" });
-  }
+  
+    })
 });
-
-// Utility function to perform database queries with a Promise-based API
-function queryDatabase(sql, params) {
-  return new Promise((resolve, reject) => {
-    db.query(sql, params, (err, result) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve(result);
-      }
-    });
-  });
-}
 
 app.post("/AddEmployee/AddDependent", (req, res) => {
   const sql =
@@ -383,12 +327,28 @@ app.post("/editEmployee", async (req, res) => {
 });
 
 app.get("/employeeData", (req, res) => {
-  db.query("SELECT * FROM employee_data", (err, result) => {
+  db.query("SELECT * FROM Employee_Data ORDER BY Timestamp", (err, result) => {
     if (err) {
       console.log(err);
     } else {
       res.send(result);
     }
+  });
+});
+
+app.get('/report4/employeesalaries/:minSalary/:maxSalary', (req, res) => {
+  const minSalary = req.params.minSalary
+  const maxSalary = req.params.maxSalary
+
+  const query = "SELECT * FROM EmployeeSalaries WHERE Basic_Salary BETWEEN ? AND ?";
+
+  db.query(query, [minSalary, maxSalary], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Failed to retrieve data' });
+    }
+
+    res.json(results);
   });
 });
 
