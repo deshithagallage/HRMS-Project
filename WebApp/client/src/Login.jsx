@@ -28,25 +28,36 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (formData.User_ID === 'Admin' && formData.password === 'Admin') {
       navigate(`/PageAdmin`);
-    }    
-
-    const user_0 = passwordList.find((user) => user.User_ID === formData.User_ID); // Use 'User_ID' instead of 'email'
-    const id_to_transfer = user_0.Employee_ID;
-    console.log(formData.User_ID);
-
-    if (user_0 && formData.password === user_0.Password) {
-      if (user_0.Job_Title === 'HR Manager') {
-        navigate(`/PageHR/${id_to_transfer}`);
-      } else {
-        navigate(`/PageEMP/${id_to_transfer}`);
-      }
     } else {
-      alert('Invalid username or password');
+      // Send a POST request to the backend for user authentication
+      axios.post("http://localhost:3000/authenticate", {
+        User_ID: formData.User_ID,
+        password: formData.password,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          const user = response.data.user;
+          const id_to_transfer = user.Employee_ID;
+  
+          if (user.Job_Title === 'HR Manager') {
+            navigate(`/PageHR/${id_to_transfer}`);
+          } else {
+            navigate(`/PageEMP/${id_to_transfer}`);
+          }
+        } else {
+          alert('Invalid username or password');
+        }
+      })
+      .catch((error) => {
+        console.error("Error authenticating:", error);
+        alert('An error occurred during authentication');
+      });
     }
-  }
+  };
+  
 
   function handleInputChange(event) {
     const { name, value } = event.target;

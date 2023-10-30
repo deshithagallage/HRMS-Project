@@ -33,43 +33,65 @@ app.post("/createCustomAttribute", (req, res) => {
   );
 });
 
-app.post('/associateCustomAttribute', (req, res) => {
+app.post("/associateCustomAttribute", (req, res) => {
   const { employeeID, attributeID, value } = req.body;
 
   // First, check if the provided Employee ID and Attribute ID exist in their respective tables.
-  const checkQuery = 'SELECT * FROM Employee_Data WHERE Employee_ID = ?';
+  const checkQuery = "SELECT * FROM Employee_Data WHERE Employee_ID = ?";
   db.query(checkQuery, [employeeID], (error, results) => {
     if (error) {
-      console.error('Error checking Employee Data:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+      console.error("Error checking Employee Data:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
 
     if (results.length === 0) {
-      return res.status(500).json({ message: 'Employee ID does not exist' });
+      return res.status(500).json({ message: "Employee ID does not exist" });
     }
 
-    const attributeCheckQuery = 'SELECT * FROM Custom_Attribute_Definition WHERE Attribute_ID = ?';
-    db.query(attributeCheckQuery, [attributeID], (attributeError, attributeResults) => {
-      if (attributeError) {
-        console.error('Error checking Custom Attribute Definition:', attributeError);
-        return res.status(500).json({ message: 'Internal server error' });
-      }
-
-      if (attributeResults.length === 0) {
-        return res.status(500).json({ message: 'Attribute ID does not exist' });
-      }
-
-      // If both Employee ID and Attribute ID exist, proceed to insert into Employee_Custom_Attribute table.
-      const insertQuery = 'INSERT INTO Employee_Custom_Attribute (Attribute_ID, Employee_ID, Value) VALUES (?, ?, ?)';
-      db.query(insertQuery, [attributeID, employeeID, value], (insertError) => {
-        if (insertError) {
-          console.error('Error inserting into Employee_Custom_Attribute:', insertError);
-          return res.status(500).json({ message: 'Internal server error' });
+    const attributeCheckQuery =
+      "SELECT * FROM Custom_Attribute_Definition WHERE Attribute_ID = ?";
+    db.query(
+      attributeCheckQuery,
+      [attributeID],
+      (attributeError, attributeResults) => {
+        if (attributeError) {
+          console.error(
+            "Error checking Custom Attribute Definition:",
+            attributeError
+          );
+          return res.status(500).json({ message: "Internal server error" });
         }
 
-        return res.status(200).json({ message: 'Custom attribute added to the employee successfully' });
-      });
-    });
+        if (attributeResults.length === 0) {
+          return res
+            .status(500)
+            .json({ message: "Attribute ID does not exist" });
+        }
+
+        // If both Employee ID and Attribute ID exist, proceed to insert into Employee_Custom_Attribute table.
+        const insertQuery =
+          "INSERT INTO Employee_Custom_Attribute (Attribute_ID, Employee_ID, Value) VALUES (?, ?, ?)";
+        db.query(
+          insertQuery,
+          [attributeID, employeeID, value],
+          (insertError) => {
+            if (insertError) {
+              console.error(
+                "Error inserting into Employee_Custom_Attribute:",
+                insertError
+              );
+              return res.status(500).json({ message: "Internal server error" });
+            }
+
+            return res
+              .status(200)
+              .json({
+                message: "Custom attribute added to the employee successfully",
+              });
+          }
+        );
+      }
+    );
   });
 });
 
@@ -84,13 +106,13 @@ app.get("/customAttributes", (req, res) => {
   });
 });
 
-app.get('/employeeCustomAttributes', (req, res) => {
+app.get("/employeeCustomAttributes", (req, res) => {
   // Fetch employee data with custom fields from the database
-  const query = 'SELECT * FROM Employee_Custom_Attribute';
+  const query = "SELECT * FROM Employee_Custom_Attribute";
   db.query(query, (err, results) => {
     if (err) {
-      console.error('Error fetching employee data:', err);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Error fetching employee data:", err);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
       res.json(results);
     }
@@ -158,7 +180,8 @@ app.get("/fetchSupervisors", (req, res) => {
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
 
-  db.query('CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+  db.query(
+    "CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       employeeData.firstName,
       employeeData.lastName,
@@ -181,12 +204,12 @@ app.post("/addEmployee", async (req, res) => {
     ],
     (error, results, fields) => {
       if (error) {
-        console.error('Error updating employee data:', error);
+        console.error("Error updating employee data:", error);
       } else {
-        console.log('Employee data inserted successfully.');
+        console.log("Employee data inserted successfully.");
       }
-  
-    })
+    }
+  );
 });
 
 app.post("/AddEmployee/AddDependent", (req, res) => {
@@ -336,16 +359,17 @@ app.get("/employeeData", (req, res) => {
   });
 });
 
-app.get('/report4/employeesalaries/:minSalary/:maxSalary', (req, res) => {
-  const minSalary = req.params.minSalary
-  const maxSalary = req.params.maxSalary
+app.get("/report4/employeesalaries/:minSalary/:maxSalary", (req, res) => {
+  const minSalary = req.params.minSalary;
+  const maxSalary = req.params.maxSalary;
 
-  const query = "SELECT * FROM EmployeeSalaries WHERE Basic_Salary BETWEEN ? AND ?";
+  const query =
+    "SELECT * FROM EmployeeSalaries WHERE Basic_Salary BETWEEN ? AND ?";
 
   db.query(query, [minSalary, maxSalary], (err, results) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ error: 'Failed to retrieve data' });
+      return res.status(500).json({ error: "Failed to retrieve data" });
     }
 
     res.json(results);
@@ -358,6 +382,29 @@ app.get("/getPass", (req, res) => {
       console.log(err);
     } else {
       res.send(result);
+    }
+  });
+});
+
+app.post("/authenticate", (req, res) => {
+  const { User_ID, password } = req.body;
+
+  // Fetch user data from the database
+  const query = "SELECT * FROM password_check WHERE User_ID = ?";
+  db.query(query, [User_ID], (err, results) => {
+    if (err) {
+      console.error("Database query error:", err);
+      res.json({ success: false });
+    } else {
+      const user = results[0]; // Assuming User_ID is unique
+
+      if (user && user.Password === password) {
+        // Authentication successful
+        res.json({ success: true, user });
+      } else {
+        // Authentication failed
+        res.json({ success: false });
+      }
     }
   });
 });
