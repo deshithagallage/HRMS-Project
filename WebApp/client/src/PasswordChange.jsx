@@ -56,22 +56,22 @@ function PasswordChange() {
         </div>
         <ul>
         <li>
-            <NavLink to={`/PageEMP/${id_to_transfer}`} activeClassName="active-link">
+            <NavLink to={`/PageEMP/${id_to_transfer}/`} >
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} activeClassName="active-link">
+            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq/`} >
               Leave Request
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} activeClassName="active-link">
+            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} >
               Reset Password
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/`} activeClassName="active-link">
+            <NavLink to={`/`} >
               Log out
             </NavLink>
           </li>

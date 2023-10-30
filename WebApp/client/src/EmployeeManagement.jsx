@@ -66,27 +66,27 @@ function EmployeeManagement() {
         <h2>Jupiter Apparels</h2></div>
         <ul>
         <li>
-            <NavLink to={`/PageHR/${id_to_transfer}`} activeClassName="active-link">
+            <NavLink to={`/PageHR/${id_to_transfer}/`} >
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`} activeClassName="active-link">
+            <NavLink to={`/PageHR/${id_to_transfer}/EmployeeManagement`}>
               Employee Management
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/AddCustom`} activeClassName="active-link">
+            <NavLink to={`/PageHR/${id_to_transfer}/AddCustom/`} >
               Add Custom Attribute
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageHR/${id_to_transfer}/ReportGenaration`} activeClassName="active-link">
+            <NavLink to={`/PageHR/${id_to_transfer}/ReportGenaration/`}>
               Report Generation
             </NavLink>
           </li>
           <li>
-          <NavLink to={`/`} activeClassName="active-link">
+          <NavLink to={`/`}>
             Log out
             </NavLink>
           </li>
