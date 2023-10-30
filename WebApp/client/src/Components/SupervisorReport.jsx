@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function ReportCard5() {
+function SupervisorReport() {
   const { id_to_transfer } = useParams();
   const navigate = useNavigate();
 
   const handleGenerateReport = () => {
-    navigate(`/PageHR/${id_to_transfer}/ReportGenaration/Report5`);
+    navigate(`/PageHR/${id_to_transfer}/ReportGenaration/SupervisorReport`);
   };
 
   return (
@@ -22,4 +22,4 @@ function ReportCard5() {
   );
 }
 
-export default ReportCard5;
+export default SupervisorReport;

@@ -5,9 +5,8 @@ import ReportCard1 from "./Components/ReportCard1";
 import ReportCard2 from "./Components/ReportCard2";
 import ReportCard3 from "./Components/ReportCard3";
 import ReportCard4 from "./Components/ReportCard4";
-import ReportCard5 from "./Components/ReportCard5";
+import SupervisorReport from "./Components/SupervisorReport";
 import './styles/PageHR.css'; // Import the CSS file
-
 
 function ReportGeneration() {
   const { id_to_transfer } = useParams();
