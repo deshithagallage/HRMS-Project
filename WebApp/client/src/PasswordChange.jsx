@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
 
+
 function PasswordChange() {
   const { id_to_transfer } = useParams();
   const [oldPassword, setOldPassword] = useState('');
