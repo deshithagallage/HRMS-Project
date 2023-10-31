@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
+const argon2 = require('argon2');
 
 const jwt = require("jsonwebtoken")
 
@@ -182,36 +183,42 @@ app.get("/fetchSupervisors", (req, res) => {
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
 
-  db.query(
-    "CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-    [
-      employeeData.firstName,
-      employeeData.lastName,
-      employeeData.gender,
-      employeeData.maritalStatus,
-      employeeData.birthday,
-      employeeData.email,
-      employeeData.employmentStatus,
-      employeeData.jobTitle,
-      employeeData.payGrade,
-      employeeData.branch,
-      employeeData.department,
+  try {
+    const hashedPassword = await argon2.hash(employeeData.password);
 
-      haveDependent,
-
-      employeeData.username,
-      employeeData.password,
-
-      JSON.stringify(employeeData.contact), // You may need to stringify the JSON object
-    ],
-    (error, results, fields) => {
-      if (error) {
-        console.error("Error updating employee data:", error);
-      } else {
-        console.log("Employee data inserted successfully.");
+    db.query(
+      "CALL AddEmployee(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      [
+        employeeData.firstName,
+        employeeData.lastName,
+        employeeData.gender,
+        employeeData.maritalStatus,
+        employeeData.birthday,
+        employeeData.email,
+        employeeData.employmentStatus,
+        employeeData.jobTitle,
+        employeeData.payGrade,
+        employeeData.branch,
+        employeeData.department,
+        haveDependent,
+        employeeData.username,
+        hashedPassword, // Store the hashed password
+        JSON.stringify(employeeData.contact),
+      ],
+      (error, results, fields) => {
+        if (error) {
+          console.error("Error updating employee data:", error);
+          res.status(500).json({ message: "Employee data insertion failed" });
+        } else {
+          console.log("Employee data inserted successfully.");
+          res.status(200).json({ message: "Employee data inserted successfully" });
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    console.error("Error hashing password:", error);
+    res.status(500).json({ message: "Password hashing failed" });
+  }
 });
 
 app.post("/AddEmployee/AddDependent", (req, res) => {
@@ -415,7 +422,7 @@ app.post("/authenticate", (req, res) => {
 
   // Fetch user data from the database
   const query = "SELECT * FROM password_check WHERE User_ID = ?";
-  db.query(query, [User_ID], (err, results) => {
+  db.query(query, [User_ID], async (err, results) => {
     if (err) {
       console.error("Database query error:", err);
       res.json({ success: false });
@@ -433,64 +440,98 @@ app.post("/authenticate", (req, res) => {
         });
 
         res.json({ success: true, user, auth: true, token: token });
+      if (user) {
+        try {
+          const passwordsMatch = await argon2.verify(user.Password, password);
+
+          if (passwordsMatch) {
+            // Authentication successful
+            // Generate a JWT token
+            const id = user.Employee_ID;
+            const jobTitle = user.Job_Title;
+            const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+              expiresIn: 3600, // means 60 minutes
+            });
+            
+            res.json({ success: true, user, auth: true, token: token });
+          } else {
+            // Authentication failed
+            res.json({ success: false });
+          }
+        } catch (error) {
+          console.error("Password verification error:", error);
+          res.json({ success: false });
+        }
       } else {
-        // Authentication failed
+        // User not found
         res.json({ success: false });
       }
     }
   });
 });
 
+
 // password changing
-app.post("/changePassword/:id_to_transfer", (req, res) => {
+app.post("/changePassword/:id_to_transfer", async (req, res) => {
   const id_to_transfer = req.params.id_to_transfer;
   const oldPassword = req.body.oldPassword;
   const newPassword = req.body.newPassword;
   console.log("userId:", id_to_transfer);
 
-  db.query(
-    "select password from employee_account where Employee_ID = ?",
-    [id_to_transfer],
-    (err, results) => {
-      if (err) {
-        console.log(err);
-        res.status.apply(500).json({ message: "Internal server error" });
-      } else if (results.length == 0) {
-        res.status(404).json({ message: "User not found" });
-      } else {
-        const storedPassword = results[0].password;
-        console.log(
-          "Received request to change password for userId:",
-          id_to_transfer
-        );
-        console.log("Old password provided:", oldPassword);
-
-        // Check the stored password
-        console.log("Stored password:", storedPassword);
-
-        if (oldPassword == storedPassword) {
-          db.query(
-            "update employee_account set password =? where Employee_ID = ?",
-            [newPassword, id_to_transfer],
-            (err, updateResult) => {
-              if (err) {
-                console.log(err);
-                res.status(500).json({ message: "Password update failed" });
-              } else {
-                res
-                  .status(200)
-                  .json({ message: "Password changed successfully" });
-              }
-            }
-          );
-        } else {
-          console.log("Old password is incorrect");
-          res.status(401).json({ message: "Old password is incorrect" });
+  try {
+    const results = await new Promise((resolve, reject) => {
+      db.query(
+        "select password from employee_account where Employee_ID = ?",
+        [id_to_transfer],
+        (err, results) => {
+          if (err) {
+            console.log(err);
+            reject("Internal server error");
+          } else if (results.length === 0) {
+            reject("User not found");
+          } else {
+            resolve(results[0].password);
+          }
         }
-      }
+      );
+    });
+
+    const storedPassword = results;
+    console.log(
+      "Received request to change password for userId:",
+      id_to_transfer
+    );
+    console.log("Old password provided:", oldPassword);
+
+    // Check the stored password
+    console.log("Stored password:", storedPassword);
+
+    const passwordsMatch = await argon2.verify(storedPassword, oldPassword);
+
+    if (passwordsMatch) {
+      const hashedPassword = await argon2.hash(newPassword);
+
+      db.query(
+        "update employee_account set password = ? where Employee_ID = ?",
+        [hashedPassword, id_to_transfer],
+        (err, updateResult) => {
+          if (err) {
+            console.log(err);
+            res.status(500).json({ message: "Password update failed" });
+          } else {
+            res.status(200).json({ message: "Password changed successfully" });
+          }
+        }
+      );
+    } else {
+      console.log("Old password is incorrect");
+      res.status(401).json({ message: "Old password is incorrect" });
     }
-  );
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 });
+
 
 // Route to fetch leave requests
 app.get("/leave_request", (req, res) => {

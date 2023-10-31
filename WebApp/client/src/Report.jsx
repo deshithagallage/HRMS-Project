@@ -49,23 +49,23 @@ function ReportGeneration() {
             </NavLink>
           </li>
           <li>
-            <NavLink exact to={`/PageHR/${id_to_transfer}/EmployeeManagement/`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/EmployeeManagement/`}>
               Employee Management
             </NavLink>
           </li>
           <li>
-            <NavLink exact to={`/PageHR/${id_to_transfer}/AddCustom/`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/AddCustom/`}>
               Add Custom Attribute
             </NavLink>
           </li>
           <li>
-            <NavLink exact to={`/PageHR/${id_to_transfer}/ReportGenaration/`} activeClassName="active-link">
+            <NavLink exact to={`/PageHR/${id_to_transfer}/ReportGenaration`}>
               Report Generation
             </NavLink>
           </li>
           <li>
-          <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
-            Log out
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
+              Log out
             </NavLink>
           </li>
         </ul>
