@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import './styles/LeaveReq.css'; // Import the CSS file
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import LeaveCard from "./Components/LeaveCard.jsx"
 import LeaveTable from "./Components/pendingReqTable.jsx"
 import RejectTable from "./Components/rejectedTable.jsx"
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
+
 function LeaveReq() {
   const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [day_no, setNumDays] = useState(0);
@@ -21,6 +27,30 @@ function LeaveReq() {
   const [settakenLeaves, settakenAllLeaves] = useState({});
   const [dataLoaded, setDataLoaded] = useState(false);
   const [rejectedRequests, setRejectedRequests] = useState([]);
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (
+          response.data.userID === id_to_transfer &&
+          (response.data.jobTitle === 'Software Engineer' ||
+          response.data.jobTitle === 'QA Engineer' ||
+          response.data.jobTitle === 'Accountant')
+        ) {} 
+        else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -135,7 +165,7 @@ if (type === "annual") {
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/`} >
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
               Log out
             </NavLink>
           </li>

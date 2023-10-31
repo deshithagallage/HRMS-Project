@@ -4,6 +4,8 @@ const mysql = require("mysql");
 const cors = require("cors");
 const argon2 = require('argon2');
 
+const jwt = require("jsonwebtoken")
+
 require("dotenv").config();
 
 app.use(cors());
@@ -393,6 +395,28 @@ app.get("/getPass", (req, res) => {
   });
 });
 
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+
+  if (!token) {
+    res.send("We need a token, please give it to us next time!");
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "You failed to authenticate" });
+      } else {
+        req.userId = decoded.id;
+        req.jobTitle = decoded.jobTitle;
+        next();
+      }
+    })
+  }
+}
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.json({userID: req.userId, jobTitle: req.jobTitle, message: "User is authenticated"});
+});
+
 app.post("/authenticate", (req, res) => {
   const { User_ID, password } = req.body;
 
@@ -405,13 +429,31 @@ app.post("/authenticate", (req, res) => {
     } else {
       const user = results[0]; // Assuming User_ID is unique
 
+      if (user && user.Password === password) {
+        // Authentication successful
+
+        // Generate a JWT token
+        const id = user.Employee_ID;
+        const jobTitle = user.Job_Title;
+        const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+          expiresIn: 3600, // means 60 minutes
+        });
+
+        res.json({ success: true, user, auth: true, token: token });
       if (user) {
         try {
           const passwordsMatch = await argon2.verify(user.Password, password);
 
           if (passwordsMatch) {
             // Authentication successful
-            res.json({ success: true, user });
+            // Generate a JWT token
+            const id = user.Employee_ID;
+            const jobTitle = user.Job_Title;
+            const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+              expiresIn: 3600, // means 60 minutes
+            });
+            
+            res.json({ success: true, user, auth: true, token: token });
           } else {
             // Authentication failed
             res.json({ success: false });

@@ -5,6 +5,11 @@ import ReactPaginate from 'react-paginate';
 import './styles/EmployeeManagement.css'; // Import the CSS file
 import './styles/PageHR.css'; // Import the CSS file
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
+
 function EmployeeManagement() {
   const { id_to_transfer } = useParams();
   const navigate = useNavigate();
@@ -58,6 +63,25 @@ function EmployeeManagement() {
 
   const displayedEmployees = filteredEmployees.slice(offset, offset + perPage);
 
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
   return (
 
     <div className="page-container">
@@ -86,8 +110,8 @@ function EmployeeManagement() {
             </NavLink>
           </li>
           <li>
-          <NavLink to={`/`}>
-            Log out
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
+              Log out
             </NavLink>
           </li>
         </ul>

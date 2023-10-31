@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
@@ -6,6 +7,32 @@ const LeaveRequest = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const id_to_transfer = queryParams.get('id_to_transfer');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (
+          response.data.userID === id_to_transfer &&
+          (response.data.jobTitle === 'Software Engineer' ||
+          response.data.jobTitle === 'QA Engineer' ||
+          response.data.jobTitle === 'Accountant')
+        ) {} 
+        else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
   console.log('id_to_transfer in Page Supervisor:', id_to_transfer);
 
   // State to store the leave request data

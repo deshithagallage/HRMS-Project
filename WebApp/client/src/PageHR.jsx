@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Axios from 'axios';
 import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
@@ -25,10 +26,31 @@ function PageHR() {
   };
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+  
+
   return (
     <div className="page-container">
       <div className="sidebar">
-      <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
+      <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center', textAlign: 'center' }}>
         <h2>Jupiter Apparels</h2></div>
         <ul>
         <li>

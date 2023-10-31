@@ -6,6 +6,11 @@ import EmployeeCard from './Components/EmployeeCard.jsx';
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
+
 function PageEMP() {
   const { id_to_transfer } = useParams();
   console.log('id_to_transfer in PageEMP:', id_to_transfer);
@@ -13,6 +18,30 @@ function PageEMP() {
 
   const [employee, setEmployee] = useState([]);
   const [supervisors, setSupervisors] = useState([]);
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (
+          response.data.userID === id_to_transfer &&
+          (response.data.jobTitle === 'Software Engineer' ||
+          response.data.jobTitle === 'QA Engineer' ||
+          response.data.jobTitle === 'Accountant')
+        ) {} 
+        else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +113,7 @@ function PageEMP() {
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/`}>
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
               Log out
             </NavLink>
           </li>
@@ -92,11 +121,11 @@ function PageEMP() {
             <div style={{ textAlign: 'center' }}>
               <button
                 type="button"
-                className="btn btn-primary btn-lg custom-button"
+                className="btn btn-secondary custom-button"
                 onClick={handleLeaveRequestClick_3}
                 disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}
               >
-                Supervisor Access
+                <b>Supervisor Access</b>
               </button>
             </div>
           </li>

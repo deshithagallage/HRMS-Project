@@ -5,16 +5,40 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
 
 function AddCustom() {
   const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
   const [customAttributes, setCustomAttributes] = useState([]);
   const [selectedAttributeID, setSelectedAttributeID] = useState('');
   const [customAttributeValue, setCustomAttributeValue] = useState('');
   const [customAttributeName, setCustomAttributeName] = useState('');
   const [employeeID, setEmployeeID] = useState(''); // Specify employee ID here
   const [successMessage, setSuccessMessage] = useState('');
-  const [successMessage2, setSuccessMessage2] = useState('');  
+  const [successMessage2, setSuccessMessage2] = useState(''); 
+  
+  useEffect(() => {
+    // Check user authentication using Axios
+    axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
   
   useEffect(() => {
     const storedSuccessMessage2 = localStorage.getItem('successMessage2');
@@ -121,8 +145,8 @@ function AddCustom() {
             </NavLink>
           </li>
           <li>
-          <NavLink to={`/`}>
-            Log out
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
+              Log out
             </NavLink>
           </li>
         </ul>

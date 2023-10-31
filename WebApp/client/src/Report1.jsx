@@ -1,14 +1,36 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReportOneTable from "./Components/ReportOneTable";
 
 function Report1() {
+  const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
   const [leaveRequests, setLeaveRequests] = useState([]);
   const [hrLeaveRequests, setHrLeaveRequests] = useState([]);
   const [financeLeaveRequests, setFinanceLeaveRequests] = useState([]);
   const [engineeringLeaveRequests, setEngineeringLeaveRequests] = useState([]);
   const [accountingLeaveRequests, setAccountingLeaveRequests] = useState([]);
   const [time, setTime] = useState("year"); // Default to "last year"
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
 
   useEffect(() => {
     async function fetchLeaveRequests() {

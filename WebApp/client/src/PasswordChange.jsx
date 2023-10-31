@@ -1,16 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
 
 function PasswordChange() {
   const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (
+          response.data.userID === id_to_transfer &&
+          (response.data.jobTitle === 'Software Engineer' ||
+          response.data.jobTitle === 'QA Engineer' ||
+          response.data.jobTitle === 'Accountant')
+        ) {} 
+        else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
 
   // Handle form submission
   const handleFormSubmit = (e) => {
@@ -72,7 +101,7 @@ function PasswordChange() {
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/`} >
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
               Log out
             </NavLink>
           </li>

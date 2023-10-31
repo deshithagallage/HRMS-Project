@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Axios from 'axios';
 import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import ReportCard1 from "./Components/ReportCard1";
@@ -8,9 +9,33 @@ import ReportCard4 from "./Components/ReportCard4";
 import ReportCard5 from "./Components/ReportCard5";
 import './styles/PageHR.css'; // Import the CSS file
 
+function handleLogout() {
+  // Remove the token from local storage
+  localStorage.removeItem("token");
+}
 
 function ReportGeneration() {
   const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
 
   return (
     <div className="page-container">
@@ -39,8 +64,8 @@ function ReportGeneration() {
             </NavLink>
           </li>
           <li>
-          <NavLink to={`/`} >
-            Log out
+            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
+              Log out
             </NavLink>
           </li>
         </ul>
