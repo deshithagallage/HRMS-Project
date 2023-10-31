@@ -8,6 +8,25 @@ function ViewEmployee() {
   const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
 
   useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
+  useEffect(() => {
     Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_view}`)
     .then((response) => {
         setEmployeeData(response.data.employee);

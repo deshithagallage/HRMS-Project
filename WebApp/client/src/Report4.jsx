@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import Axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import './styles/Report4.css'; // Import the CSS file
 
@@ -16,12 +17,34 @@ function formatSalary(salary) {
 }
 
 function Report4() {
+  const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
+  
   const [data, setData] = useState([]);
   const [minSalary, setMinSalary] = useState(0);
   const [maxSalary, setMaxSalary] = useState(100000);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/report4/employeesalaries/${minSalary}/${maxSalary}`)
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3000/report4/employeesalaries/${minSalary}/${maxSalary}`)
       .then((response) => {
         setData(response.data);
       })

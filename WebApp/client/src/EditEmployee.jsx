@@ -16,6 +16,25 @@ function EditEmployee() {
   const [contactNumbers, setContactNumbers] = useState(null);
 
   useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
+  useEffect(() => {
     // Fetch employee data based on id_to_edit when the component mounts
     Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_edit}`)
       .then(response => {

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBCheckbox, MDBIcon } from 'mdb-react-ui-kit';
 
 function Login() {
+localStorage.removeItem('token');
+
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     User_ID: '', // Change 'email' to 'User_ID'
@@ -41,6 +43,8 @@ function Login() {
         if (response.data.success) {
           const user = response.data.user;
           const id_to_transfer = user.Employee_ID;
+          localStorage.setItem('token', response.data.token);
+          console.log(response.data)
   
           if (user.Job_Title === 'HR Manager') {
             navigate(`/PageHR/${id_to_transfer}`);
@@ -65,7 +69,7 @@ function Login() {
   }
 
   return (
-    <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden'>
+    <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden min-vh-100'>
   
       <MDBRow>
   
