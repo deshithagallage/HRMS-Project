@@ -429,17 +429,7 @@ app.post("/authenticate", (req, res) => {
     } else {
       const user = results[0]; // Assuming User_ID is unique
 
-      if (user && user.Password === password) {
-        // Authentication successful
-
-        // Generate a JWT token
-        const id = user.Employee_ID;
-        const jobTitle = user.Job_Title;
-        const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
-          expiresIn: 3600, // means 60 minutes
-        });
-
-        res.json({ success: true, user, auth: true, token: token });
+    
       if (user) {
         try {
           const passwordsMatch = await argon2.verify(user.Password, password);
