@@ -210,7 +210,7 @@ function AddHR() {
                       <div key={index}>
                         
                         <div className="d-flex justify-content-between">
-                            <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px", marginBottom: "0px"}} />
+                          <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px", marginBottom: "0px"}} />
                           {
                             index > 0 &&
                             <div className="col">
