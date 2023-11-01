@@ -31,7 +31,7 @@ localStorage.removeItem('token');
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    if (formData.User_ID === 'Admin' && formData.password === 'Admin') {
+    if (false) {
       navigate(`/PageAdmin`);
     } else {
       // Send a POST request to the backend for user authentication
@@ -41,6 +41,10 @@ localStorage.removeItem('token');
       })
       .then((response) => {
         if (response.data.success) {
+          if(response.data.is_admin){
+            navigate(`/PageAdmin`);
+          }
+          else{
           const user = response.data.user;
           const id_to_transfer = user.Employee_ID;
           localStorage.setItem('token', response.data.token);
@@ -51,7 +55,9 @@ localStorage.removeItem('token');
           } else {
             navigate(`/PageEMP/${id_to_transfer}`);
           }
-        } else {
+        } 
+      }
+        else {
           alert('Invalid username or password');
         }
       })
