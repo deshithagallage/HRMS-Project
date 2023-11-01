@@ -3,65 +3,39 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 import EmployeeCard from './Components/EmployeeCard.jsx';
-import './styles/PageHR.css'; // Import the CSS file
+import './styles/PageEMP.css'; // Import the CSS file (assuming the CSS file name is PageEMP.css)
 import { NavLink } from 'react-router-dom';
-
-function handleLogout() {
-  // Remove the token from local storage
-  localStorage.removeItem("token");
-}
 
 function PageEMP() {
   const { id_to_transfer } = useParams();
   console.log('id_to_transfer in PageEMP:', id_to_transfer);
   const navigate = useNavigate();
 
-  const [employee, setEmployee] = useState([]);
+  const [employeeData, setEmployeeData] = useState([]); // State to store employee data
+  const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
   const [supervisors, setSupervisors] = useState([]);
 
   useEffect(() => {
-    // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    })
+    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_transfer}`)
       .then((response) => {
-        if (
-          response.data.userID === id_to_transfer &&
-          (response.data.jobTitle === 'Software Engineer' ||
-          response.data.jobTitle === 'QA Engineer' ||
-          response.data.jobTitle === 'Accountant')
-        ) {} 
-        else {
-          navigate(`/`);
-        }
+        setEmployeeData(response.data.employee);
+        setContactNumbers(response.data.contact);
       })
       .catch((error) => {
-        console.error(error);
-        navigate(`/`);
+        console.error('Error fetching employee data:', error);
       });
-  }, [id_to_transfer, navigate]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('id_to_transfer in PageEMP:', id_to_transfer);
-
-        const [employeeResponse, supervisorsResponse] = await Promise.all([
-          Axios.get(`http://localhost:3000/emp_view/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/fetchSupervisors`)
-        ]);
-
-        setEmployee(employeeResponse.data);
-        console.log('employee:', employeeResponse.data);
-        setSupervisors(supervisorsResponse.data);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
-    fetchData();
+    Axios.get(`http://localhost:3000/fetchSupervisors/${id_to_transfer}`)
+      .then((response) => {
+        setSupervisors(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching supervisor data:', error);
+      });
   }, [id_to_transfer]);
+
+  console.log('employeeData:', employeeData);
+  console.log('supervisors:', supervisors);
 
   const handleLeaveRequestClick_1 = () => {
     navigate(`/PageEMP/${id_to_transfer}/LeaveReq`);
@@ -97,23 +71,23 @@ function PageEMP() {
           <h2>Jupiter Apparels</h2>
         </div>
         <ul>
-        <li>
-            <NavLink exact to={`/PageEMP/${id_to_transfer}`} >
+          <li>
+            <NavLink to={`/PageEMP/${id_to_transfer}`} activeClassName="active-link">
               Dashboard
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} >
+            <NavLink to={`/PageEMP/${id_to_transfer}/LeaveReq`} activeClassName="active-link">
               Leave Request
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`}>
+            <NavLink to={`/PageEMP/${id_to_transfer}/PasswordChange`} activeClassName="active-link">
               Reset Password
             </NavLink>
           </li>
           <li>
-            <NavLink to={`/`} activeClassName="active-link" onClick={handleLogout}>
+            <NavLink to={`/`} activeClassName="active-link">
               Log out
             </NavLink>
           </li>
@@ -121,11 +95,11 @@ function PageEMP() {
             <div style={{ textAlign: 'center' }}>
               <button
                 type="button"
-                className="btn btn-secondary custom-button"
+                className="btn btn-primary btn-lg custom-button"
                 onClick={handleLeaveRequestClick_3}
                 disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}
               >
-                <b>Supervisor Access</b>
+                Supervisor Access
               </button>
             </div>
           </li>
@@ -133,7 +107,7 @@ function PageEMP() {
       </div>
       <div className="container narrow-container d-flex flex-column align-items-center">
         <div style={{ marginBottom: '20px' }}>
-          <EmployeeCard employee={employee} />
+          <EmployeeCard employee={employeeData} contactNumbers={contactNumbers} supervisors={supervisors}/>
         </div>
       </div>
     </div>
