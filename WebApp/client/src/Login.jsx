@@ -31,41 +31,40 @@ localStorage.removeItem('token');
   const handleSubmit = async (event) => {
     event.preventDefault();
   
-    if (false) {
-      navigate(`/PageAdmin`);
-    } else {
-      // Send a POST request to the backend for user authentication
-      axios.post("http://localhost:3000/authenticate", {
-        User_ID: formData.User_ID,
-        password: formData.password,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          if(response.data.is_admin){
-            navigate(`/PageAdmin`);
-          }
-          else{
-          const user = response.data.user;
-          const id_to_transfer = user.Employee_ID;
+    // Send a POST request to the backend for user authentication
+    axios.post("http://localhost:3000/authenticate", {
+      User_ID: formData.User_ID,
+      password: formData.password,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        if(response.data.is_admin){
           localStorage.setItem('token', response.data.token);
-          console.log(response.data)
-  
-          if (user.Job_Title === 'HR Manager') {
-            navigate(`/PageHR/${id_to_transfer}`);
-          } else {
-            navigate(`/PageEMP/${id_to_transfer}`);
-          }
-        } 
-      }
-        else {
-          alert('Invalid username or password');
+          console.log(response.data);
+          navigate(`/PageAdmin`);
         }
-      })
-      .catch((error) => {
-        console.error("Error authenticating:", error);
-        alert('An error occurred during authentication');
-      });
+        else{
+        const user = response.data.user;
+        const id_to_transfer = user.Employee_ID;
+        localStorage.setItem('token', response.data.token);
+        console.log(response.data)
+
+        if (user.Job_Title === 'HR Manager') {
+          navigate(`/PageHR/${id_to_transfer}`);
+        } else {
+          navigate(`/PageEMP/${id_to_transfer}`);
+        }
+      } 
     }
+      else {
+        alert('Invalid username or password');
+      }
+    })
+    .catch((error) => {
+      console.error("Error authenticating:", error);
+      alert('An error occurred during authentication');
+    });
+      
   };
   
 

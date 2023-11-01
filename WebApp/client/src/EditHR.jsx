@@ -12,6 +12,25 @@ function EditHR() {
   const { id_to_edit } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === "Admin" && response.data.jobTitle === 'Admin') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [navigate]);
+
   const [employeeData, setEmployeeData] = useState(null);
   const [contactNumbers, setContactNumbers] = useState(null);
 

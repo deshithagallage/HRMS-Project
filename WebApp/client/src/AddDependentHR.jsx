@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { addDependentSchema } from './validations/AddDependentValidations';
 
 function AddDependentHR() {
-  const { id_to_transfer } = useParams();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === "Admin" && response.data.jobTitle === 'Admin') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [navigate]);
 
   const initialDependentData = {
     firstName: "",
