@@ -8,6 +8,7 @@ import ReportCard3 from "./Components/ReportCard3";
 import ReportCard4 from "./Components/ReportCard4";
 import ReportCard5 from "./Components/ReportCard5";
 import './styles/PageHR.css'; // Import the CSS file
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -71,9 +72,9 @@ function ReportGeneration() {
         </ul>
       </div>
        <div className="content">
+       <NavBar text='Report Generation'/>
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '20vh' }}>
-        <h1>Report Generation Page</h1>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '20vh' }}>       
       </div>
 
       <div className="container">
