@@ -12,6 +12,25 @@ function EditHR() {
   const { id_to_edit } = useParams();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === "Admin" && response.data.jobTitle === 'Admin') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [navigate]);
+
   const [employeeData, setEmployeeData] = useState(null);
   const [contactNumbers, setContactNumbers] = useState(null);
 
@@ -186,15 +205,19 @@ function EditHR() {
                         {contact.map((number, index) => (
                         <div key={index}>
                             
-                            <div className="d-flex justify-content-between">
-                            <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" value={contact[index] || ''} style={{marginTop: "5px"}} />
+                          <div className="d-flex justify-content-between">
+                            <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" value={contact[index] || ''} style={{marginTop: "5px", marginBottom: "0px"}} />
                             {
-                                index > 0 &&
+                              index > 0 &&
+                              <div className="col">
                                 <button type="button" className="btn btn-secondary" style={{marginLeft: "5px", marginTop: "5px"}} onClick={() => remove(index)}><BsFillTelephoneMinusFill /></button>
+                              </div>
                             }
-                            <button type="button" className="btn btn-secondary" style={{marginLeft: "5px", marginTop: "5px"}} onClick={() => push('')}><BsTelephonePlusFill /></button>
+                            <div className="col">
+                              <button type="button" className="btn btn-secondary" style={{marginLeft: "5px", marginTop: "5px"}} onClick={() => push('')}><BsTelephonePlusFill /></button>
                             </div>
-                            <ErrorMessage name={`contact[${index}]`} component="div" className="error-message" />
+                          </div>
+                          <ErrorMessage name={`contact[${index}]`} component="div" className="error-message" />
                         </div>
                         ))}
                     </div>

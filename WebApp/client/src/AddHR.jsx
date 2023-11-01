@@ -10,6 +10,25 @@ import { BsTelephonePlusFill, BsFillTelephoneMinusFill } from 'react-icons/bs'; 
 function AddHR() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === "Admin" && response.data.jobTitle === 'Admin') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [navigate]);
+
   const initialEmployeeData = {
     firstName: "",
     lastName: "",
@@ -191,7 +210,7 @@ function AddHR() {
                       <div key={index}>
                         
                         <div className="d-flex justify-content-between">
-                            <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px", marginBottom: "0px"}} />
+                          <Field type="text" className="form-control col-md-4" id={`inputContact[${index}]`} name={`contact[${index}]`} placeholder="Contact Number" style={{marginTop: "5px", marginBottom: "0px"}} />
                           {
                             index > 0 &&
                             <div className="col">

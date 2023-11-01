@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 
 function ViewEmployee() {
-  const { id_to_view } = useParams();
+  const { id_to_transfer, id_to_view } = useParams();
+  const navigate = useNavigate();
   const [employeeData, setEmployeeData] = useState(null); // State to store employee data
   const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
 

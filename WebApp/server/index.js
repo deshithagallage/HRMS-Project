@@ -439,7 +439,15 @@ app.post("/authenticate", (req, res) => {
   const { User_ID, password } = req.body;
   if (User_ID == "Admin" && password == "Admin") {
     console.log("Admin login");
-    res.json({ success: true, is_admin: true });
+
+    const id = "Admin";
+    const jobTitle = "Admin";
+
+    const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+      expiresIn: 3600, // means 60 minutes
+    });
+
+    res.json({ success: true, auth: true, token: token, is_admin: true });
   } else {
     // Fetch user data from the database
     const query = "SELECT * FROM password_check WHERE User_ID = ?";
@@ -464,13 +472,7 @@ app.post("/authenticate", (req, res) => {
                 expiresIn: 3600, // means 60 minutes
               });
 
-              res.json({
-                success: true,
-                user,
-                auth: true,
-                token: token,
-                is_admin: false,
-              });
+              res.json({ success: true, user, auth: true, token: token, is_admin: false });
             } else {
               // Authentication failed
               res.json({ success: false });
