@@ -674,6 +674,168 @@ app.get("/fetchLeaveRequestsDept", (req, res) => {
   });
 });
 
+
+
+
+// Function to fetch employee data based on the given query
+function fetchEmployeeData(req, res, query) {
+  db.query(query, (error, results) => {
+    if (error) {
+      console.error('Error fetching:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    } else {
+      res.status(200).json(results);
+    }
+  });
+}
+
+//Job Title report
+app.get('/employee_data_Title_HRManager', (req, res) => {
+  const query = 'SELECT * FROM HRManagerEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+
+app.get('/employee_data_Title_SoftwareEngineer', (req, res) => {
+  const query = 'SELECT * FROM SoftwareEngineerEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Title_Accountant', (req, res) => {
+  const query = 'SELECT * FROM AccountantEmployeeData';
+fetchEmployeeData(req, res, query);
+});
+
+app.get('/employee_data_Title_QA_Engineer', (req, res) => {
+  const query = 'SELECT * FROM QA_EngineerEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+
+
+//Department report
+// Route to fetch leave requests
+app.get('/employee_data_FinanceDepartmentEmployeeData', (req, res) => {
+  const query = 'SELECT * FROM FinanceDepartmentEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_HRDepartmentEmployeeData', (req, res) => {
+  const query = 'SELECT * FROM HRDepartmentEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_AccountingDepartmentEmployeeData', (req, res) => {
+  const query = 'SELECT * FROM AccountingDepartmentEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_EngineeringDepartmentEmployeeData', (req, res) => {
+  const query = 'SELECT * FROM EngineeringDepartmentEmployeeData';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 1
+app.get('/employee_data_pay_grade_1', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_1_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 2
+app.get('/employee_data_pay_grade_2', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_2_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 3
+app.get('/employee_data_pay_grade_3', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_3_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_4', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_4_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_5', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_5_Employees';
+  fetchEmployeeData(req, res, query);
+});
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_6', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_6_Employees';
+  fetchEmployeeData(req, res, query);
+});
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_7', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_7_Employees';
+  fetchEmployeeData(req, res, query);
+});
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_8', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_8_Employees';
+  fetchEmployeeData(req, res, query);
+});
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_9', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_9_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+// Route to get employee data for Pay Grade 4
+app.get('/employee_data_pay_grade_10', (req, res) => {
+  const query = 'SELECT * FROM Pay_Grade_10_Employees';
+  fetchEmployeeData(req, res, query);
+});
+
+
+//Branch route
+// Route to fetch leave requests
+app.get('/employee_data4', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch';
+  fetchEmployeeData(req, res, query);
+});
+
+app.get('/employee_data_Branch_1', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch1';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_2', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch2';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_3', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch3';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_4', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch4';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_5', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch5';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_6', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch6';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_7', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch7';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_8', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch8';
+  fetchEmployeeData(req, res, query);
+});
+
+app.get('/employee_data_Branch_9', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch9';
+  fetchEmployeeData(req, res, query);
+});
+app.get('/employee_data_Branch_10', (req, res) => {
+  const query = 'SELECT * FROM EmployeeReportByBranch10';
+  fetchEmployeeData(req, res, query);
+});
+
+
 app.listen(3000, () => {
   console.log("Yey, your server is running on port 3000");
 });
