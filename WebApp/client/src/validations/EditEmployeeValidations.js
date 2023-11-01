@@ -14,11 +14,11 @@ export const editEmployeeSchema = Yup.object({
     branch: Yup.string().notOneOf(['Choose...'], '* Please select a branch').required(),
     department: Yup.string().notOneOf(['Choose...'], '* Please select a department').required(),
 
-    dFirstName: Yup.string().required('* First name is required'),
-    dLastName: Yup.string().required('* Last name is required'),
-    dGender: Yup.string().notOneOf(['Choose...'], '* Please select a gender').required('* Gender is required'),
-    age: Yup.number().required('* Age is required'),
-    relation: Yup.string().required('* Relation is required')
+    // dFirstName: Yup.string().required('* First name is required'),
+    // dLastName: Yup.string().required('* Last name is required'),
+    // dGender: Yup.string().notOneOf(['Choose...'], '* Please select a gender').required('* Gender is required'),
+    // age: Yup.number().required('* Age is required'),
+    // relation: Yup.string().required('* Relation is required'),
     
   });
 
