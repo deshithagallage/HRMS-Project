@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
 function ViewHR() {
+  const navigate = useNavigate();
   const { id_to_view } = useParams();
   const [employeeData, setEmployeeData] = useState(null); // State to store employee data
   const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === "Admin" && response.data.jobTitle === 'Admin') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [navigate]);
 
   useEffect(() => {
     Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_view}`)

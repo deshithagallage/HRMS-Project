@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './styles/Report.css';
+import './styles/Report2.css';
 const Report2 = () => {
   const [selectedReport, setSelectedReport] = useState('HRManager');//new
 
@@ -40,34 +40,34 @@ const Report2 = () => {
 
     // Create an object to map report type to data
     const reportData = {
-      'HR Manager Employee Data': hrManagerData,
-      'Software Engineer Employee Data': softwareEngineerData,
-      'Accountant Employee Data': accountantData,
-      'QA Engineer Employee Data': qaEngineerData,
-      'Finance Department Employee Data': financeData,
-      'HR Department Employee Data': hrData,
-      'Account Department Employee Data': accountingData,
-      'Engineering Department Employee Data': engineeringData,
-      'PayGrade L1 Employee Data': payGrade1Data,
-      'PayGrade L2 Employee Data': payGrade2Data,
-      'PayGrade L3 Employee Data': payGrade3Data,
-      'PayGrade L4 Employee Data': payGrade4Data,
-      'PayGrade L5 Employee Data': payGrade5Data,
-      'PayGrade L6 Employee Data': payGrade6Data,
-      'PayGrade L7 Employee Data': payGrade7Data,
-      'PayGrade L8 Employee Data': payGrade8Data,
-      'PayGrade L9 Employee Data': payGrade9Data,
-      'PayGrade L10 Employee Data': payGrade10Data,
-      'Branch1 Employee Data': branch1Report,
-      'Branch2 Employee Data': branch2Report,
-      'Branch3 Employee Data': branch3Report,
-      'Branch4 Employee Data': branch4Report,
-      'Branch5 Employee Data': branch5Report,
-      'Branch6 Employee Data': branch6Report,
-      'Branch7 Employee Data': branch7Report,
-      'Branch8 Employee Data': branch8Report,
-      'Branch9 Employee Data': branch9Report,
-    'Branch10 Employee Data': branch10Report,
+      HRManager: hrManagerData,
+      SoftwareEngineer: softwareEngineerData,
+      Accountant: accountantData,
+      QAEngineear: qaEngineerData,
+      Finance: financeData,
+      HR: hrData,
+      Account: accountingData,
+      Engineering: engineeringData,
+      PayGradeL1: payGrade1Data,
+      PayGradeL2: payGrade2Data,
+      PayGradeL3: payGrade3Data,
+      PayGradeL4: payGrade4Data,
+      PayGradeL5: payGrade5Data,
+      PayGradeL6: payGrade6Data,
+      PayGradeL7: payGrade7Data,
+      PayGradeL8: payGrade8Data,
+      PayGradeL9: payGrade9Data,
+      PayGradeL10: payGrade10Data,
+      Branch1: branch1Report,
+      Branch2: branch2Report,
+      Branch3: branch3Report,
+      Branch4: branch4Report,
+      Branch5: branch5Report,
+      Branch6: branch6Report,
+      Branch7: branch7Report,
+      Branch8: branch8Report,
+      Branch9: branch9Report,
+    Branch10: branch10Report,
       
       
    
@@ -79,36 +79,36 @@ const Report2 = () => {
       <div>
         <label>Select a Report:</label>
         <select onChange={handleDropdownChange} value={selectedReport}>
-          <option value="HR Manager Employee Data">HR Manager Employee Data</option>
-          <option value="Software Engineer Employee Data">Software Engineer Employee Data</option>
-          <option value="Accountant Employee Data">Accountant Employee Data</option>
-          <option value="QA Engineer Employee Data">QA Engineer Employee Data</option>
+          <option value="HRManager">HR Manager Employee Data</option>
+          <option value="SoftwareEngineer">Software Engineer Employee Data</option>
+          <option value="Accountant">Accountant Employee Data</option>
+          <option value="QAEngineer">QA Engineer Employee Data</option>
         
-          <option value="Engineering Department Employee Data">Engineering Department Employee Data</option>
-          <option value="HR Department Employee Data">HR Department Employee Data</option>
-          <option value="Account Department Employee Data">Account Department Employee Data</option>
-          <option value="Finance Department Employee Data">Finance Department Employee Data</option>
+          <option value="Engineering">Engineering Department Employee Data</option>
+          <option value="HR">HR Department Employee Data</option>
+          <option value="Account">Account Department Employee Data</option>
+          <option value="Finance">Finance Department Employee Data</option>
          
-        <option value="PayGrade L1 Employee Data">PayGrade L1 Employee Data</option>
-        <option value="PayGrade L2 Employee Data">PayGrade L2 Employee Data</option>
-        <option value="PayGrade L3 Employee Data">PayGrade L3 Employee Data</option>
-        <option value="PayGrade L4 Employee Data">PayGrade L4 Employee Data</option>
-        <option value="PayGrade L5 Employee Data">PayGrade L5 Employee Data</option>
-        <option value="PayGrade L6 Employee Data">PayGrade L6 Employee Data</option>
-        <option value="PayGrade L7 Employee Data">PayGrade L7 Employee Data</option>
-        <option value="PayGrade L8 Employee Data">PayGrade L8 Employee Data</option>
-        <option value="PayGrade L9 Employee Data">PayGrade L9 Employee Data</option>
-        <option value="PayGrade L10 Employee Data">PayGrade L10 Employee Data</option>
-        <option value="Branch1 Employee Data"> Branch1 Employee Data</option>
-        <option value="Branch2 Employee Data"> Branch2 Employee Data</option>
-        <option value="Branch3 Employee Data"> Branch3 Employee Data</option>
-        <option value="Branch4 Employee Data"> Branch4 Employee Data</option>
-        <option value="Branch5 Employee Data"> Branch5 Employee Data</option>
-        <option value="Branch6 Employee Data"> Branch6 Employee Data</option>
-        <option value="Branch7 Employee Data"> Branch7 Employee Data</option>
-        <option value="Branch8 Employee Data"> Branch8 Employee Data</option>
-        <option value="Branch9 Employee Data"> Branch9 Employee Data</option>
-      <option value="Branch10 Employee Data"> Branch10 Employee Data</option>
+        <option value="PayGradeL1">PayGrade L1 Employee Data</option>
+        <option value="PayGradeL2">PayGrade L2 Employee Data</option>
+        <option value="PayGradeL3">PayGrade L3 Employee Data</option>
+        <option value="PayGradeL4">PayGrade L4 Employee Data</option>
+        <option value="PayGradeL5">PayGrade L5 Employee Data</option>
+        <option value="PayGradeL6">PayGrade L6 Employee Data</option>
+        <option value="PayGradeL7">PayGrade L7 Employee Data</option>
+        <option value="PayGradeL8">PayGrade L8 Employee Data</option>
+        <option value="PayGradeL9">PayGrade L9 Employee Data</option>
+        <option value="PayGradeL10">PayGrade L10 Employee Data</option>
+        <option value="Branch1"> Branch1 Employee Data</option>
+        <option value="Branch2"> Branch2 Employee Data</option>
+        <option value="Branch3"> Branch3 Employee Data</option>
+        <option value="Branch4"> Branch4 Employee Data</option>
+        <option value="Branch5"> Branch5 Employee Data</option>
+        <option value="Branch6"> Branch6 Employee Data</option>
+        <option value="Branch7"> Branch7 Employee Data</option>
+        <option value="Branch8"> Branch8 Employee Data</option>
+        <option value="Branch9"> Branch9 Employee Data</option>
+      <option value="Branch10"> Branch10 Employee Data</option>
         </select>
       </div>
     );

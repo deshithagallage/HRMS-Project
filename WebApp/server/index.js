@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
-const argon2 = require('argon2');
+const argon2 = require("argon2");
 
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
 
 require("dotenv").config();
 
@@ -86,11 +86,9 @@ app.post("/associateCustomAttribute", (req, res) => {
               return res.status(500).json({ message: "Internal server error" });
             }
 
-            return res
-              .status(200)
-              .json({
-                message: "Custom attribute added to the employee successfully",
-              });
+            return res.status(200).json({
+              message: "Custom attribute added to the employee successfully",
+            });
           }
         );
       }
@@ -184,7 +182,7 @@ app.get("/supervisorReport/:id_to_transfer", (req, res) => {
   const id_to_transfer = req.params.id_to_transfer;
   const query =
     "SELECT employee_data.first_name as Subordinate_first_name, employee_data.last_name as Subordinate_last_name, supervisor.subordinate_id as Subordinate_ID FROM supervisor LEFT JOIN employee_data ON supervisor.subordinate_ID = employee_data.employee_id WHERE supervisor.Supervisor_ID = ?";
-  db.query(query,[id_to_transfer],(error, results) => {
+  db.query(query, [id_to_transfer], (error, results) => {
     if (error) {
       console.error("Error querying the database: " + error);
       res.status(500).json({ error: "Internal server error" });
@@ -225,7 +223,9 @@ app.post("/addEmployee", async (req, res) => {
           res.status(500).json({ message: "Employee data insertion failed" });
         } else {
           console.log("Employee data inserted successfully.");
-          res.status(200).json({ message: "Employee data inserted successfully" });
+          res
+            .status(200)
+            .json({ message: "Employee data inserted successfully" });
         }
       }
     );
@@ -423,57 +423,72 @@ const verifyJWT = (req, res, next) => {
         req.jobTitle = decoded.jobTitle;
         next();
       }
-    })
+    });
   }
-}
+};
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.json({userID: req.userId, jobTitle: req.jobTitle, message: "User is authenticated"});
+  res.json({
+    userID: req.userId,
+    jobTitle: req.jobTitle,
+    message: "User is authenticated",
+  });
 });
 
 app.post("/authenticate", (req, res) => {
   const { User_ID, password } = req.body;
+  if (User_ID == "Admin" && password == "Admin") {
+    console.log("Admin login");
 
-  // Fetch user data from the database
-  const query = "SELECT * FROM password_check WHERE User_ID = ?";
-  db.query(query, [User_ID], async (err, results) => {
-    if (err) {
-      console.error("Database query error:", err);
-      res.json({ success: false });
-    } else {
-      const user = results[0]; // Assuming User_ID is unique
+    const id = "Admin";
+    const jobTitle = "Admin";
 
-    
-      if (user) {
-        try {
-          const passwordsMatch = await argon2.verify(user.Password, password);
+    const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+      expiresIn: 3600, // means 60 minutes
+    });
 
-          if (passwordsMatch) {
-            // Authentication successful
-            // Generate a JWT token
-            const id = user.Employee_ID;
-            const jobTitle = user.Job_Title;
-            const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
-              expiresIn: 3600, // means 60 minutes
-            });
-            
-            res.json({ success: true, user, auth: true, token: token });
-          } else {
-            // Authentication failed
+    res.json({ success: true, auth: true, token: token, is_admin: true });
+  } else {
+    // Fetch user data from the database
+    const query = "SELECT * FROM password_check WHERE User_ID = ?";
+    db.query(query, [User_ID], async (err, results) => {
+      if (err) {
+        console.error("Database query error:", err);
+        res.json({ success: false });
+      } else {
+        const user = results[0]; // Assuming User_ID is unique
+
+        if (user) {
+          try {
+            const passwordsMatch = await argon2.verify(user.Password, password);
+
+            if (passwordsMatch) {
+              // Authentication successful
+              // Generate a JWT token
+
+              const id = user.Employee_ID;
+              const jobTitle = user.Job_Title;
+              const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
+                expiresIn: 3600, // means 60 minutes
+              });
+
+              res.json({ success: true, user, auth: true, token: token, is_admin: false });
+            } else {
+              // Authentication failed
+              res.json({ success: false });
+            }
+          } catch (error) {
+            console.error("Password verification error:", error);
             res.json({ success: false });
           }
-        } catch (error) {
-          console.error("Password verification error:", error);
+        } else {
+          // User not found
           res.json({ success: false });
         }
-      } else {
-        // User not found
-        res.json({ success: false });
       }
-    }
-  });
+    });
+  }
 });
-
 
 // password changing
 app.post("/changePassword/:id_to_transfer", async (req, res) => {
@@ -535,7 +550,6 @@ app.post("/changePassword/:id_to_transfer", async (req, res) => {
     res.status(500).json({ message: error });
   }
 });
-
 
 // Route to fetch leave requests
 app.get("/leave_request", (req, res) => {
@@ -674,15 +688,12 @@ app.get("/fetchLeaveRequestsDept", (req, res) => {
   });
 });
 
-
-
-
 // Function to fetch employee data based on the given query
 function fetchEmployeeData(req, res, query) {
   db.query(query, (error, results) => {
     if (error) {
-      console.error('Error fetching:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Error fetching:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
       res.status(200).json(results);
     }
@@ -690,151 +701,148 @@ function fetchEmployeeData(req, res, query) {
 }
 
 //Job Title report
-app.get('/employee_data_Title_HRManager', (req, res) => {
-  const query = 'SELECT * FROM HRManagerEmployeeData';
+app.get("/employee_data_Title_HRManager", (req, res) => {
+  const query = "SELECT * FROM HRManagerEmployeeData";
   fetchEmployeeData(req, res, query);
 });
 
-app.get('/employee_data_Title_SoftwareEngineer', (req, res) => {
-  const query = 'SELECT * FROM SoftwareEngineerEmployeeData';
+app.get("/employee_data_Title_SoftwareEngineer", (req, res) => {
+  const query = "SELECT * FROM SoftwareEngineerEmployeeData";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Title_Accountant', (req, res) => {
-  const query = 'SELECT * FROM AccountantEmployeeData';
-fetchEmployeeData(req, res, query);
-});
-
-app.get('/employee_data_Title_QA_Engineer', (req, res) => {
-  const query = 'SELECT * FROM QA_EngineerEmployeeData';
+app.get("/employee_data_Title_Accountant", (req, res) => {
+  const query = "SELECT * FROM AccountantEmployeeData";
   fetchEmployeeData(req, res, query);
 });
 
+app.get("/employee_data_Title_QA_Engineer", (req, res) => {
+  const query = "SELECT * FROM QA_EngineerEmployeeData";
+  fetchEmployeeData(req, res, query);
+});
 
 //Department report
 // Route to fetch leave requests
-app.get('/employee_data_FinanceDepartmentEmployeeData', (req, res) => {
-  const query = 'SELECT * FROM FinanceDepartmentEmployeeData';
+app.get("/employee_data_FinanceDepartmentEmployeeData", (req, res) => {
+  const query = "SELECT * FROM FinanceDepartmentEmployeeData";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_HRDepartmentEmployeeData', (req, res) => {
-  const query = 'SELECT * FROM HRDepartmentEmployeeData';
+app.get("/employee_data_HRDepartmentEmployeeData", (req, res) => {
+  const query = "SELECT * FROM HRDepartmentEmployeeData";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_AccountingDepartmentEmployeeData', (req, res) => {
-  const query = 'SELECT * FROM AccountingDepartmentEmployeeData';
+app.get("/employee_data_AccountingDepartmentEmployeeData", (req, res) => {
+  const query = "SELECT * FROM AccountingDepartmentEmployeeData";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_EngineeringDepartmentEmployeeData', (req, res) => {
-  const query = 'SELECT * FROM EngineeringDepartmentEmployeeData';
+app.get("/employee_data_EngineeringDepartmentEmployeeData", (req, res) => {
+  const query = "SELECT * FROM EngineeringDepartmentEmployeeData";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 1
-app.get('/employee_data_pay_grade_1', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_1_Employees';
+app.get("/employee_data_pay_grade_1", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_1_Employees";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 2
-app.get('/employee_data_pay_grade_2', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_2_Employees';
+app.get("/employee_data_pay_grade_2", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_2_Employees";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 3
-app.get('/employee_data_pay_grade_3', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_3_Employees';
+app.get("/employee_data_pay_grade_3", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_3_Employees";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_4', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_4_Employees';
+app.get("/employee_data_pay_grade_4", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_4_Employees";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_5', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_5_Employees';
+app.get("/employee_data_pay_grade_5", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_5_Employees";
   fetchEmployeeData(req, res, query);
 });
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_6', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_6_Employees';
+app.get("/employee_data_pay_grade_6", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_6_Employees";
   fetchEmployeeData(req, res, query);
 });
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_7', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_7_Employees';
+app.get("/employee_data_pay_grade_7", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_7_Employees";
   fetchEmployeeData(req, res, query);
 });
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_8', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_8_Employees';
+app.get("/employee_data_pay_grade_8", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_8_Employees";
   fetchEmployeeData(req, res, query);
 });
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_9', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_9_Employees';
+app.get("/employee_data_pay_grade_9", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_9_Employees";
   fetchEmployeeData(req, res, query);
 });
 
 // Route to get employee data for Pay Grade 4
-app.get('/employee_data_pay_grade_10', (req, res) => {
-  const query = 'SELECT * FROM Pay_Grade_10_Employees';
+app.get("/employee_data_pay_grade_10", (req, res) => {
+  const query = "SELECT * FROM Pay_Grade_10_Employees";
   fetchEmployeeData(req, res, query);
 });
-
 
 //Branch route
 // Route to fetch leave requests
-app.get('/employee_data4', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch';
+app.get("/employee_data4", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch";
   fetchEmployeeData(req, res, query);
 });
 
-app.get('/employee_data_Branch_1', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch1';
+app.get("/employee_data_Branch_1", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch1";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_2', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch2';
+app.get("/employee_data_Branch_2", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch2";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_3', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch3';
+app.get("/employee_data_Branch_3", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch3";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_4', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch4';
+app.get("/employee_data_Branch_4", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch4";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_5', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch5';
+app.get("/employee_data_Branch_5", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch5";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_6', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch6';
+app.get("/employee_data_Branch_6", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch6";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_7', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch7';
+app.get("/employee_data_Branch_7", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch7";
   fetchEmployeeData(req, res, query);
 });
-app.get('/employee_data_Branch_8', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch8';
-  fetchEmployeeData(req, res, query);
-});
-
-app.get('/employee_data_Branch_9', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch9';
-  fetchEmployeeData(req, res, query);
-});
-app.get('/employee_data_Branch_10', (req, res) => {
-  const query = 'SELECT * FROM EmployeeReportByBranch10';
+app.get("/employee_data_Branch_8", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch8";
   fetchEmployeeData(req, res, query);
 });
 
+app.get("/employee_data_Branch_9", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch9";
+  fetchEmployeeData(req, res, query);
+});
+app.get("/employee_data_Branch_10", (req, res) => {
+  const query = "SELECT * FROM EmployeeReportByBranch10";
+  fetchEmployeeData(req, res, query);
+});
 
 app.listen(3000, () => {
   console.log("Yey, your server is running on port 3000");
