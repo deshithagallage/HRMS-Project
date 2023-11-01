@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 import EmployeeCard from './Components/EmployeeCard.jsx';
-import './styles/PageHR.css'; // Import the CSS file
+import './styles/PageEMP.css'; // Import the CSS file (assuming the CSS file name is PageEMP.css)
 import { NavLink } from 'react-router-dom';
 
 function PageEMP() {
@@ -11,28 +11,31 @@ function PageEMP() {
   console.log('id_to_transfer in PageEMP:', id_to_transfer);
   const navigate = useNavigate();
 
-  const [employee, setEmployee] = useState([]);
+  const [employeeData, setEmployeeData] = useState([]); // State to store employee data
+  const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
   const [supervisors, setSupervisors] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log('id_to_transfer in PageEMP:', id_to_transfer);
+    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_transfer}`)
+      .then((response) => {
+        setEmployeeData(response.data.employee);
+        setContactNumbers(response.data.contact);
+      })
+      .catch((error) => {
+        console.error('Error fetching employee data:', error);
+      });
 
-        const [employeeResponse, supervisorsResponse] = await Promise.all([
-          Axios.get(`http://localhost:3000/emp_view/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/fetchSupervisors`)
-        ]);
-
-        setEmployee(employeeResponse.data);
-        console.log('employee:', employeeResponse.data);
-        setSupervisors(supervisorsResponse.data);
-      } catch (error) {
-        console.error("Error fetching data", error);
-      }
-    };
-    fetchData();
+    Axios.get(`http://localhost:3000/fetchSupervisors/${id_to_transfer}`)
+      .then((response) => {
+        setSupervisors(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching supervisor data:', error);
+      });
   }, [id_to_transfer]);
+
+  console.log('employeeData:', employeeData);
+  console.log('supervisors:', supervisors);
 
   const handleLeaveRequestClick_1 = () => {
     navigate(`/PageEMP/${id_to_transfer}/LeaveReq`);
@@ -68,7 +71,7 @@ function PageEMP() {
           <h2>Jupiter Apparels</h2>
         </div>
         <ul>
-        <li>
+          <li>
             <NavLink to={`/PageEMP/${id_to_transfer}`} activeClassName="active-link">
               Dashboard
             </NavLink>
@@ -104,7 +107,7 @@ function PageEMP() {
       </div>
       <div className="container narrow-container d-flex flex-column align-items-center">
         <div style={{ marginBottom: '20px' }}>
-          <EmployeeCard employee={employee} />
+          <EmployeeCard employee={employeeData} contactNumbers={contactNumbers} supervisors={supervisors}/>
         </div>
       </div>
     </div>

@@ -68,8 +68,6 @@ app.post("/associateCustomAttribute", (req, res) => {
             .status(500)
             .json({ message: "Attribute ID does not exist" });
         }
-
-        // If both Employee ID and Attribute ID exist, proceed to insert into Employee_Custom_Attribute table.
         const insertQuery =
           "INSERT INTO Employee_Custom_Attribute (Attribute_ID, Employee_ID, Value) VALUES (?, ?, ?)";
         db.query(
@@ -326,7 +324,7 @@ app.get("/employeeDetailForHR/:id", (req, res) => {
 
         // Combine the results into a single response
         const output = { employee: employeeResult[0], contact: contactResult };
-
+        console.log(output);
         // Send the response with the combined data
         res.status(200).json(output);
       });
