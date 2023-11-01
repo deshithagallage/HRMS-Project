@@ -23,6 +23,8 @@ import AddHR from './AddHR';
 import AddDependentHR from './AddDependentHR';
 import ViewEmployee from './ViewEmployee';
 import EditEmployee from './EditEmployee';
+import ViewHR from './ViewHR';
+import EditHR from './EditHR';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -51,6 +53,8 @@ function App() {
         <Route path="/PageAdmin" element={<PageAdmin />} />
         <Route path="/PageAdmin/AddHR" element={<AddHR />} />
         <Route path="/PageAdmin/AddHR/AddDependent" element={<AddDependentHR />} />
+        <Route path="/PageAdmin/ViewHR/:id_to_view" element={<ViewHR />} />
+        <Route path="/PageAdmin/EditHR/:id_to_edit" element={<EditHR />} />
 
         <Route path="/PageHR/:id_to_transfer" element={<PageHR />} />
         <Route path="/PageHR/:id_to_transfer/EmployeeManagement" element={<EmployeeManagement />} />

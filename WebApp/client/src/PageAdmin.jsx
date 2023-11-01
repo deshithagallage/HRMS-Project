@@ -103,7 +103,7 @@ function PageAdmin() {
                       <button type="button" className="btn btn-success" onClick={
                         () => {
                           const id_to_view = employee.Employee_ID;
-                          navigate(`/PageHR/${id_to_transfer}/EmployeeManagement/ViewEmployee/${id_to_view}`)
+                          navigate(`/PageAdmin/ViewHR/${id_to_view}`)
                         }
                       }>
                         View
@@ -113,7 +113,7 @@ function PageAdmin() {
                       <button type="button" className="btn btn-warning" onClick={
                         () => {
                           const id_to_edit = employee.Employee_ID;
-                          navigate(`/PageHR/${id_to_transfer}/EmployeeManagement/EditEmployee/${id_to_edit}`)
+                          navigate(`/PageAdmin/EditHR/${id_to_edit}`)
                         }
                       }>
                         Edit

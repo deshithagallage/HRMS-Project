@@ -272,52 +272,6 @@ VALUES
   ('gugliElmo.piter', 'EMP0049', '$2a$12$AEMK1SokwY7l3eLmFE', 'https://drive.google.com/images/random_image_49.jpg'),
   ('wilson.karu', 'EMP0050', '$2a$12$AEMK1SokwY7l3eLmFE', 'https://drive.google.com/images/random_image_50.jpg');
 
--- Insert sample values into Supervisor table
-INSERT INTO Supervisor (Supervisor_ID, Subordinate_ID)
-VALUES
-  ('EMP0002', 'EMP0005'),
-  ('EMP0003', 'EMP0007'),
-  ('EMP0002', 'EMP0008'),
-  ('EMP0004', 'EMP0009'),
-  ('EMP0002', 'EMP0010'),
-  ('EMP0004', 'EMP0011'),
-  ('EMP0003', 'EMP0012'),
-  ('EMP0002', 'EMP0013'),
-  ('EMP0002', 'EMP0014'),
-  ('EMP0004', 'EMP0015'),
-  ('EMP0003', 'EMP0016'),
-  ('EMP0003', 'EMP0018'),
-  ('EMP0002', 'EMP0019'),
-  ('EMP0004', 'EMP0020'),
-  ('EMP0002', 'EMP0022'),
-  ('EMP0004', 'EMP0023'),
-  ('EMP0003', 'EMP0024'),
-  ('EMP0002', 'EMP0025'),
-  ('EMP0004', 'EMP0027'),
-  ('EMP0004', 'EMP0028'),
-  ('EMP0003', 'EMP0029'),
-  ('EMP0002', 'EMP0030'),
-  ('EMP0004', 'EMP0031'),
-  ('EMP0004', 'EMP0032'),
-  ('EMP0003', 'EMP0033'),
-  ('EMP0004', 'EMP0034'),
-  ('EMP0003', 'EMP0035'),
-  ('EMP0002', 'EMP0036'),
-  ('EMP0004', 'EMP0037'),
-  ('EMP0002', 'EMP0038'),
-  ('EMP0004', 'EMP0039'),
-  ('EMP0003', 'EMP0040'),
-  ('EMP0003', 'EMP0041'),
-  ('EMP0002', 'EMP0042'),
-  ('EMP0003', 'EMP0043'),
-  ('EMP0004', 'EMP0044'),
-  ('EMP0002', 'EMP0045'),
-  ('EMP0003', 'EMP0046'),
-  ('EMP0004', 'EMP0047'),
-  ('EMP0003', 'EMP0048'),
-  ('EMP0002', 'EMP0049'),
-  ('EMP0003', 'EMP0050');
-
 -- Insert sample values into Custom_Attribute_Definition table
 INSERT INTO Custom_Attribute_Definition (Attribute_Name)
 VALUES
