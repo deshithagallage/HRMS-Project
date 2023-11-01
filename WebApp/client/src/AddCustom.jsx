@@ -4,6 +4,7 @@ import { useNavigate, NavLink, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -118,9 +119,9 @@ function AddCustom() {
     }
   };
 
-  return (
-    <div className="page-container">
-        <div className="sidebar">
+  return (    
+    <div className="page-container">      
+        <div className="sidebar">    
       <div style={{ marginTop: '20px',marginBottom:'40px',display: 'flex',alignItems: 'center',textAlign: 'center' }}>
         <h2>Jupiter Apparels</h2></div>
         <ul>
@@ -152,10 +153,10 @@ function AddCustom() {
         </ul>
       </div>
             <div className="content">
+             <NavBar text="Add Custom Attribute"/>            
     <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-4">
-          <h3 className="mb-4 text-center">Add Custom Attribute</h3>
+        <div className="col-md-4">         
           {successMessage && (
             <div className="alert alert-danger">{successMessage}</div>
           )}
