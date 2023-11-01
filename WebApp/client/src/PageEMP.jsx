@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import EmployeeCard from './Components/EmployeeCard.jsx';
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -90,8 +91,11 @@ function PageEMP() {
     }
   };
 
-  return (
+  return ( 
+   
+      
     <div className="page-container">
+             
       <div className="sidebar">
         <div style={{ marginTop: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
           <h2>Jupiter Apparels</h2>
@@ -130,13 +134,13 @@ function PageEMP() {
             </div>
           </li>
         </ul>
-      </div>
-      <div className="container narrow-container d-flex flex-column align-items-center">
+      </div>                     
+      <div className="container narrow-container d-flex flex-column align-items-center">      
         <div style={{ marginBottom: '20px' }}>
           <EmployeeCard employee={employee} />
         </div>
       </div>
-    </div>
+      </div>     
   );
 }
 

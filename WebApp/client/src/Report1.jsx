@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import ReportOneTable from "./Components/ReportOneTable";
+import NavBar from './Navbar';
 
 function Report1() {
   const { id_to_transfer } = useParams();
@@ -61,7 +62,7 @@ function Report1() {
   }, [leaveRequests]);
 
   return (
-    <div>
+    <div>      
       <div style={{ position: "absolute", top: "10px", right: "10px" }}>
         <select
           value={time}
@@ -72,7 +73,8 @@ function Report1() {
         </select>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <h1>Total leaves in a given period by department</h1> </div>
+      <NavBar text="Total leaves in a given period by department" width="65%"/>
+      </div>
       <div style={{  margin: "20px auto", maxWidth: "90%" }}>
         <h2 >Human Resources Department</h2>
         <ReportOneTable allRequests={hrLeaveRequests} />

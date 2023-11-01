@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import './styles/Report4.css'; // Import the CSS file
+import NavBar from './Navbar';
 
 function formatSalary(salary) {
   // Use Intl.NumberFormat to format the salary
@@ -55,10 +56,9 @@ function Report4() {
 
   return (
     <div>
-      
+      <NavBar text="Employee Salary Analysis" width="59%"/>
       <div className="table-container">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18vh' }}>
-          <h1>Employee Salary Analysis</h1>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18vh' }}>        
         </div>
         <div className="get-salary d-flex justify-content-start">
           <div >

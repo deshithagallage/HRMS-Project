@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/EmployeeManagement.css'; // Import the CSS file
+import NavBar from './Navbar';
 
 function PageAdmin() {
   const { id_to_transfer } = useParams();
@@ -61,7 +62,7 @@ function PageAdmin() {
 
   return (
     <div>
-      <h1>Page of the HR Management</h1>
+      <NavBar text="HR Management" width="56%"/>      
       <div className="d-flex justify-content-between">
         <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleAddEmployee}>
           Add New HR Manager
