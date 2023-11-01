@@ -1,0 +1,26 @@
+/* Navbarr.css */
+.navbar {  
+  background: color #333;;  /* Change the background color */  
+  padding: 1px; /* Add some padding to the navbar */
+  width: 100%;
+}
+
+
+
+.navbar-text {
+  font-size: 18px; /* Customize the text size */
+  font-weight: bold; /* Make the text bold */
+  text-transform: uppercase; /* Transform text to uppercase */
+  color: #fff; 
+  
+}
+
+
+
+
+
+
+
+
+
+

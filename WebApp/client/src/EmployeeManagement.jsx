@@ -4,6 +4,7 @@ import { useNavigate, useParams,NavLink, Outlet } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import './styles/EmployeeManagement.css'; // Import the CSS file
 import './styles/PageHR.css'; // Import the CSS file
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -117,7 +118,7 @@ function EmployeeManagement() {
         </ul>
       </div>
     <div className="content">
-      <h1>Page the Employee Management</h1>
+    <NavBar text="Employee Management"/>      
 
       <div className="d-flex justify-content-between">
         <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleAddEmployee}>

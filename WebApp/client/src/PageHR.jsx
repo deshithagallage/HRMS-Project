@@ -14,6 +14,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TrafficIcon from "@mui/icons-material/Traffic";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import LineChart from "./Components/LineChart";
+import NavBar from './Navbar';
 
 function PageHR() {
   const { id_to_transfer } = useParams();
@@ -81,6 +82,7 @@ function PageHR() {
         </ul>
       </div>
       <div className="content">
+        <NavBar text="Dashboard" width="53%"/>
         <Box m="20px">
        <Box
         display="grid"
