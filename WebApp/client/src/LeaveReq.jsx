@@ -7,6 +7,7 @@ import LeaveTable from "./Components/pendingReqTable.jsx"
 import RejectTable from "./Components/rejectedTable.jsx"
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -172,6 +173,7 @@ if (type === "annual") {
         </ul>
       </div>
        <div className="content">
+       <NavBar text="Leave Request" width="55%"/>
     <div className="container mt-5">
     <div className="leave-info">
     <h2 style={{ textAlign: 'center' }}>Remaining Leaves</h2>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Axios from 'axios';
 import './styles/Report5.css';
+import NavBar from './Navbar';
 
 function Report5() {
   const { id_to_transfer } = useParams();
@@ -58,8 +59,9 @@ function Report5() {
   }, []);
 
   return (
-    <div className="report_background">
-      <h1 className="headers">Supervisor Report</h1>
+    <div>
+      <NavBar text="Supervisor Report"/>
+    <div className="report_background">         
       <div className="select_supervisor_part">
         <label className="label_line">Select a Supervisor: </label>
         <select className="select" onChange={(e) => setSupervisor(e.target.value)}>
@@ -91,6 +93,7 @@ function Report5() {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 }

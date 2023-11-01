@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import NavBar from './Navbar';
 
 function Report3() {
   const { id_to_transfer } = useParams();
@@ -54,7 +55,7 @@ function Report3() {
 
   return (
     <div>
-      <h1>Employee Custom Fields Report</h1>
+      <NavBar text="Employee Custom Fields Report" width="60%"/>      
       <div>
         <label htmlFor="customAttribute">Select Custom Attribute: </label>
         <select
@@ -85,7 +86,7 @@ function Report3() {
                 : true
             )
             .map((employee) => (
-              <tr key={employee.Employee_ID}>
+              <tr key={`${employee.Employee_ID}-${employee.Attribute_ID}`}>
                 <td>{employee.Employee_ID}</td>
                 <td>{employee.Value}</td>
               </tr>

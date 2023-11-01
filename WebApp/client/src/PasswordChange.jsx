@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './styles/PageHR.css'; // Import the CSS file
 import { NavLink } from 'react-router-dom';
+import NavBar from './Navbar';
 
 function handleLogout() {
   // Remove the token from local storage
@@ -108,12 +109,12 @@ function PasswordChange() {
         </ul>
       </div>
        <div className="content">
+       <NavBar text="Reset Password" width="55%"/>
     <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-4">
           <div className="card mt-5">
-            <div className="card-body">
-              <h1 className="text-center mb-4">Password Reset</h1>
+            <div className="card-body">              
               {message && <div className="alert alert-info">{message}</div>}
               <form onSubmit={handleFormSubmit}>
                 <div className="form-group">
