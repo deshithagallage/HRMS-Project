@@ -180,6 +180,20 @@ app.get("/fetchSupervisors", (req, res) => {
   });
 });
 
+app.get("/supervisorReport/:id_to_transfer", (req, res) => {
+  const id_to_transfer = req.params.id_to_transfer;
+  const query =
+    "SELECT employee_data.first_name as Subordinate_first_name, employee_data.last_name as Subordinate_last_name, supervisor.subordinate_id as Subordinate_ID FROM supervisor LEFT JOIN employee_data ON supervisor.subordinate_ID = employee_data.employee_id WHERE supervisor.Supervisor_ID = ?";
+  db.query(query,[id_to_transfer],(error, results) => {
+    if (error) {
+      console.error("Error querying the database: " + error);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.post("/addEmployee", async (req, res) => {
   const { employeeData, haveDependent } = req.body;
 
