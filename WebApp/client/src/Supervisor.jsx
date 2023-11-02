@@ -99,22 +99,26 @@ const LeaveRequest = () => {
               <td>{request.Type}</td>
               <td>{request.Status}</td>
               <td>
-                {request.Status === 'Pending' && (
-                  <div>
+                <div style={{margin: "0px"}} className="d-flex custom-button-container">
+                  <div style={{margin: "0px"}} className="mx-1">
                     <button
                       className="btn btn-success"
                       onClick={() => updateStatus(request.Leave_Req_ID, 'Approved')}
+                      disabled={request.Status !== 'Pending'}
                     >
                       Approve
                     </button>
+                  </div>
+                  <div style={{margin: "0px"}} className="mx-1">
                     <button
                       className="btn btn-danger"
                       onClick={() => updateStatus(request.Leave_Req_ID, 'Rejected')}
+                      disabled={request.Status !== 'Pending'}
                     >
                       Reject
                     </button>
                   </div>
-                )}
+                </div>
               </td>
             </tr>
           ))}
