@@ -64,6 +64,9 @@ function EmployeeCard({ employee, contactNumbers, supervisors}) {
           <div>
             Department: {employee.Dept_Name}
           </div>
+          <div>
+            {employee.Attribute_Name}: {employee.Value}
+          </div>
           {/* <div style={{ marginBottom: '20px' }}> 
               Supervisor: {employee.Supervisor_ID}
             </div> */}
