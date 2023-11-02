@@ -58,9 +58,7 @@ function Report4() {
     <div>
       <NavBar text="Employee Salary Analysis" width="59%"/>
       <div className="table-container">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '18vh' }}>        
-        </div>
-        <div className="get-salary d-flex justify-content-start">
+        <div className="get-salary d-flex justify-content-start" style={{marginTop: "20px"}}>
           <div >
             <label htmlFor='inputMinSalary' className="ml-2 salary-label" style={{ marginRight: '5px' }}>Min Salary: </label>
             <input id='inputMinSalary' type="number" value={minSalary} placeholder='Minimum Salary' onChange={(e) => setMinSalary(e.target.value ? e.target.value : 0)} style={{ marginRight: '20px' }} />
