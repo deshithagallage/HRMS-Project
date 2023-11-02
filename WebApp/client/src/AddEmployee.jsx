@@ -147,9 +147,11 @@ function AddEmployee() {
             });
             setSavedEmployeeData(initialEmployeeData); // Update the savedEmployeeData state
             setHaveDependent(false);
+            console.log("Employee data inserted successfully!");
           }) 
-          .catch(error => console.error('Error fetching data:', error))
-          console.log("Employee data inserted successfully!");
+          .catch(error => {
+            console.error('Error fetching data:', error)
+          })
           navigate(-1);
         }}>
         {({errors, values, setFieldValue}) => (
