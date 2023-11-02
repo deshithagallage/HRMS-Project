@@ -68,8 +68,7 @@ function PageEMP() {
   return ( 
    
       
-    <div className="page-container">
-             
+    <div className="page-container">                   
       <div className="sidebar">
         <div style={{ marginTop: '20px', marginBottom: '40px', display: 'flex', alignItems: 'center', textAlign: 'center' }}>
           <h2>Jupiter Apparels</h2>
@@ -108,13 +107,13 @@ function PageEMP() {
             </div>
           </li>
         </ul>
-      </div>                     
+      </div>                           
       <div className="container narrow-container d-flex flex-column align-items-center">      
         <div style={{ marginBottom: '20px' }}>
           <EmployeeCard employee={employeeData} contactNumbers={contactNumbers} supervisors={supervisors}/>
         </div>
       </div>
-      </div>     
+      </div>          
   );
 }
 
