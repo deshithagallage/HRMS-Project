@@ -40,7 +40,7 @@ function EmployeeCard({ employee, contactNumbers, supervisors}) {
           </div>
           <div>
             Contact Numbers:
-            <ul>
+            <ul style={{ listStyleType: 'none', padding: 0 }}>
               {contactNumbers.map((contact, index) => (
                 <li key={index}><h5>{contact.Contact_Number}</h5></li>
               ))}
@@ -64,9 +64,14 @@ function EmployeeCard({ employee, contactNumbers, supervisors}) {
           <div>
             Department: {employee.Dept_Name}
           </div>
-          <div>
+          {employee && employee.Attribute_Name ? (
+            <div style={{ marginBottom: '20px' }}> 
+              {employee.Attribute_Name}: {employee.Value}
+            </div>
+          ) : null}
+          {/* <div>
             {employee.Attribute_Name}: {employee.Value}
-          </div>
+          </div> */}
           {/* <div style={{ marginBottom: '20px' }}> 
               Supervisor: {employee.Supervisor_ID}
             </div> */}

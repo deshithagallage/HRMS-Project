@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { useParams } from 'react-router-dom';
 import EmployeeCard from './Components/EmployeeCard.jsx';
 import './styles/PageEMP.css'; // Import the CSS file (assuming the CSS file name is PageEMP.css)
+
 import { NavLink } from 'react-router-dom';
 import NavBar from './Navbar';
 
@@ -12,28 +13,55 @@ function PageEMP() {
   console.log('id_to_transfer in PageEMP:', id_to_transfer);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Check user authentication using Axios
+    Axios.get("http://localhost:3000/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (
+          response.data.userID === id_to_transfer &&
+          (response.data.jobTitle === 'Software Engineer' ||
+          response.data.jobTitle === 'QA Engineer' ||
+          response.data.jobTitle === 'Accountant')
+        ) {} 
+        else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
   const [employeeData, setEmployeeData] = useState([]); // State to store employee data
   const [contactNumbers, setContactNumbers] = useState([]); // State to store contact numbers
   const [supervisors, setSupervisors] = useState([]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_transfer}`)
-      .then((response) => {
-        setEmployeeData(response.data.employee);
-        setContactNumbers(response.data.contact);
-      })
-      .catch((error) => {
-        console.error('Error fetching employee data:', error);
-      });
-
-    Axios.get(`http://localhost:3000/fetchSupervisors/${id_to_transfer}`)
-      .then((response) => {
-        setSupervisors(response.data);
-      })
-      .catch((error) => {
+    async function fetchData() {
+      try {
+        const supervisorsResponse = await Axios.get(`http://localhost:3000/fetchSupervisors`);
+        setSupervisors(supervisorsResponse.data);
+      } catch (error) {
         console.error('Error fetching supervisor data:', error);
-      });
+      }
+      try {
+        const employeeResponse = await Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_transfer}`);
+        setEmployeeData(employeeResponse.data.employee);
+        setContactNumbers(employeeResponse.data.contact);
+      } catch (error) {
+        console.error('Error fetching employee data:', error);
+      }
+  
+    }
+  
+    fetchData();
   }, [id_to_transfer]);
+  
 
   console.log('employeeData:', employeeData);
   console.log('supervisors:', supervisors);
@@ -95,10 +123,10 @@ function PageEMP() {
             </NavLink>
           </li>
           <li>
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%',width:'83% '}}>
               <button
                 type="button"
-                className="btn btn-primary btn-lg custom-button"
+                className="btn btn-secondary custom-button"
                 onClick={handleLeaveRequestClick_3}
                 disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}
               >
@@ -108,8 +136,8 @@ function PageEMP() {
           </li>
         </ul>
       </div>                           
-      <div className="container narrow-container d-flex flex-column align-items-center">      
-        <div style={{ marginBottom: '20px' }}>
+      <div className='container' >      
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <EmployeeCard employee={employeeData} contactNumbers={contactNumbers} supervisors={supervisors}/>
         </div>
       </div>

@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import './styles/EmployeeManagement.css'; // Import the CSS file
 import NavBar from './Navbar';
 
+
 function handleLogout() {
   // Remove the token from local storage
   localStorage.removeItem("token");
