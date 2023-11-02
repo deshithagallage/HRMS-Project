@@ -56,16 +56,18 @@ SELECT
     p.Pay_Grade,
     b.Branch_Name,
     s.Status AS Employment_Status,
-    dept.Dept_Name
-
+    dept.Dept_Name,
+    sup.Supervisor_ID,
+    (SELECT e2.First_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupFirstName,
+    (SELECT e2.Last_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupLastName
 FROM Employee_Data e
 LEFT JOIN Dependent_Information d ON e.Dependent_ID = d.Dependent_ID
 JOIN Employee_Account a ON e.Employee_ID = a.Employee_ID
 JOIN Pay_Grade p ON e.Pay_Grade_ID = p.Pay_Grade_ID
 JOIN Branch b ON e.Branch_ID = b.Branch_ID
 JOIN Employment_Status s ON e.Employment_Status = s.Status_ID
-JOIN Department dept ON e.Dept_ID = dept.Dept_ID;
-
+JOIN Department dept ON e.Dept_ID = dept.Dept_ID
+LEFT JOIN Supervisor sup ON e.Employee_ID = sup.Subordinate_ID;
 
 
 create view supervisor_leave_accept as
