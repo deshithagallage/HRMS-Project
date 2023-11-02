@@ -173,7 +173,9 @@ app.get("/fetchSupervisors", (req, res) => {
       console.error("Error fetching supervisor data:", error);
       res.status(500).json({ error: "Internal server error" });
     } else {
+      console.log(results);
       res.json(results);
+      
     }
   });
 });

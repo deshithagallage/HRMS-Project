@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './EmployeeCard.css'; // Import the CSS file
 
-function EmployeeCard({employee, contactNumbers, supervisors}) {
+function EmployeeCard({ employee, contactNumbers, supervisors}) {
   const cardStyle = {
     maxWidth: '1000px',
   };
@@ -41,9 +41,9 @@ function EmployeeCard({employee, contactNumbers, supervisors}) {
           <div>
             Contact Numbers:
             <ul>
-                {contactNumbers.map((contact, index) => (
-                    <li key={index}><h5>{contact.Contact_Number}</h5></li>
-                ))}
+              {contactNumbers.map((contact, index) => (
+                <li key={index}><h5>{contact.Contact_Number}</h5></li>
+              ))}
             </ul>
           </div>
           <div>
@@ -64,21 +64,23 @@ function EmployeeCard({employee, contactNumbers, supervisors}) {
           <div>
             Department: {employee.Dept_Name}
           </div>
-          <div>
-            {supervisors.length > 0 && (
-              <div>
-                Supervisors:
-                <ul>
-                  {supervisors.map((supervisor, index) => (
-                    <li key={index}>
-                      <h5>{supervisor.Supervisor_Name}</h5>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-          
+          {/* <div style={{ marginBottom: '20px' }}> 
+              Supervisor: {employee.Supervisor_ID}
+            </div> */}
+          {employee && employee.Supervisor_ID ? (
+            <div style={{ marginBottom: '20px' }}> 
+              Supervisor: {employee.SupFirstName} {employee.SupLastName}
+            </div>
+          ) : null}
+          {employee && employee.Dependent_ID ? (
+            <div>
+              <div>Dependent ID: {employee.Dependent_ID}</div>
+              <div>Dependent's Name: {employee.dFirst_Name} {employee.dLast_Name}</div>
+              <div>Age: {employee.Age}</div>
+              <div>Gender: {employee.dGender}</div>
+              <div>Relation: {employee.Relation}</div>
+            </div>
+          ) : null}
         </Card.Text>
       </Card.Body>
     </Card>
