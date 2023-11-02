@@ -1,5 +1,6 @@
 import React from 'react';
 import Table from 'react-bootstrap/Table';
+import { format, parseISO } from 'date-fns';
 
 function LeaveTable({ pendingRequests, deleteRequest }) {
   return (
@@ -21,7 +22,7 @@ function LeaveTable({ pendingRequests, deleteRequest }) {
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{request.Employee_ID}</td>
-              <td>{request.Start_Date}</td>
+              <td>{format(parseISO(request.Start_Date), 'yyyy-MM-dd')}</td>
               <td>{request.No_of_Days}</td>
               <td>{request.Type}</td>
               <td>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 
 const LeaveRequest = () => {
   const location = useLocation();
@@ -94,7 +95,7 @@ const LeaveRequest = () => {
             <tr key={request.Leave_Req_ID}>
               <td>{request.Leave_Req_ID}</td>
               <td>{request.Employee_ID}</td>
-              <td>{request.Start_Date}</td>
+              <td>{format(parseISO(request.Start_Date), 'yyyy-MM-dd')}</td>
               <td>{request.No_of_Days}</td>
               <td>{request.Type}</td>
               <td>{request.Status}</td>
