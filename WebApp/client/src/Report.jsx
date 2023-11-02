@@ -73,11 +73,10 @@ function ReportGeneration() {
       </div>
        <div className="content">
        <NavBar text='Report Generation'/>
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '20vh' }}>       
-      </div>
+  
+      <div className="isara">       
 
-      <div className="container">
+        
         <div className="row">
           <div className="col-md-4 mb-4">
             <div className="dark-border"> {/* Apply the dark-border class */}
@@ -115,7 +114,7 @@ function ReportGeneration() {
       </div>
     </div>
     </div>
-    </div>
+
   );
 }
 

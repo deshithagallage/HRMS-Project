@@ -30,6 +30,7 @@
     flex-direction: column;
     align-items: flex-start;
     overflow-y: auto; 
+    
   }
   
   .content h1 {
@@ -76,4 +77,12 @@
     
 .custom-button {
   width: 210px; /* Change this value to your preferred button width */
+}
+
+.content .isara {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
 }

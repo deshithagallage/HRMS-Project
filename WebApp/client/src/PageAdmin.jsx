@@ -33,6 +33,9 @@ function PageAdmin() {
   const handleAddEmployee = () => {
     navigate(`/PageAdmin/AddHR`);
   };
+  const handleLogOut = () => {
+    navigate(`/`);
+  };
 
   const [employees, setEmployees] = useState([]);
   const [currentPage, setCurrentPage] = useState(0); // Current page number
@@ -95,6 +98,9 @@ function PageAdmin() {
             onChange={handleSearchChange}
           />
         </div>
+        <button type="button" className="btn btn-success my-3" style={{ margin: '30px' }} onClick={handleLogOut}>
+          Log out
+        </button>
       </div>
       <div className="table-container">
         <table className="table table-striped table-bordered">
