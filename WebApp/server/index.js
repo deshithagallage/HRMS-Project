@@ -221,7 +221,7 @@ app.post("/addEmployee", async (req, res) => {
       ],
       (error, results, fields) => {
         if (error) {
-          console.error("Error updating employee data:", error);
+          console.error("Error inserting employee data:", error);
           res.status(500).json({ message: "Employee data insertion failed" });
         } else {
           console.log("Employee data inserted successfully.");

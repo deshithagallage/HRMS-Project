@@ -1,12 +1,24 @@
 import * as Yup from 'yup';
 
+const contactNumberRegex = /^(\+[0-9]+|[0-9]+)$/;
+
 export const addEmployeeSchema = Yup.object({
     firstName: Yup.string().required("* First name is required"),
     lastName: Yup.string().required("* Last name is required"),
     gender: Yup.string().notOneOf(['Choose...'], '* Please select a gender').required(),
     maritalStatus: Yup.string().notOneOf(['Choose...'], '* Please select a marital status').required(),
     birthday: Yup.date().required('* Birthday is required'),
-    contact: Yup.array().of(Yup.string().max(15, '* Contact number is too long').required('* Contact number is required')),
+    
+    contact: Yup.array()
+    .of(Yup.string()
+      .matches(contactNumberRegex, {
+        message: '* Please enter a valid contact number',
+        excludeEmptyString: true,
+      })
+      .max(15, '* Contact number is too long')
+      .required('* Contact number is required'),
+    ),
+
     email: Yup.string().email('* Email must be a valid email'),
     employmentStatus: Yup.string().notOneOf(['Choose...'], '* Please select a employment status').required(),
     jobTitle: Yup.string().notOneOf(['Choose...'], '* Please select a job title').required(),

@@ -28,6 +28,14 @@ BEGIN
     DECLARE dependentId VARCHAR(10);
     DECLARE numContacts INT;
     DECLARE i INT DEFAULT 0;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
     
     SELECT Status_ID INTO employmentStatus FROM Employment_Status WHERE Status = employmentStatus;
     SELECT Pay_Grade_ID INTO payGrade FROM Pay_Grade WHERE Pay_Grade = payGrade;
@@ -58,6 +66,8 @@ BEGIN
     -- Insert account information into Employee_account table
     INSERT INTO Employee_account (Employee_ID, User_ID, Password) VALUES (employeeID, username, password);
     
+    COMMIT;
+
 END $$
 DELIMITER ;
 
@@ -93,6 +103,14 @@ CREATE PROCEDURE Update_Employee_Data(
 BEGIN
 	DECLARE i INT DEFAULT 0;
     DECLARE numContacts INT;
+
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
 
     -- Update employee data in the employee_data table
     UPDATE Employee_data
@@ -133,6 +151,8 @@ BEGIN
         VALUES (employeeID, JSON_UNQUOTE(JSON_EXTRACT(contactNumbers, CONCAT('$[', i, ']'))));
         SET i = i + 1;
     END WHILE;
+
+    COMMIT;
     
 END //
 
