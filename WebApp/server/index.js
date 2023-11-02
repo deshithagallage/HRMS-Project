@@ -175,7 +175,6 @@ app.get("/fetchSupervisors", (req, res) => {
     } else {
       console.log(results);
       res.json(results);
-      
     }
   });
 });
@@ -446,7 +445,7 @@ app.post("/authenticate", (req, res) => {
     const jobTitle = "Admin";
 
     const token = jwt.sign({ id, jobTitle }, "jwtSecret", {
-      expiresIn: 3600, // means 60 minutes
+      expiresIn: 36000, // means 60 minutes
     });
 
     res.json({ success: true, auth: true, token: token, is_admin: true });
@@ -474,7 +473,13 @@ app.post("/authenticate", (req, res) => {
                 expiresIn: 3600, // means 60 minutes
               });
 
-              res.json({ success: true, user, auth: true, token: token, is_admin: false });
+              res.json({
+                success: true,
+                user,
+                auth: true,
+                token: token,
+                is_admin: false,
+              });
             } else {
               // Authentication failed
               res.json({ success: false });
