@@ -135,3 +135,88 @@ td.status-rejected {
 .dropdown-content.show {
   display: block;
 }
+
+
+
+.report-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Dropdown styles */
+.custom-dropdown-container {
+  margin: 20px 0;
+}
+
+.custom-dropdown {
+  width: 100%;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  appearance: none;
+  background-image: url('path/to/your-arrow-icon.png'); /* Replace with your arrow icon */
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
+
+.custom-dropdown::-ms-expand {
+  display: none;
+}
+
+.custom-dropdown option {
+  background-color: #f2f2f2;
+  color: #333;
+  font-size: 16px;
+}
+
+/* Table styles */
+.custom-table {
+  width: 95%;
+  margin: 30px auto;
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+}
+
+.custom-table td {
+  padding: 10px;
+}
+
+/* Alternate row colors */
+.custom-table .even-row {
+  background-color: #f2f2f2;
+}
+
+.custom-table .odd-row {
+  background-color: #e0e0e0;
+}
+
+/* Label and Branch ID styles */
+.lable, .branchID {
+  
+  font-size: x-large;
+  height: 5%;
+  margin: auto;
+  padding: 0%;
+}
+
+
+
+
+
