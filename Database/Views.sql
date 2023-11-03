@@ -62,6 +62,7 @@ SELECT
     sup.Supervisor_ID,
     (SELECT e2.First_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupFirstName,
     (SELECT e2.Last_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupLastName
+    
 FROM Employee_Data e
 LEFT JOIN Dependent_Information d ON e.Dependent_ID = d.Dependent_ID
 JOIN Employee_Account a ON e.Employee_ID = a.Employee_ID
@@ -69,7 +70,7 @@ JOIN Pay_Grade p ON e.Pay_Grade_ID = p.Pay_Grade_ID
 JOIN Branch b ON e.Branch_ID = b.Branch_ID
 JOIN Employment_Status s ON e.Employment_Status = s.Status_ID
 JOIN Department dept ON e.Dept_ID = dept.Dept_ID
-JOIN Employee_Custom_Attribute emca ON emca.Employee_ID = e.Employee_ID
+LEFT JOIN Employee_Custom_Attribute emca ON emca.Employee_ID = e.Employee_ID
 LEFT JOIN Custom_attribute_definition cad ON cad.attribute_id = emca.attribute_id
 LEFT JOIN Supervisor sup ON e.Employee_ID = sup.Subordinate_ID;
 
@@ -95,111 +96,6 @@ INNER JOIN
 
 
 
--- Create a view to get all employee data for HR Managers
-CREATE VIEW HRManagerEmployeeData AS
-SELECT
-    Employee_ID,First_Name,Last_Name,Gender,Marital_Status,Birthday,Email,Employment_Status,Job_Title,Pay_Grade_ID,Branch_ID,Dept_ID,Dependent_ID
-FROM Employee_Data
-WHERE Job_Title = 'HR Manager';
-
--- Create a view to get all employee data for Software Engineers
-CREATE VIEW SoftwareEngineerEmployeeData AS
-SELECT
-    Employee_ID,First_Name,Last_Name,Gender,Marital_Status,Birthday,Email,Employment_Status,Job_Title,Pay_Grade_ID,Branch_ID,Dept_ID,Dependent_ID
-FROM Employee_Data
-WHERE Job_Title = 'Software Engineer';
--- Create a view to get all employee data for Accountants
-CREATE VIEW AccountantEmployeeData AS
-SELECT
-    Employee_ID,First_Name,Last_Name,Gender,Marital_Status,Birthday,Email,Employment_Status,Job_Title,Pay_Grade_ID,Branch_ID,Dept_ID,Dependent_ID
-FROM Employee_Data
-WHERE Job_Title = 'Accountant';
--- Create a view to get all employee data for QA_Engineers
-CREATE VIEW QA_EngineerEmployeeData AS
-SELECT
-    Employee_ID,First_Name,Last_Name,Gender,Marital_Status,Birthday,Email,Employment_Status,Job_Title,Pay_Grade_ID,Branch_ID,Dept_ID,Dependent_ID
-FROM Employee_Data
-WHERE Job_Title = 'QA Engineer';
-
--- Create a view to get employee data for the Human Resources department
-CREATE VIEW FinanceDepartmentEmployeeData AS
-SELECT Employee_ID, First_Name, Last_Name, Gender, Marital_Status, Birthday, Email, Employment_Status, Job_Title, Pay_Grade_ID, Branch_ID, Dept_ID, Dependent_ID
-FROM Employee_Data
-WHERE Dept_ID = 'DEPT002';
-
--- Create a view to get employee data for the Engineering department
-CREATE VIEW EngineeringDepartmentEmployeeData AS
-SELECT Employee_ID, First_Name, Last_Name, Gender, Marital_Status, Birthday, Email, Employment_Status, Job_Title, Pay_Grade_ID, Branch_ID, Dept_ID, Dependent_ID
-FROM Employee_Data
-WHERE Dept_ID = 'DEPT003';
-
--- Create a view to get employee data for the Human Resources department
-CREATE VIEW HRDepartmentEmployeeData AS
-SELECT Employee_ID, First_Name, Last_Name, Gender, Marital_Status, Birthday, Email, Employment_Status, Job_Title, Pay_Grade_ID, Branch_ID, Dept_ID, Dependent_ID
-FROM Employee_Data
-WHERE Dept_ID = 'DEPT001';
-
--- Create a view to get employee data for the Accounting department
-CREATE VIEW AccountingDepartmentEmployeeData AS
-SELECT Employee_ID, First_Name, Last_Name, Gender, Marital_Status, Birthday, Email, Employment_Status, Job_Title, Pay_Grade_ID, Branch_ID, Dept_ID, Dependent_ID
-FROM Employee_Data
-WHERE Dept_ID = 'DEPT004';
-
-
--- View for employees in Pay Grade 1
-CREATE VIEW Pay_Grade_1_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 1;
-
--- View for employees in Pay Grade 2
-CREATE VIEW Pay_Grade_2_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 2;
-
--- View for employees in Pay Grade 3
-CREATE VIEW Pay_Grade_3_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 3;
-
--- View for employees in Pay Grade 4
-CREATE VIEW Pay_Grade_4_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 4;
--- View for employees in Pay Grade 5
-CREATE VIEW Pay_Grade_5_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 5;
--- View for employees in Pay Grade 6
-CREATE VIEW Pay_Grade_6_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 6;
--- View for employees in Pay Grade 7
-CREATE VIEW Pay_Grade_7_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 7;
--- View for employees in Pay Grade 8
-CREATE VIEW Pay_Grade_8_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 8;
--- View for employees in Pay Grade 9
-CREATE VIEW Pay_Grade_9_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 9;
--- View for employees in Pay Grade 10
-CREATE VIEW Pay_Grade_10_Employees AS
-SELECT *
-FROM Employee_Data
-WHERE Pay_Grade_ID = 10;
-
 -- Create a view to generate Employee Report grouped by Branch
 CREATE VIEW EmployeeReportByBranch AS
 SELECT
@@ -219,26 +115,32 @@ CREATE VIEW EmployeeReportByBranch2 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR002';
+
 CREATE VIEW EmployeeReportByBranch3 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR003';
+
 CREATE VIEW EmployeeReportByBranch4 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR004';
+
 CREATE VIEW EmployeeReportByBranch5 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR005';
+
 CREATE VIEW EmployeeReportByBranch6 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR006';
+
 CREATE VIEW EmployeeReportByBranch7 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR007';
+
 CREATE VIEW EmployeeReportByBranch8 AS
 SELECT *
 FROM Employee_Data
@@ -248,6 +150,7 @@ CREATE VIEW EmployeeReportByBranch9 AS
 SELECT *
 FROM Employee_Data
 where Branch_ID='BR009';
+
 CREATE VIEW EmployeeReportByBranch10 AS
 SELECT *
 FROM Employee_Data
