@@ -75,22 +75,23 @@ function Report1() {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <NavBar text="Total leaves in a given period by department" width="65%"/>
       </div>
-      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
-        <h2 >Human Resources Department</h2>
-        <ReportOneTable allRequests={hrLeaveRequests} />
+      <div style={{  margin: "auto", maxWidth: "90%", marginTop: "30px" }}>
+        <h2>Human Resources Department</h2>
+        <ReportOneTable allRequests={hrLeaveRequests}/>
       </div>
-      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
+      <div style={{  margin: "20px auto", maxWidth: "90%", marginTop: "60px" }}>
         <h2>Finance Department</h2>
         <ReportOneTable allRequests={financeLeaveRequests} />
       </div>
-      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
+      <div style={{  margin: "20px auto", maxWidth: "90%", marginTop: "60px" }}>
         <h2>Engineering Department</h2>
         <ReportOneTable allRequests={engineeringLeaveRequests} />
       </div>
-      <div style={{  margin: "20px auto", maxWidth: "90%" }}>
+      <div style={{  margin: "20px auto", maxWidth: "90%", marginTop: "60px" }}>
         <h2>Accounting Department</h2>
         <ReportOneTable allRequests={accountingLeaveRequests} />
       </div>
+      <br />
     </div>
   );
 }

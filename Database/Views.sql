@@ -62,6 +62,7 @@ SELECT
     sup.Supervisor_ID,
     (SELECT e2.First_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupFirstName,
     (SELECT e2.Last_Name FROM Employee_Data e2 WHERE sup.Supervisor_ID = e2.Employee_ID) AS SupLastName
+    
 FROM Employee_Data e
 LEFT JOIN Dependent_Information d ON e.Dependent_ID = d.Dependent_ID
 JOIN Employee_Account a ON e.Employee_ID = a.Employee_ID
@@ -69,7 +70,7 @@ JOIN Pay_Grade p ON e.Pay_Grade_ID = p.Pay_Grade_ID
 JOIN Branch b ON e.Branch_ID = b.Branch_ID
 JOIN Employment_Status s ON e.Employment_Status = s.Status_ID
 JOIN Department dept ON e.Dept_ID = dept.Dept_ID
-JOIN Employee_Custom_Attribute emca ON emca.Employee_ID = e.Employee_ID
+LEFT JOIN Employee_Custom_Attribute emca ON emca.Employee_ID = e.Employee_ID
 LEFT JOIN Custom_attribute_definition cad ON cad.attribute_id = emca.attribute_id
 LEFT JOIN Supervisor sup ON e.Employee_ID = sup.Subordinate_ID;
 
@@ -93,6 +94,4 @@ FROM
 INNER JOIN
     Pay_Grade PG ON E.Pay_Grade_ID = PG.Pay_Grade_ID;
 
-SELECT Employee_ID, CONCAT(First_Name, ' ', Last_Name) AS Full_Name, Gender, Birthday, Pay_Grade_ID
-FROM Employee_Data
-WHERE Branch_ID = 'BR010';
+
