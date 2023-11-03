@@ -1,0 +1,30 @@
+/* Add this CSS to style the table, header, and cells */
+
+.customTable {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .tableHeaderStyle {
+    background-color: lightgray;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid black; /* Add border to header cells */
+  }
+  
+  .tableRowStyle {
+    border-bottom: 1px solid lightgray;
+  }
+  
+  .tableCellStyle {
+    padding: 10px;
+    border: 1px solid lightgray; /* Add border to table cells */
+  }
+
+
+  .boldText {
+    font-weight: bold;
+  }
+  
+  
