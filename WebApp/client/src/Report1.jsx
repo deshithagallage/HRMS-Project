@@ -63,7 +63,7 @@ function Report1() {
 
   return (
     <div>      
-      <div style={{ position: "absolute", top: "10px", right: "10px" }}>
+      <div style={{ position: "absolute", top: "65px", right: "10px" }}>
         <select
           value={time}
           onChange={(e) => setTime(e.target.value)}
