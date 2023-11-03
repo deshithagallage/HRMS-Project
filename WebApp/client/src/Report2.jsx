@@ -77,7 +77,7 @@ const Report2 = () => {
               <td>{employee.Full_Name}</td>
               <td>{employee.Gender}</td>
               <td>{formatDate(employee.Birthday)}</td>
-              <td>{employee.Employee_ID}</td>
+              <td>{employee.Pay_Grade_ID}</td>
             </tr>
           ))
         ) : (

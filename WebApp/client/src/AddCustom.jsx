@@ -158,7 +158,7 @@ function AddCustom() {
       <div className="row justify-content-center">
         <div className="col-md-4">         
           {successMessage && (
-            <div className="alert alert-danger">{successMessage}</div>
+            <div className="alert alert-success mt-3">{successMessage}</div>
           )}
           <div className="container">
             <form>
