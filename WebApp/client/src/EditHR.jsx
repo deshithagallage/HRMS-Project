@@ -36,7 +36,7 @@ function EditHR() {
 
   useEffect(() => {
     // Fetch employee data based on id_to_edit when the component mounts
-    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_edit}`)
+    Axios.get(`http://localhost:3000/viewhr/employeeDetailForHR/${id_to_edit}`)
       .then(response => {
         // Set the fetched data to the state
         setEmployeeData(response.data.employee);

@@ -19,6 +19,22 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
+const report1Router = require("./routes/Report1");
+const report2Router = require("./routes/Report2");
+const report3Router = require("./routes/Report3");
+const report4Router = require("./routes/Report4");
+const report5Router = require("./routes/Report5");
+const pageAdminRouter = require("./routes/PageAdmin");
+const viewHRRouter = require("./routes/ViewHR");
+
+app.use("/report1", report1Router);
+app.use("/report2", report2Router);
+app.use("/report3", report3Router);
+app.use("/report4", report4Router);
+app.use("/report5", report5Router);
+app.use("/pageadmin", pageAdminRouter);
+app.use("/viewhr", viewHRRouter);
+
 app.post("/createCustomAttribute", (req, res) => {
   const attributeName = req.body.attributeName;
 
@@ -96,30 +112,6 @@ app.post("/associateCustomAttribute", (req, res) => {
   });
 });
 
-app.get("/customAttributes", (req, res) => {
-  db.query("SELECT * FROM Custom_Attribute_Definition", (err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error fetching custom attributes");
-    } else {
-      res.status(200).send(result);
-    }
-  });
-});
-
-app.get("/employeeCustomAttributes", (req, res) => {
-  // Fetch employee data with custom fields from the database
-  const query = "SELECT * FROM Employee_Custom_Attribute";
-  db.query(query, (err, results) => {
-    if (err) {
-      console.error("Error fetching employee data:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-    } else {
-      res.json(results);
-    }
-  });
-});
-
 app.post("/createLeaveReq", (req, res) => {
   const id = req.body.id;
   const startDate = req.body.startDate;
@@ -163,34 +155,6 @@ app.get("/emp_view/:id_to_transfer", (req, res) => {
       }
     }
   }); // Missing closing parenthesis
-});
-
-app.get("/fetchSupervisors", (req, res) => {
-  const sql = "SELECT DISTINCT Supervisor_ID FROM supervisor";
-
-  db.query(sql, (error, results) => {
-    if (error) {
-      console.error("Error fetching supervisor data:", error);
-      res.status(500).json({ error: "Internal server error" });
-    } else {
-      console.log(results);
-      res.json(results);
-    }
-  });
-});
-
-app.get("/supervisorReport/:id_to_transfer", (req, res) => {
-  const id_to_transfer = req.params.id_to_transfer;
-  const query =
-    "SELECT employee_data.first_name as Subordinate_first_name, employee_data.last_name as Subordinate_last_name, supervisor.subordinate_id as Subordinate_ID FROM supervisor LEFT JOIN employee_data ON supervisor.subordinate_ID = employee_data.employee_id WHERE supervisor.Supervisor_ID = ?";
-  db.query(query, [id_to_transfer], (error, results) => {
-    if (error) {
-      console.error("Error querying the database: " + error);
-      res.status(500).json({ error: "Internal server error" });
-    } else {
-      res.json(results);
-    }
-  });
 });
 
 app.post("/addEmployee", async (req, res) => {
@@ -308,35 +272,6 @@ app.get("/addEmployee/branch", (req, res) => {
   });
 });
 
-app.get("/employeeDetailForHR/:id", (req, res) => {
-  const employeeId = req.params.id;
-  const empQuery = "SELECT * FROM Employee_Details WHERE Employee_ID = ?";
-  const contactQuery =
-    "SELECT * FROM Contact_Number_Details WHERE Employee_ID = ?";
-
-  // Perform the employee details query
-  db.query(empQuery, [employeeId], (err, employeeResult) => {
-    if (err) {
-      console.error(err);
-      res.status(500).json({ error: "Error fetching employee details" });
-    } else {
-      // Perform the contact details query
-      db.query(contactQuery, [employeeId], (err, contactResult) => {
-        if (err) {
-          console.error(err);
-          res.status(500).json({ error: "Error fetching contact details" });
-        }
-
-        // Combine the results into a single response
-        const output = { employee: employeeResult[0], contact: contactResult };
-
-        // Send the response with the combined data
-        res.status(200).json(output);
-      });
-    }
-  });
-});
-
 app.post("/editEmployee", async (req, res) => {
   db.query(
     "CALL Update_Employee_Data(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -371,33 +306,6 @@ app.post("/editEmployee", async (req, res) => {
       }
     }
   );
-});
-
-app.get("/employeeData", (req, res) => {
-  db.query("SELECT * FROM Employee_Data ORDER BY Timestamp", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-app.get("/report4/employeesalaries/:minSalary/:maxSalary", (req, res) => {
-  const minSalary = req.params.minSalary;
-  const maxSalary = req.params.maxSalary;
-
-  const query =
-    "SELECT * FROM EmployeeSalaries WHERE Basic_Salary BETWEEN ? AND ?";
-
-  db.query(query, [minSalary, maxSalary], (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "Failed to retrieve data" });
-    }
-
-    res.json(results);
-  });
 });
 
 app.get("/getPass", (req, res) => {
@@ -667,74 +575,20 @@ app.get("/fetchLeaveRequests", (req, res) => {
     }
   });
 });
-app.get("/fetchLeaveRequestsDept", (req, res) => {
-  const time = req.query.time; // Assuming the "time" variable is sent from the front end as a query parameter
-  console.log("time:", time);
-  let interval = ""; // Define an empty interval string
-
-  if (time === "month") {
-    interval = "1 MONTH";
-  } else if (time === "year") {
-    interval = "1 YEAR";
-  } else {
-    // Handle invalid or missing "time" parameter
-    return res
-      .status(400)
-      .json({ error: "Invalid or missing 'time' parameter" });
-  }
-
-  const query = `SELECT * FROM leave_req_dept_2 WHERE start_date BETWEEN DATE_SUB(CURDATE(), INTERVAL ${interval}) AND CURDATE()`;
-
-  db.query(query, (error, results) => {
-    if (error) {
-      console.error("Error querying the database: " + error);
-      res.status(500).json({ error: "Internal server error" });
-    } else {
-      res.json(results);
-    }
-  });
-});
-
 
 // Function to fetch employee data based on the given query
 function fetchEmployeeData(req, res, query) {
   db.query(query, (error, results) => {
     if (error) {
-      console.error('Error fetching:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      console.error("Error fetching:", error);
+      res.status(500).json({ error: "Internal Server Error" });
     } else {
       res.status(200).json(results);
     }
   });
 }
 
-
-app.get("/employee_data", (req, res) => {
-  const selectedReport = req.query.selectedReport;
-
-
- return new Promise((resolve,reject)=> {
-  db.query(
-  "SELECT Employee_ID, CONCAT(First_Name, ' ', Last_Name) AS Full_Name, Gender, Birthday, Pay_Grade_ID FROM Employee_Data WHERE Branch_ID = ?;",
-  [selectedReport],
-  (err,result) => {
-    if(err){
-     // console.log(err);
-      reject(err);
-    }else{
-     // console.log("employee_data");
-      //const result = JSON.stringify(result);
-     // console.log(result);
-
-      //resolve(result);
-      res.status(200).json(result);
-    }
-  }
- )
-});
-}),
- // let interval = ""; // Define an empty interval string
-
+// let interval = ""; // Define an empty interval string
 
 app.listen(3000, () => {
   console.log("Yey, your server is running on port 3000");

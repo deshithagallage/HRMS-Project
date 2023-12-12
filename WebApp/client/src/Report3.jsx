@@ -32,7 +32,7 @@ function Report3() {
 
   useEffect(() => {
     // Fetch custom attributes from your API
-    axios.get('http://localhost:3000/customAttributes')
+    axios.get('http://localhost:3000/report3/customAttributes')
       .then((response) => {
         setCustomAttributes(response.data);
       })
@@ -41,7 +41,7 @@ function Report3() {
       });
 
     // Fetch employee data with custom fields from your API
-    axios.get('http://localhost:3000/employeeCustomAttributes')
+    axios.get('http://localhost:3000/report3/employeeCustomAttributes')
       .then((response) => {
         setEmployeeData(response.data);
       })

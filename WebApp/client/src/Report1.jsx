@@ -36,7 +36,7 @@ function Report1() {
   useEffect(() => {
     async function fetchLeaveRequests() {
       try {
-        const response = await axios.get("http://localhost:3000/fetchLeaveRequestsDept", {
+        const response = await axios.get("http://localhost:3000/report1/fetchLeaveRequestsDept", {
           params: { time }
         });
         setLeaveRequests(response.data);
