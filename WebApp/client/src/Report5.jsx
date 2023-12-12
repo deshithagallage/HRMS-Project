@@ -32,7 +32,7 @@ function Report5() {
 
   const fetchSupervisors = async () => {
     try {
-      const response = await Axios.get(`http://localhost:3000/fetchSupervisors`);
+      const response = await Axios.get(`http://localhost:3000/report5/fetchSupervisors`);
       setSupervisors(response.data);
     } catch (error) {
       console.error("Error fetching supervisors: " + error);
@@ -42,7 +42,7 @@ function Report5() {
   const fetchSubordinates = async () => {
     if (supervisor) {
       try {
-        const response = await Axios.get(`http://localhost:3000/supervisorReport/${supervisor}`);
+        const response = await Axios.get(`http://localhost:3000/report5/supervisorReport/${supervisor}`);
         if (response.data) {
           setSubordinates(response.data);
         } else {

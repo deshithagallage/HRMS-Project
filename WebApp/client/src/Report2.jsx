@@ -35,7 +35,7 @@ const Report2 = () => {
     console.log(selectedReport);
 
     //need to debug
-    axios.get("http://localhost:3000/employee_data",{params :{selectedReport : selectedReport} })
+    axios.get("http://localhost:3000/report2/employee_data",{params :{selectedReport : selectedReport} })
     .then((response) => {
       console.log(response);
       setReportData(response.data);

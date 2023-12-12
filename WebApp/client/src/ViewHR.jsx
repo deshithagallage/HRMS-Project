@@ -28,7 +28,7 @@ function ViewHR() {
   }, [navigate]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_view}`)
+    Axios.get(`http://localhost:3000/viewhr/employeeDetailForHR/${id_to_view}`)
     .then((response) => {
         setEmployeeData(response.data.employee);
         setContactNumbers(response.data.contact);
