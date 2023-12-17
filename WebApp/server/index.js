@@ -19,20 +19,32 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
+app.use((req, res, next) => {
+  req.db = db;
+  next();
+});
+
+const pageAdminRouter = require("./routes/PageAdmin");
+const addEmployeeRouter = require("./routes/AddEmployee");
+const viewHRRouter = require("./routes/ViewHR");
+const editHRRouter = require("./routes/editHR");
+
 const report1Router = require("./routes/Report1");
 const report2Router = require("./routes/Report2");
 const report3Router = require("./routes/Report3");
 const report4Router = require("./routes/Report4");
 const report5Router = require("./routes/Report5");
-const pageAdminRouter = require("./routes/PageAdmin");
-const viewHRRouter = require("./routes/ViewHR");
+
+app.use("/pageadmin", pageAdminRouter);
+app.use()
+
 
 app.use("/report1", report1Router);
 app.use("/report2", report2Router);
 app.use("/report3", report3Router);
 app.use("/report4", report4Router);
 app.use("/report5", report5Router);
-app.use("/pageadmin", pageAdminRouter);
+
 app.use("/viewhr", viewHRRouter);
 
 app.post("/createCustomAttribute", (req, res) => {
