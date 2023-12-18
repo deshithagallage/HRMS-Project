@@ -20,7 +20,7 @@ function PasswordChange() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -53,7 +53,7 @@ function PasswordChange() {
     }
 
     // Send a POST request to change the password
-    Axios.post(`http://localhost:3000/changePassword/${id_to_transfer}`, {
+    Axios.post(`http://localhost:3000/password/changePassword/${id_to_transfer}`, {
       id_to_transfer: { id_to_transfer },
       oldPassword: oldPassword,
       newPassword: newPassword,

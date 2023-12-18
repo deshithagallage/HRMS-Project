@@ -13,7 +13,7 @@ function Report3() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    axios.get("http://localhost:3000/isUserAuth", {
+    axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -32,7 +32,7 @@ function Report3() {
 
   useEffect(() => {
     // Fetch custom attributes from your API
-    axios.get('http://localhost:3000/report3/customAttributes')
+    axios.get('http://localhost:3000/customAttribute')
       .then((response) => {
         setCustomAttributes(response.data);
       })

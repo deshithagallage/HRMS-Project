@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/employeeDetailForHR/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const db = req.db; // Access the 'db' object from the request
   const employeeId = req.params.id;
   const empQuery = "SELECT * FROM Employee_Details WHERE Employee_ID = ?";

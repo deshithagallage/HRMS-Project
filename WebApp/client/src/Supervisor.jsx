@@ -12,7 +12,7 @@ const LeaveRequest = () => {
 
   useEffect(() => {
     // Check user authentication using Axios
-    axios.get("http://localhost:3000/isUserAuth", {
+    axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -42,7 +42,7 @@ const LeaveRequest = () => {
   // Function to fetch leave requests from your API
   const fetchLeaveRequests = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/leave_request', {
+      const response = await axios.get('http://localhost:3000/leaveRequest', {
         params: { id_to_transfer }
       }); // Replace with your API endpoint
       setLeaveRequests(response.data);
@@ -54,7 +54,7 @@ const LeaveRequest = () => {
   // Function to update the status of a leave request
   const updateStatus = async (leaveReqID, newStatus) => {
     try {
-      await axios.put(`http://localhost:3000/leave_request/${leaveReqID}`, {
+      await axios.put(`http://localhost:3000/leaveRequest/${leaveReqID}`, {
         status: newStatus
       }); // Replace with your API endpoint
       // Update the status locally without making another request

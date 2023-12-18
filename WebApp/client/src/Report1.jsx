@@ -16,7 +16,7 @@ function Report1() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    axios.get("http://localhost:3000/isUserAuth", {
+    axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },

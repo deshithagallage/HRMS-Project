@@ -1,9 +1,32 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './styles/Report2.css';
 
 const Report2 = () => {
+  const { id_to_transfer } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check user authentication using Axios
+    axios.get("http://localhost:3000/authenticate/isUserAuth", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.data.userID === id_to_transfer && response.data.jobTitle === 'HR Manager') {
+        } else {
+          navigate(`/`);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        navigate(`/`);
+      });
+  }, [id_to_transfer, navigate]);
+
   const [selectedReport, setSelectedReport] = useState('BR001');
   const [reportData, setReportData] = useState([]);
   
