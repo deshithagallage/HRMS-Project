@@ -21,7 +21,7 @@ localStorage.removeItem('token');
 
   const getPasswords = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/getPass");
+      const response = await axios.get("http://localhost:3000/password/getPass");
       setPasswordList(response.data);
     } catch (error) {
       console.error("Error fetching passwords:", error);

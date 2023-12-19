@@ -13,7 +13,7 @@ function AddEmployee() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },

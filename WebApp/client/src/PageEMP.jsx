@@ -15,7 +15,7 @@ function PageEMP() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -44,13 +44,13 @@ function PageEMP() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const supervisorsResponse = await Axios.get(`http://localhost:3000/fetchSupervisors`);
+        const supervisorsResponse = await Axios.get(`http://localhost:3000/employee/fetchSupervisors`);
         setSupervisors(supervisorsResponse.data);
       } catch (error) {
         console.error('Error fetching supervisor data:', error);
       }
       try {
-        const employeeResponse = await Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_transfer}`);
+        const employeeResponse = await Axios.get(`http://localhost:3000/viewEmployee/${id_to_transfer}`);
         setEmployeeData(employeeResponse.data.employee);
         setContactNumbers(employeeResponse.data.contact);
       } catch (error) {

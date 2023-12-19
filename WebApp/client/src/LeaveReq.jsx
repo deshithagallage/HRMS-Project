@@ -31,7 +31,7 @@ function LeaveReq() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -57,10 +57,10 @@ function LeaveReq() {
     const fetchData = async () => {
       try {
         const [pending, allLeaves, takenLeaves,rejectedRequests] = await Promise.all([
-          Axios.get(`http://localhost:3000/pendingLeaveRequests/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/fetchAllLeaves/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/fetchtakenLeaves/${id_to_transfer}`),
-          Axios.get(`http://localhost:3000/rejectedLeaveRequests/${id_to_transfer}`),
+          Axios.get(`http://localhost:3000/leaveRequest/pendingLeaveRequests/${id_to_transfer}`),
+          Axios.get(`http://localhost:3000/leaveRequest/fetchAllLeaves/${id_to_transfer}`),
+          Axios.get(`http://localhost:3000/leaveRequest/fetchtakenLeaves/${id_to_transfer}`),
+          Axios.get(`http://localhost:3000/leaveRequest/rejectedLeaveRequests/${id_to_transfer}`),
         ]);
 
         setPendingRequests(pending.data);
@@ -103,7 +103,7 @@ if (type === "annual") {
         console.log(id,type)
         if ((type == "annual" && day_no <= remainingAnnualLeaves) | (type == "casual" && day_no <= remainingCasualLeaves) | (type == "no_pay" && day_no <= remainingNoPayLeaves) | (type == "maternity" && day_no <= remainingMaternityLeaves)) {
           if((type == "maternity" && Object.values(setAllLeaves)[0].Gender === 'Female') | (type != "maternity")){
-        await Axios.post("http://localhost:3000/createLeaveReq", {
+        await Axios.post("http://localhost:3000/leaveRequest/createLeaveReq", {
           id: id,
           startDate: startDate,
           day_no: day_no,
@@ -133,7 +133,7 @@ if (type === "annual") {
 
   const deleteRequest = async (requestId) => {
     try {
-      await Axios.delete(`http://localhost:3000/deleteLeaveRequest/${requestId}`);
+      await Axios.delete(`http://localhost:3000/leaveRequest/deleteLeaveRequest/${requestId}`);
 
       setPendingRequests((prevRequests) => prevRequests.filter((request) => request.Leave_Req_ID !== requestId));
       setSuccessMessage("Request deleted successfully");

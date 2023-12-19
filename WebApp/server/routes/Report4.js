@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const mysql = require("mysql");
-
-require("dotenv").config();
-
-const db = mysql.createConnection({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
-router.get("/report4/employeesalaries/:minSalary/:maxSalary", (req, res) => {
+router.get("/employeesalaries/:minSalary/:maxSalary", (req, res) => {
+  const db = req.db; // Access the 'db' object from the request
   const minSalary = req.params.minSalary;
   const maxSalary = req.params.maxSalary;
 

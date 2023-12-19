@@ -24,7 +24,7 @@ function AddCustom() {
   
   useEffect(() => {
     // Check user authentication using Axios
-    axios.get("http://localhost:3000/isUserAuth", {
+    axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -56,7 +56,7 @@ function AddCustom() {
       localStorage.removeItem('successMessage');
     }
 
-    axios.get('http://localhost:3000/customAttributes')
+    axios.get('http://localhost:3000/customAttribute')
       .then((response) => {
         setCustomAttributes(response.data);
       })
@@ -65,7 +65,7 @@ function AddCustom() {
 
   const handleAddCustomAttributeDefinition = () => {
     if (customAttributeName) {
-      axios.post('http://localhost:3000/createCustomAttribute', {
+      axios.post('http://localhost:3000/customAttribute/createCustomAttribute', {
         attributeName: customAttributeName,
       })
         .then((response) => {
@@ -89,7 +89,7 @@ function AddCustom() {
 
   const handleAddCustomAttributeToEmployee = () => {
     if (employeeID && selectedAttributeID && customAttributeValue) {
-      axios.post('http://localhost:3000/associateCustomAttribute', {
+      axios.post('http://localhost:3000/customAttribute/associateCustomAttribute', {
         employeeID: employeeID,
         attributeID: selectedAttributeID,
         value: customAttributeValue,

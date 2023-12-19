@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const mysql = require("mysql");
-
-require("dotenv").config();
-
-const db = mysql.createConnection({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
 router.get("/employee_data", (req, res) => {
+  const db = req.db; // Access the 'db' object from the request
   const selectedReport = req.query.selectedReport;
 
   return new Promise((resolve, reject) => {
@@ -21,18 +11,13 @@ router.get("/employee_data", (req, res) => {
       [selectedReport],
       (err, result) => {
         if (err) {
-          // console.log(err);
           reject(err);
         } else {
-          // console.log("employee_data");
-          //const result = JSON.stringify(result);
-          // console.log(result);
-
-          //resolve(result);
           res.status(200).json(result);
         }
       }
     );
   });
 }),
-  (module.exports = router);
+
+module.exports = router;

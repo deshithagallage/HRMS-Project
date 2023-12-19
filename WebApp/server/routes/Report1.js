@@ -1,18 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const mysql = require("mysql");
-
-require("dotenv").config();
-
-const db = mysql.createConnection({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
-
 router.get("/fetchLeaveRequestsDept", (req, res) => {
+  const db = req.db; // Access the 'db' object from the request
   const time = req.query.time; // Assuming the "time" variable is sent from the front end as a query parameter
   console.log("time:", time);
   let interval = ""; // Define an empty interval string

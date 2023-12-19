@@ -28,7 +28,7 @@ function EmployeeManagement() {
   const perPage = 10; // Number of records per page
 
   useEffect(() => {
-    Axios.get('http://localhost:3000/employeeData')
+    Axios.get('http://localhost:3000/employee/employeeData')
       .then((response) => setEmployees(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -66,7 +66,7 @@ function EmployeeManagement() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },

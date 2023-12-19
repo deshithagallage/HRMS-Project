@@ -11,7 +11,7 @@ function ViewEmployee() {
 
   useEffect(() => {
     // Check user authentication using Axios
-    Axios.get("http://localhost:3000/isUserAuth", {
+    Axios.get("http://localhost:3000/authenticate/isUserAuth", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -29,7 +29,7 @@ function ViewEmployee() {
   }, [id_to_transfer, navigate]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:3000/employeeDetailForHR/${id_to_view}`)
+    Axios.get(`http://localhost:3000/viewEmployee/${id_to_view}`)
     .then((response) => {
         setEmployeeData(response.data.employee);
         setContactNumbers(response.data.contact);
