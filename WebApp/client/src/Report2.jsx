@@ -27,34 +27,48 @@ const Report2 = () => {
       });
   }, [id_to_transfer, navigate]);
 
-  const [selectedReport, setSelectedReport] = useState('BR001');
+  const [selectedReport, setSelectedReport] = useState("Nothing Selected");
   const [reportData, setReportData] = useState([]);
   
   const handleDropdownChange = (event) => {
     setSelectedReport(event.target.value);
   };
 
+  const [branchOptions, setBranchOptions] = useState ([]);
+  useEffect(() => {
+    axios.get("http://localhost:3000/addEmployee/branch")
+      .then(response => {
+        setBranchOptions(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, []);
+
   const renderDropdown = () => (
-    <div>
-      <label className='lable'><b>Select a Report:</b></label>
-      <select className= "custom-dropdown-container" onChange={handleDropdownChange} value={selectedReport} >
-        <option value="BR001">Colombo Central Branch</option>
-        <option value="BR002">Colombo North Branch</option>
-        <option value="BR003">Kandy Downtown Branch</option>
-        <option value="BR004">Galle Coastal Branch</option>
-        <option value="BR005">Jaffna Northern Branch</option>
-        <option value="BR006">Negombo Seaside Branch</option>
-        <option value="BR007">Dhaka Central Branch</option>
-        <option value="BR008">Chittagong Coastal Branch</option>
-        <option value="BR009">Islamabad Capital Branch</option>
-      <option value="BR0010">Lahore Cultural Branch</option>
-      </select>
+    <div className="d-flex justify-content-start" style={{ gap: '20px', margin: '3%' }}>
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <label htmlFor="inputBranch" style={{ padding: '5px' }}>Branch: </label>
+        <select className="form-control" id="inputBranch" name="branch" onChange={handleDropdownChange}>
+          <option value={"Nothing Selected"}>Choose...</option>
+          {branchOptions.map(option => (
+            <option value={option.Branch_ID}>
+              {option.Branch_Name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <label htmlFor="inputBranchID" style={{ padding: '5px' }}>ID: </label>
+        <input className="form-control" id="inputBranchID" name="branchID" value={selectedReport} disabled={true} />
+      </div>
+
     </div>
+
   );
 
   useEffect(() => {
-    //fetchData(selectedReport);
-    console.log("hello");
     console.log(selectedReport);
 
     //need to debug
@@ -67,8 +81,6 @@ const Report2 = () => {
       console.error("error",error);
     });
 
-    //need to debug
-
   }, [selectedReport]);
 
   // eslint-disable-next-line no-unused-vars
@@ -80,11 +92,9 @@ const Report2 = () => {
    const renderTable = (data, title) => (
     
      <div>
-       <h3 className='branchID'>Branch ID - {title}</h3>
        <table className="custom-table">
          <thead>
            <tr>
-           
              <th>Employee ID</th>
              <th>Name</th>
              <th>Gender</th>
@@ -117,7 +127,7 @@ const Report2 = () => {
     <div>
       {console.log("Report Data",reportData.data)}
       {renderDropdown()}
-       {renderTable(reportData, selectedReport)} 
+      {renderTable(reportData, selectedReport)} 
     </div>
   );
 };

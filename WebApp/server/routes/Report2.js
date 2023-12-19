@@ -6,8 +6,13 @@ router.get("/employee_data", (req, res) => {
   const selectedReport = req.query.selectedReport;
 
   return new Promise((resolve, reject) => {
+    if (selectedReport === "Nothing Selected") {
+      query = "SELECT Employee_ID, CONCAT(First_Name, ' ', Last_Name) AS Full_Name, Gender, Birthday, Pay_Grade_ID FROM Employee_Data;"
+    } else {
+      query = "SELECT Employee_ID, CONCAT(First_Name, ' ', Last_Name) AS Full_Name, Gender, Birthday, Pay_Grade_ID FROM Employee_Data WHERE Branch_ID = ?;"
+    }
     db.query(
-      "SELECT Employee_ID, CONCAT(First_Name, ' ', Last_Name) AS Full_Name, Gender, Birthday, Pay_Grade_ID FROM Employee_Data WHERE Branch_ID = ?;",
+      query,
       [selectedReport],
       (err, result) => {
         if (err) {
@@ -18,6 +23,6 @@ router.get("/employee_data", (req, res) => {
       }
     );
   });
-}),
+});
 
 module.exports = router;
