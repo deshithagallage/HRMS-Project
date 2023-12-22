@@ -8,7 +8,7 @@
 
 .table-container {
     margin: 0 3%; /* 10% margin on top, bottom, left, and right */
-    width: 94%; /* 100% - 10% left margin - 10% right margin */
+    width: 94%; /* 100% - 3% left margin - 3% right margin */
     border-radius: 10px;
 }
 
