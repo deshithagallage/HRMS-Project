@@ -76,7 +76,7 @@ localStorage.removeItem('token');
   return (
     <MDBContainer fluid className='p-4 background-radial-gradient overflow-hidden min-vh-100'>
   
-      <MDBRow>
+      <MDBRow style={{ padding: '4.5rem' }}>
   
         <MDBCol md='6' className='text-center text-md-start d-flex flex-column justify-content-center'>
           <h1 className="my-5 display-3 fw-bold ls-tight px-3" style={{ color: 'hsl(218, 81%, 95%)' }}>
@@ -89,9 +89,9 @@ localStorage.removeItem('token');
           </p>
         </MDBCol>
   
-        <MDBCol md='6' className='text-center position-relative'>
+        <MDBCol md='6' className='text-center position-relative' style={{ display: 'flex', justifyContent: 'center' }}>
   
-          <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong" style={{ top: '4%', right: '20%' }}></div>
+          <div id="radius-shape-1" className="position-absolute rounded-circle shadow-5-strong" style={{ left: '5%' }}></div>
           <div id="radius-shape-2" className="position-absolute shadow-5-strong" style={{ top: '60%', right: '10%' }}></div>
   
           <MDBCard className='my-5 bg-glass' style={{ maxWidth: '400px', height: '450px'}}>

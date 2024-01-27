@@ -42,7 +42,6 @@ function ViewHR() {
 
   return (
     <div style={{marginLeft: '20px', marginRight: '20px'}}>
-      <h1>This is the view employee page</h1>
       <div className="d-flex flex-column align-items-center" style={{
         border: '2px solid black',
         padding: '20px',

@@ -124,14 +124,14 @@ function PageEMP() {
           </li>
           <li>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%',width:'83% '}}>
-              <button
+              {supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer) &&
+              (<button
                 type="button"
                 className="btn btn-secondary custom-button"
                 onClick={handleLeaveRequestClick_3}
-                disabled={!supervisors.some(supervisor => supervisor.Supervisor_ID === id_to_transfer)}
               >
                 Supervisor Access
-              </button>
+              </button>)}
             </div>
           </li>
         </ul>
