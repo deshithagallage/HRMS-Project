@@ -7,6 +7,7 @@ Human Resource Management System for the final project of module CS-3043 in the 
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Usage](#usage)
+- [Special Notes](#special-notes)
 
 ## Introduction
 
@@ -35,6 +36,10 @@ Our HR Management System for Jupiter Apparels will offer the following features:
 ## Usage
 
 Provide detailed instructions on how to use the HR Management System. Include information on user roles and permissions, common workflows, and any other relevant details that will help users effectively utilize the system.
+
+## Special Notes
+
+- As this project is developed for an Assesment, It is not meant to be used in any commercial applications since it doesn't meet all the nessecary requirements yet. Instead the main focus is in the educational aspect of a DBMS Project.
 
 
 Thank you for your interest in the Jupiter HR Management System project. If you have any questions or need further assistance, please don't hesitate to contact our team.
