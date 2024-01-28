@@ -1,0 +1,14 @@
+Install Node.js and npm (npm will automatically install with node.js)
+Add npm to system path
+
+client:
+	Install vite (npm install --save-dev create-vite)
+	
+server:
+	Create .env file with database credentials
+	Insatall dotenv package (npm install dotenv)
+	
+MySQL workbech:
+	ALTER USER 'your_username'@'localhost' IDENTIFIED WITH mysql_native_password BY 'your_password';
+	flush privileges;
+	(Only if data doesn't fetch)
