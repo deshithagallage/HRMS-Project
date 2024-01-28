@@ -15,7 +15,7 @@ function ReportCard5() {
     <Card style={{ width: '18rem' }}>
       <Card.Body className="d-flex flex-column align-items-center">
         <Card.Title className="text-center">Supervisor Report</Card.Title>
-        <Card.Text>Generate reports based on the Supervisr and Subordinate relationship in the company</Card.Text>
+        <Card.Text>Generate reports based on the Supervisor and Subordinate relationship in the company</Card.Text>
         <Button variant="primary" onClick={handleGenerateReport}>Generate Report</Button>
       </Card.Body>
     </Card>
