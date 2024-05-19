@@ -1,11 +1,11 @@
 # Jupiter Apparels HR Management System
 Human Resource Management System for the final project of module CS-3043 in the 3rd semester.
 
-
 ## Table of Contents
 - [Introduction](#introduction)
 - [Project Overview](#project-overview)
 - [Features](#features)
+- [Installation](#installation)
 - [Usage](#usage)
 - [Special Notes](#special-notes)
 
@@ -33,13 +33,56 @@ Our HR Management System for Jupiter Apparels will offer the following features:
   
 - **User Management and Authorization**: Efficiently manage user access and authorization, allowing you to control who can access various parts of the system. Customize access levels to aid decision-making and compliance efforts.
 
+## Installation
+
+Follow these steps to install the Jupiter HR Management System:
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/deshithagallage/HRMS-Project.git
+   cd HRMS-Project
+   ```
+
+2. **Install Dependencies**:
+   - Ensure you have [Node.js](https://nodejs.org/) installed.
+   - Install the necessary packages:
+     ```bash
+     npm install
+     ```
+
+3. **Set Up the Database**:
+   - Ensure you have a MySQL server running.
+   - Create a new database for the HRMS.
+   - Update the `config/database.js` file with your database credentials.
+   - Run the database migrations:
+     ```bash
+     npx sequelize-cli db:migrate
+     ```
+
+4. **Configure Environment Variables**:
+   - Create a `.env` file in the root directory of the project.
+   - Add the following environment variables:
+     ```
+     DB_HOST=your_database_host
+     DB_USER=your_database_user
+     DB_PASS=your_database_password
+     DB_NAME=your_database_name
+     ```
+
+5. **Start the Application**:
+   ```bash
+   npm start
+   ```
+
+6. **Access the Application**:
+   - Open your browser and navigate to `http://localhost:3000`.
+
 ## Usage
 
 Provide detailed instructions on how to use the HR Management System. Include information on user roles and permissions, common workflows, and any other relevant details that will help users effectively utilize the system.
 
 ## Special Notes
 
-- As this project is developed for an Assesment, It is not meant to be used in any commercial applications since it doesn't meet all the nessecary requirements yet. Instead the main focus is in the educational aspect of a DBMS Project.
-
+- As this project is developed for an assessment, it is not meant to be used in any commercial applications since it doesn't meet all the necessary requirements yet. Instead, the main focus is on the educational aspect of a DBMS project.
 
 Thank you for your interest in the Jupiter HR Management System project. If you have any questions or need further assistance, please don't hesitate to contact our team.
