@@ -53,11 +53,7 @@ Follow these steps to install the Jupiter HR Management System:
 3. **Set Up the Database**:
    - Ensure you have a MySQL server running.
    - Create a new database for the HRMS.
-   - Update the `config/database.js` file with your database credentials.
-   - Run the database migrations:
-     ```bash
-     npx sequelize-cli db:migrate
-     ```
+   - Run all the database scripts in database directory.
 
 4. **Configure Environment Variables**:
    - Create a `.env` file in the root directory of the project.
