@@ -1,7 +1,9 @@
 # Jupiter Apparels HR Management System
+
 Human Resource Management System for the final project of module CS-3043 in the 3rd semester.
 
 ## Table of Contents
+
 - [Introduction](#introduction)
 - [Project Overview](#project-overview)
 - [Features](#features)
@@ -24,13 +26,9 @@ If the HRMS proves successful, Jupiter Apparels intends to migrate other key fun
 Our HR Management System for Jupiter Apparels will offer the following features:
 
 - **User-Friendly Interface**: Enjoy an intuitive and user-friendly interface that minimizes the need for extensive training, ensuring that all employees can easily navigate and use the system.
-  
 - **Personal Information Management (PIM)**: Access comprehensive tools for efficiently managing employee data. This includes overseeing personal information, tracking attendance, and conducting performance evaluations with ease.
-  
 - **Absence Management**: Simplify absence management processes by providing streamlined tools for requesting and managing leave.
-  
 - **Reporting Module**: Automate payroll calculations, tax deductions, and payslip generation with our reporting module. This feature not only saves time but also ensures accuracy in financial processes.
-  
 - **User Management and Authorization**: Efficiently manage user access and authorization, allowing you to control who can access various parts of the system. Customize access levels to aid decision-making and compliance efforts.
 
 ## Installation
@@ -38,24 +36,28 @@ Our HR Management System for Jupiter Apparels will offer the following features:
 Follow these steps to install the Jupiter HR Management System:
 
 1. **Clone the Repository**:
+
    ```bash
    git clone https://github.com/deshithagallage/HRMS-Project.git
    cd HRMS-Project
    ```
 
-2. **Install Dependencies**:
+2. **Set Up the Database**:
+
+   - Ensure you have a MySQL server running.
+   - Create a new database for the HRMS.
+   - Run all the database scripts in database directory.
+
+3. **Install Dependencies**:
+
    - Ensure you have [Node.js](https://nodejs.org/) installed.
    - Install the necessary packages:
      ```bash
      npm install
      ```
 
-3. **Set Up the Database**:
-   - Ensure you have a MySQL server running.
-   - Create a new database for the HRMS.
-   - Run all the database scripts in database directory.
-
 4. **Configure Environment Variables**:
+
    - Create a `.env` file in the root directory of the project.
    - Add the following environment variables:
      ```
@@ -66,6 +68,7 @@ Follow these steps to install the Jupiter HR Management System:
      ```
 
 5. **Start the Application**:
+
    ```bash
    npm start
    ```
